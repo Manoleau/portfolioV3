@@ -4,27 +4,33 @@
 <template>
   <div id="taskbar">
     <button id="taskbar-start">
+      Start
     </button>
   </div>
 </template>
 
 <style scoped>
+* {
+  color: white;
+}
 #taskbar {
-  background-color: cadetblue;
+  background-color: var(--color-1);
   border-top: gray solid 2px;
 }
 #taskbar-start {
-  background-color: green;
+  background-color: var(--color-2);
   text-decoration: none;
   border: none;
-
+  margin: 3px;
+  border-radius: 3px;
   width: 10%;
-  height: 100%;
+  height: 75%;
 }
 #taskbar-start:hover {
-  background-color: limegreen;
+  background-color: var(--color-3);
 }
 #taskbar-start:active {
-  background-color: darkgreen;
+  background-color: var(--color-4);
+  color: black;
 }
 </style>
