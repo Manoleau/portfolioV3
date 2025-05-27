@@ -1,0 +1,91 @@
+{
+  "technical": [
+    {
+      "name": "JavaScript",
+      "level": 90,
+      "description": "Proficient in modern JavaScript (ES6+), including async/await, promises, and functional programming concepts.",
+      "icon": "/icons/javascript.svg",
+      "years": 5
+    },
+    {
+      "name": "Vue.js",
+      "level": 85,
+      "description": "Experienced with Vue.js framework, including Vue 3 composition API, Vuex for state management, and Vue Router.",
+      "icon": "/icons/vue.svg",
+      "years": 3
+    },
+    {
+      "name": "HTML/CSS",
+      "level": 95,
+      "description": "Expert in semantic HTML5 and modern CSS techniques including Flexbox, Grid, and CSS animations.",
+      "icon": "/icons/html-css.svg",
+      "years": 7
+    },
+    {
+      "name": "Node.js",
+      "level": 80,
+      "description": "Strong knowledge of server-side JavaScript using Node.js, including Express framework and RESTful API development.",
+      "icon": "/icons/javascript.svg",
+      "years": 4
+    },
+    {
+      "name": "Git",
+      "level": 85,
+      "description": "Proficient with Git version control, including branching strategies, merge conflict resolution, and collaborative workflows.",
+      "icon": "/icons/javascript.svg",
+      "years": 5
+    }
+  ],
+  "soft": [
+    {
+      "name": "Communication",
+      "level": 90,
+      "description": "Excellent verbal and written communication skills, able to explain complex technical concepts to non-technical stakeholders.",
+      "years": 8
+    },
+    {
+      "name": "Problem Solving",
+      "level": 95,
+      "description": "Strong analytical and problem-solving abilities, with a methodical approach to debugging and troubleshooting.",
+      "years": 10
+    },
+    {
+      "name": "Teamwork",
+      "level": 85,
+      "description": "Collaborative team player with experience in agile development environments and cross-functional teams.",
+      "years": 6
+    },
+    {
+      "name": "Time Management",
+      "level": 80,
+      "description": "Effective at prioritizing tasks, meeting deadlines, and managing multiple projects simultaneously.",
+      "years": 5
+    },
+    {
+      "name": "Adaptability",
+      "level": 90,
+      "description": "Quick learner who adapts well to new technologies, methodologies, and changing project requirements.",
+      "years": 7
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "level": 95,
+      "description": "Native or bilingual proficiency",
+      "years": 30
+    },
+    {
+      "name": "French",
+      "level": 80,
+      "description": "Professional working proficiency",
+      "years": 15
+    },
+    {
+      "name": "Spanish",
+      "level": 60,
+      "description": "Limited working proficiency",
+      "years": 5
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "personal": [
+    {
+      "id": 1,
+      "name": "Personal Portfolio",
+      "description": "A Windows-themed portfolio website showcasing my skills and projects.",
+      "technologies": ["Vue.js", "JavaScript", "CSS"],
+      "image": "/images/projects/portfolio.jpg",
+      "link": "https://portfolio.example.com",
+      "github": "https://github.com/example/portfolio"
+    },
+    {
+      "id": 2,
+      "name": "Weather App",
+      "description": "A weather application that shows current weather and forecasts for any location.",
+      "technologies": ["JavaScript", "Weather API", "HTML/CSS"],
+      "image": "/images/projects/weather.jpg",
+      "link": "https://weather.example.com",
+      "github": "https://github.com/example/weather-app"
+    },
+    {
+      "id": 3,
+      "name": "Task Manager",
+      "description": "A productivity application for managing daily tasks and projects.",
+      "technologies": ["Vue.js", "Vuex", "Firebase"],
+      "image": "/images/projects/task-manager.jpg",
+      "link": "https://tasks.example.com",
+      "github": "https://github.com/example/task-manager"
+    }
+  ],
+  "group": [
+    {
+      "id": 4,
+      "name": "E-commerce Platform",
+      "description": "A collaborative project to build a full-featured e-commerce platform.",
+      "technologies": ["Vue.js", "Node.js", "MongoDB", "Express"],
+      "image": "/images/projects/ecommerce.jpg",
+      "link": "https://shop.example.com",
+      "github": "https://github.com/example/ecommerce"
+    },
+    {
+      "id": 5,
+      "name": "Social Media Dashboard",
+      "description": "A dashboard for managing multiple social media accounts and analytics.",
+      "technologies": ["React", "Redux", "Social Media APIs"],
+      "image": "/images/projects/social-dashboard.jpg",
+      "link": "https://social.example.com",
+      "github": "https://github.com/example/social-dashboard"
+    }
+  ],
+  "academic": [
+    {
+      "id": 6,
+      "name": "Machine Learning Classifier",
+      "description": "A machine learning project for classifying images using neural networks.",
+      "technologies": ["Python", "TensorFlow", "Jupyter Notebook"],
+      "image": "/images/projects/ml-classifier.jpg",
+      "link": "https://ml.example.com",
+      "github": "https://github.com/example/ml-classifier"
+    },
+    {
+      "id": 7,
+      "name": "Database Management System",
+      "description": "A university project implementing a simple database management system.",
+      "technologies": ["Java", "SQL", "JDBC"],
+      "image": "/images/projects/dbms.jpg",
+      "link": "https://dbms.example.com",
+      "github": "https://github.com/example/dbms"
+    },
+    {
+      "id": 8,
+      "name": "Algorithm Visualizer",
+      "description": "An educational tool for visualizing common algorithms and data structures.",
+      "technologies": ["JavaScript", "D3.js", "HTML/CSS"],
+      "image": "/images/projects/algorithm-viz.jpg",
+      "link": "https://algo.example.com",
+      "github": "https://github.com/example/algorithm-visualizer"
+    }
+  ]
+}

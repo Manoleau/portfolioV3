@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#213448" />
+      <stop offset="100%" stop-color="#94B4C1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bg-gradient)" />
+  
+  <!-- Abstract shapes -->
+  <circle cx="300" cy="200" r="150" fill="#ECEFCA" opacity="0.1" />
+  <circle cx="1600" cy="800" r="200" fill="#547792" opacity="0.1" />
+  <circle cx="1000" cy="500" r="300" fill="#ECEFCA" opacity="0.05" />
+  
+  <!-- Lines -->
+  <path d="M0,300 C400,250 800,500 1200,400 C1600,300 1920,500 1920,600" 
+        stroke="#ECEFCA" stroke-width="2" fill="none" opacity="0.2" />
+  <path d="M0,600 C300,550 600,700 900,650 C1200,600 1500,700 1920,500" 
+        stroke="#ECEFCA" stroke-width="2" fill="none" opacity="0.2" />
+  <path d="M0,900 C400,850 800,950 1200,900 C1600,850 1920,950 1920,900" 
+        stroke="#ECEFCA" stroke-width="1" fill="none" opacity="0.1" />
+</svg>
