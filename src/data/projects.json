@@ -26,6 +26,15 @@
       "image": "/images/projects/task-manager.jpg",
       "link": "https://tasks.example.com",
       "github": "https://github.com/example/task-manager"
+    },
+    {
+      "id": 4,
+      "name": "Task Manager",
+      "description": "A productivity application for managing daily tasks and projects.",
+      "technologies": ["Vue.js", "Vuex", "Firebase"],
+      "image": "/images/projects/task-manager.jpg",
+      "link": "https://tasks.example.com",
+      "github": "https://github.com/example/task-manager"
     }
   ],
   "group": [

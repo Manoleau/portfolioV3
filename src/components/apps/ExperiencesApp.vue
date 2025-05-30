@@ -116,7 +116,6 @@ function calculateDuration(startDate, endDate) {
 
 <style scoped>
 .experiences-app {
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -154,6 +153,7 @@ function calculateDuration(startDate, endDate) {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  height: 0; /* Force container to respect flex: 1 */
 }
 
 .experience-card {
@@ -166,7 +166,6 @@ function calculateDuration(startDate, endDate) {
   background-color: white;
   padding: 20px;
   min-width: 0;
-  width: 100%;
 }
 
 .experience-header {

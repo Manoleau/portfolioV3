@@ -7,11 +7,58 @@ import ExperiencesApp from './apps/ExperiencesApp.vue';
 import EducationApp from './apps/EducationApp.vue';
 import HobbiesApp from './apps/HobbiesApp.vue';
 import MusicApp from './apps/MusicApp.vue';
-import { ref } from 'vue';
+import VideoGamesApp from './apps/VideoGamesApp.vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 // Application windows state
 const openWindows = ref([]);
 const nextZIndex = ref(1);
+
+// Start menu state
+const isStartMenuOpen = ref(false);
+
+// Social links
+const socialLinks = [
+  {
+    name: "GitHub",
+    icon: "/icons/github.svg",
+    url: "https://github.com/Manoleau"
+  },
+  {
+    name: "LinkedIn",
+    icon: "/icons/linkedin.svg",
+    url: "https://www.linkedin.com/in/emmanuel-ardoin-819217251/"
+  }
+];
+
+// Toggle start menu
+function toggleStartMenu() {
+  isStartMenuOpen.value = !isStartMenuOpen.value;
+}
+
+// Close start menu when clicking outside
+function handleClickOutside(event) {
+  if (isStartMenuOpen.value) {
+    // Check if click is outside the start menu and not on the start button
+    const startMenu = document.querySelector('.start-menu');
+    const startButton = document.querySelector('.start-button');
+
+    if (startMenu && startButton) {
+      if (!startMenu.contains(event.target) && !startButton.contains(event.target)) {
+        isStartMenuOpen.value = false;
+      }
+    }
+  }
+}
+
+// Add and remove event listeners
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 
 // Function to open an application window
 function openApp(appName) {
@@ -74,6 +121,11 @@ const desktopIcons = [
         name: "Music",
         icon: "/icons/music.svg",
         onClick: () => openApp("Music")
+      },
+      {
+        name: "Video Games",
+        icon: "/icons/games.svg",
+        onClick: () => openApp("Video Games")
       }
     ]
   }
@@ -114,29 +166,97 @@ const desktopIcons = [
       <EducationApp v-else-if="window.name === 'Education'" />
       <HobbiesApp v-else-if="window.name === 'Hobbies'" />
       <MusicApp v-else-if="window.name === 'Music'" />
+      <VideoGamesApp v-else-if="window.name === 'Video Games'" />
       <div v-else class="placeholder-content">
         {{ window.name }} content coming soon...
       </div>
     </AppWindow>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+      <div class="start-button" @click="toggleStartMenu">
+        <img src="/icons/start.svg" alt="Start" />
+        <span>Start</span>
+      </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div v-if="isStartMenuOpen" class="start-menu">
+      <div class="start-menu-header">
+        <img src="/icons/start.svg" alt="Start" class="start-menu-logo" />
+        <span>Portfolio Menu</span>
+      </div>
+
+      <div class="start-menu-content">
+        <!-- Social Links Section -->
+        <div class="start-menu-section">
+          <h3 class="section-title">Social Links</h3>
+          <div class="menu-items">
+            <a v-for="link in socialLinks" :key="link.name" :href="link.url" target="_blank" class="menu-item">
+              <img :src="link.icon" :alt="link.name" class="menu-item-icon" />
+              <span class="menu-item-name">{{ link.name }}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Applications Section -->
+        <div class="start-menu-section">
+          <h3 class="section-title">Applications</h3>
+          <div class="menu-items">
+            <div v-for="item in desktopIcons[0].items" :key="item.name" class="menu-item" @click="item.onClick(); toggleStartMenu()">
+              <img :src="item.icon" :alt="item.name" class="menu-item-icon" />
+              <span class="menu-item-name">{{ item.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 #desktop {
-  background-color: var(--color-3);
+  background-color: #000;
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow-x: hidden;
   background-image: url('/images/wallpaper.svg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
+
+#desktop::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: lightSweep 8s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes lightSweep {
+  0%, 100% { left: -150%; }
+  50% { left: 150%; }
+}
+
 
 .desktop-icons-container {
   display: flex;
   padding: 20px;
   flex-wrap: wrap;
+  padding-bottom: 60px; /* Make room for taskbar */
 }
 
 .icon-category {
@@ -171,5 +291,138 @@ const desktopIcons = [
   font-size: 18px;
   color: #666;
   font-style: italic;
+}
+
+/* Taskbar Styles */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-2), var(--color-1));
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.start-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.start-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  filter: invert(1);
+}
+
+.start-button span {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Start Menu Styles */
+.start-menu {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  width: 300px;
+  background-color: rgba(40, 40, 40, 0.95);
+  border-radius: 0 8px 0 0;
+  box-shadow: 2px -2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  overflow: hidden;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.start-menu-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(to right, var(--color-1), var(--color-2));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.start-menu-logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  filter: invert(1);
+}
+
+.start-menu-header span {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.start-menu-content {
+  padding: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.start-menu-section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  color: white;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  filter: invert(1);
+}
+
+.menu-item-name {
+  color: white;
+  font-size: 14px;
 }
 </style>

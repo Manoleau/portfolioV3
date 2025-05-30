@@ -65,7 +65,7 @@ function setActiveTab(tab) {
 
 <style scoped>
 .skills-app {
-  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -103,6 +103,7 @@ function setActiveTab(tab) {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 0; /* Force container to respect flex: 1 */
 }
 
 .skill-card {
@@ -114,7 +115,6 @@ function setActiveTab(tab) {
   background-color: white;
   padding: 16px;
   min-width: 0;
-  width: 100%;
 }
 
 .skill-icon {

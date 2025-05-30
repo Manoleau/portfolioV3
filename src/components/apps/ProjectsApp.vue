@@ -65,7 +65,6 @@ function setActiveTab(tab) {
 
 <style scoped>
 .projects-app {
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
