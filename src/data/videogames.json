@@ -2,55 +2,46 @@
   "action": [
     {
       "id": 1,
-      "name": "Call of Duty: Modern Warfare",
-      "description": "Reached Prestige 10 and unlocked all weapons and attachments.",
-      "achievements": ["Prestige Master", "All Weapons Gold", "100% Completion"],
-      "image": "/images/games/cod.jpg",
-      "platform": "PC"
-    },
-    {
-      "id": 2,
-      "name": "Assassin's Creed Valhalla",
-      "description": "Completed the main storyline and all side quests with 100% synchronization.",
-      "achievements": ["Completionist", "Legend of Asgard", "Master Assassin"],
+      "name": "Assassin's Creed",
+      "description": "J'aime la saga Assassin's Creed.",
+      "achievements": ["Fan de la série"],
       "image": "/images/games/ac-valhalla.jpg",
       "platform": "PlayStation 5"
     }
   ],
-  "rpg": [
+  "competitive": [
+    {
+      "id": 2,
+      "name": "League of Legends",
+      "description": "MOBA développé par Riot Games.",
+      "achievements": ["Emeraude 3"],
+      "image": "/images/games/lol.jpg",
+      "platform": "PC"
+    },
     {
       "id": 3,
-      "name": "The Witcher 3: Wild Hunt",
-      "description": "Completed all main and side quests, discovered all locations, and collected all Gwent cards.",
-      "achievements": ["Monster Slayer", "Gwent Master", "Walked the Path"],
-      "image": "/images/games/witcher3.jpg",
+      "name": "Rocket League",
+      "description": "Jeu de football avec des voitures.",
+      "achievements": ["Champion 3"],
+      "image": "/images/games/rocket-league.jpg",
       "platform": "PC"
     },
     {
       "id": 4,
-      "name": "Skyrim",
-      "description": "Reached level 100 in all skills and completed all guild questlines.",
-      "achievements": ["Dragon Soul", "Master of All", "Legendary Hero"],
-      "image": "/images/games/skyrim.jpg",
-      "platform": "Xbox Series X"
-    }
-  ],
-  "strategy": [
-    {
-      "id": 5,
-      "name": "Civilization VI",
-      "description": "Won games with all victory conditions on Deity difficulty.",
-      "achievements": ["World Dominator", "Cultural Icon", "Scientific Pioneer"],
-      "image": "/images/games/civ6.jpg",
+      "name": "ZrT Cup 2022 (Trackmania)",
+      "description": "Tournoi compétitif de Trackmania.",
+      "achievements": ["Top 48"],
+      "image": "/images/games/tournament.jpg",
       "platform": "PC"
     },
     {
-      "id": 6,
-      "name": "StarCraft II",
-      "description": "Reached Diamond League in 1v1 ranked matches and completed all campaign missions on Brutal difficulty.",
-      "achievements": ["Diamond Strategist", "Campaign Master", "APM King"],
-      "image": "/images/games/starcraft2.jpg",
+      "id": 5,
+      "name": "Valorant",
+      "description": "FPS tactique développé par Riot Games.",
+      "achievements": ["Platine 2"],
+      "image": "/images/games/valorant.jpg",
       "platform": "PC"
     }
-  ]
+  ],
+  "strategy": []
 }

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import videogamesData from '@/data/videogames.json';
 
-const activeTab = ref('action');
+const activeTab = ref('competitive');
 const videogames = ref(videogamesData);
 
 function setActiveTab(tab) {
@@ -13,32 +13,26 @@ function setActiveTab(tab) {
 <template>
   <div class="videogames-app">
     <div class="tabs">
+      <button
+          class="tab-button"
+          :class="{ active: activeTab === 'competitive' }"
+          @click="setActiveTab('competitive')"
+      >
+        Jeux Compétitif
+      </button>
       <button 
         class="tab-button" 
         :class="{ active: activeTab === 'action' }" 
         @click="setActiveTab('action')"
       >
-        Action Games
+        Jeux d'Action
       </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'rpg' }" 
-        @click="setActiveTab('rpg')"
-      >
-        RPG Games
-      </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'strategy' }" 
-        @click="setActiveTab('strategy')"
-      >
-        Strategy Games
-      </button>
+
     </div>
 
     <div class="videogames-container">
       <div v-if="videogames[activeTab].length === 0" class="no-games">
-        No games to display.
+        Aucun jeu à afficher.
       </div>
 
       <div v-for="game in videogames[activeTab]" :key="game.id" class="game-card">
@@ -47,10 +41,10 @@ function setActiveTab(tab) {
         </div>
         <div class="game-details">
           <h3 class="game-name">{{ game.name }}</h3>
-          <p class="game-platform">Platform: {{ game.platform }}</p>
+          <p class="game-platform">Plateforme: {{ game.platform }}</p>
           <p class="game-description">{{ game.description }}</p>
           <div class="game-achievements">
-            <h4>Achievements:</h4>
+            <h4>Réalisations:</h4>
             <ul>
               <li v-for="(achievement, index) in game.achievements" :key="index">
                 {{ achievement }}
@@ -65,7 +59,6 @@ function setActiveTab(tab) {
 
 <style scoped>
 .videogames-app {
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -114,7 +107,6 @@ function setActiveTab(tab) {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
   min-width: 0;
-  width: 100%;
 }
 
 .game-image {

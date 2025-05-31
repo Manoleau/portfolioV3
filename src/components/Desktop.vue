@@ -93,39 +93,39 @@ const desktopIcons = [
     category: "Applications",
     items: [
       {
-        name: "Projects",
+        name: "Projets",
         icon: "/icons/portfolio.svg",
-        onClick: () => openApp("Projects")
+        onClick: () => openApp("Projets")
       },
       {
-        name: "Skills",
+        name: "Compétences",
         icon: "/icons/html-css.svg",
-        onClick: () => openApp("Skills")
+        onClick: () => openApp("Compétences")
       },
       {
-        name: "Experiences",
+        name: "Expériences",
         icon: "/icons/ecommerce.svg",
-        onClick: () => openApp("Experiences")
+        onClick: () => openApp("Expériences")
       },
       {
-        name: "Education",
+        name: "Formation",
         icon: "/icons/blog.svg",
-        onClick: () => openApp("Education")
+        onClick: () => openApp("Formation")
       },
       {
-        name: "Hobbies",
+        name: "Loisirs",
         icon: "/icons/photography.svg",
-        onClick: () => openApp("Hobbies")
+        onClick: () => openApp("Loisirs")
       },
       {
-        name: "Music",
+        name: "Musique",
         icon: "/icons/music.svg",
-        onClick: () => openApp("Music")
+        onClick: () => openApp("Musique")
       },
       {
-        name: "Video Games",
+        name: "Jeux Vidéo",
         icon: "/icons/games.svg",
-        onClick: () => openApp("Video Games")
+        onClick: () => openApp("Jeux Vidéo")
       }
     ]
   }
@@ -160,37 +160,37 @@ const desktopIcons = [
       @close="closeApp(window.name)"
     >
       <!-- Dynamic component based on window type -->
-      <ProjectsApp v-if="window.name === 'Projects'" />
-      <SkillsApp v-else-if="window.name === 'Skills'" />
-      <ExperiencesApp v-else-if="window.name === 'Experiences'" />
-      <EducationApp v-else-if="window.name === 'Education'" />
-      <HobbiesApp v-else-if="window.name === 'Hobbies'" />
-      <MusicApp v-else-if="window.name === 'Music'" />
-      <VideoGamesApp v-else-if="window.name === 'Video Games'" />
+      <ProjectsApp v-if="window.name === 'Projets'" />
+      <SkillsApp v-else-if="window.name === 'Compétences'" />
+      <ExperiencesApp v-else-if="window.name === 'Expériences'" />
+      <EducationApp v-else-if="window.name === 'Formation'" />
+      <HobbiesApp v-else-if="window.name === 'Loisirs'" />
+      <MusicApp v-else-if="window.name === 'Musique'" />
+      <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'" />
       <div v-else class="placeholder-content">
-        {{ window.name }} content coming soon...
+        {{ window.name }} contenu à venir...
       </div>
     </AppWindow>
 
     <!-- Taskbar -->
     <div class="taskbar">
       <div class="start-button" @click="toggleStartMenu">
-        <img src="/icons/start.svg" alt="Start" />
-        <span>Start</span>
+        <img src="/icons/start.svg" alt="Démarrer" />
+        <span>Démarrer</span>
       </div>
     </div>
 
     <!-- Start Menu -->
     <div v-if="isStartMenuOpen" class="start-menu">
       <div class="start-menu-header">
-        <img src="/icons/start.svg" alt="Start" class="start-menu-logo" />
-        <span>Portfolio Menu</span>
+        <img src="/icons/start.svg" alt="Démarrer" class="start-menu-logo" />
+        <span>Menu Portfolio</span>
       </div>
 
       <div class="start-menu-content">
         <!-- Social Links Section -->
         <div class="start-menu-section">
-          <h3 class="section-title">Social Links</h3>
+          <h3 class="section-title">Liens Sociaux</h3>
           <div class="menu-items">
             <a v-for="link in socialLinks" :key="link.name" :href="link.url" target="_blank" class="menu-item">
               <img :src="link.icon" :alt="link.name" class="menu-item-icon" />
@@ -237,9 +237,10 @@ const desktopIcons = [
   background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.25) 50%,
       transparent 100%
   );
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
   transform: skewX(-20deg);
   animation: lightSweep 8s ease-in-out infinite;
   z-index: 0;
