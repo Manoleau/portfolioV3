@@ -5,7 +5,7 @@
       "name": "Assassin's Creed",
       "description": "J'aime la saga Assassin's Creed.",
       "achievements": ["Fan de la série"],
-      "image": "/images/games/ac-valhalla.jpg"
+      "image": "/images/games/ac.png"
     }
   ],
   "competitive": [
@@ -38,7 +38,7 @@
       "name": "Valorant",
       "description": "FPS tactique développé par Riot Games.",
       "achievements": ["Platine 2"],
-      "image": "/images/games/valo.png",
+      "image": "/images/games/valo.jpg",
       "pseudo": "Manolo#GGEZ"
     }
   ],

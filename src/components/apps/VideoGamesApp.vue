@@ -112,6 +112,7 @@ function setActiveTab(tab) {
 
 .game-image {
   height: 150px;
+  width: 150px;
   overflow: hidden;
 }
 
