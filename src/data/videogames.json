@@ -5,8 +5,7 @@
       "name": "Assassin's Creed",
       "description": "J'aime la saga Assassin's Creed.",
       "achievements": ["Fan de la série"],
-      "image": "/images/games/ac-valhalla.jpg",
-      "platform": "PlayStation 5"
+      "image": "/images/games/ac-valhalla.jpg"
     }
   ],
   "competitive": [
@@ -15,32 +14,32 @@
       "name": "League of Legends",
       "description": "MOBA développé par Riot Games.",
       "achievements": ["Emeraude 3"],
-      "image": "/images/games/lol.jpg",
-      "platform": "PC"
+      "image": "/images/games/lol.webp",
+      "pseudo": "Manolo#GGEZ"
     },
     {
       "id": 3,
       "name": "Rocket League",
       "description": "Jeu de football avec des voitures.",
       "achievements": ["Champion 3"],
-      "image": "/images/games/rocket-league.jpg",
-      "platform": "PC"
+      "image": "/images/games/rl.png",
+      "pseudo": "Manolo.TM"
     },
     {
       "id": 4,
       "name": "ZrT Cup 2022 (Trackmania)",
       "description": "Tournoi compétitif de Trackmania.",
       "achievements": ["Top 48"],
-      "image": "/images/games/tournament.jpg",
-      "platform": "PC"
+      "image": "/images/games/tm.jpg",
+      "pseudo": "Manolo"
     },
     {
       "id": 5,
       "name": "Valorant",
       "description": "FPS tactique développé par Riot Games.",
       "achievements": ["Platine 2"],
-      "image": "/images/games/valorant.jpg",
-      "platform": "PC"
+      "image": "/images/games/valo.png",
+      "pseudo": "Manolo#GGEZ"
     }
   ],
   "strategy": []

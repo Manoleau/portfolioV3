@@ -41,8 +41,8 @@ function setActiveTab(tab) {
         </div>
         <div class="game-details">
           <h3 class="game-name">{{ game.name }}</h3>
-          <p class="game-platform">Plateforme: {{ game.platform }}</p>
           <p class="game-description">{{ game.description }}</p>
+          <p v-if="game.pseudo" class="game-pseudo">Pseudo : {{game.pseudo}}</p>
           <div class="game-achievements">
             <h4>Réalisations:</h4>
             <ul>
@@ -100,6 +100,7 @@ function setActiveTab(tab) {
 }
 
 .game-card {
+  max-height: 150px;
   display: flex;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -110,7 +111,6 @@ function setActiveTab(tab) {
 }
 
 .game-image {
-  width: 200px;
   height: 150px;
   overflow: hidden;
 }
@@ -133,7 +133,7 @@ function setActiveTab(tab) {
   color: var(--color-1);
 }
 
-.game-platform {
+.game-pseudo {
   margin: 0 0 8px 0;
   font-size: 14px;
   font-weight: bold;

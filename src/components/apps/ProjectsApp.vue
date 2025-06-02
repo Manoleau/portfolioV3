@@ -112,7 +112,6 @@ function setActiveTab(tab) {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
   min-width: 0;
-  width: 100%;
 }
 
 .project-image {
