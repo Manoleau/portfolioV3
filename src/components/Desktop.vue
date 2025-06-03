@@ -8,6 +8,7 @@ import EducationApp from './apps/EducationApp.vue';
 import MusicApp from './apps/MusicApp.vue';
 import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
+import GeometryDashGame from './apps/GeometryDashGame.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 // Application windows state
@@ -120,6 +121,11 @@ const desktopIcons = [
         name: "Jeux Vidéo",
         icon: "/icons/games.svg",
         onClick: () => openApp("Jeux Vidéo")
+      },
+      {
+        name: "Geometry Dash",
+        icon: "/icons/games.svg",
+        onClick: () => openApp("Geometry Dash")
       }
     ]
   }
@@ -162,6 +168,7 @@ const desktopIcons = [
       <EducationApp v-else-if="window.name === 'Formation'" />
       <MusicApp v-else-if="window.name === 'Musique'" />
       <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'" />
+      <GeometryDashGame v-else-if="window.name === 'Geometry Dash'" />
       <div v-else class="placeholder-content">
         {{ window.name }} contenu à venir...
       </div>

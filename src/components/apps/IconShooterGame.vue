@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 
-// Game state
 const score = ref(0);
 const icons = ref([]);
 const gameActive = ref(true);
@@ -10,7 +9,6 @@ const spawnRate = ref(1500); // Time in ms between icon spawns
 let gameLoop = null;
 let spawnInterval = null;
 
-// Load saved score from localStorage on component mount
 onMounted(() => {
   const savedScore = localStorage.getItem('iconShooterScore');
   if (savedScore) {
@@ -19,57 +17,45 @@ onMounted(() => {
 
   startGame();
 
-  // Add global click handler for game icons
-  document.addEventListener('click', handleGlobalClick);
+  document.addEventListener('mousedown', handleGlobalClick);
 });
 
-// Clean up intervals when component is unmounted
 onUnmounted(() => {
   stopGame();
 
-  // Remove global click handler
-  document.removeEventListener('click', handleGlobalClick);
+  document.removeEventListener('mousedown', handleGlobalClick);
 });
 
-// Global click handler
 function handleGlobalClick(event) {
-  // Check if the click target is a game icon or its child
   const iconElement = event.target.closest('.game-icon');
   if (iconElement) {
-    // Extract the icon ID from the element's dataset
     const iconId = iconElement.dataset.iconId;
     if (iconId) {
       destroyIcon(parseFloat(iconId));
-      event.stopPropagation(); // Prevent event from bubbling up
+      event.stopPropagation();
     }
   }
 
-  // Check if the click target is the reset button
   const resetButton = event.target.closest('.reset-button');
   if (resetButton) {
     resetScore();
-    event.stopPropagation(); // Prevent event from bubbling up
+    event.stopPropagation();
   }
 }
 
-// Start the game
 function startGame() {
   if (gameActive.value) {
-    // Start spawning icons
     spawnInterval = setInterval(spawnIcon, spawnRate.value);
 
-    // Start game loop
     gameLoop = setInterval(updateGame, 16); // ~60fps
   }
 }
 
-// Stop the game
 function stopGame() {
   clearInterval(gameLoop);
   clearInterval(spawnInterval);
 }
 
-// Spawn a new icon
 function spawnIcon() {
   const iconTypes = [
     '/icons/github.svg',
@@ -145,7 +131,9 @@ function resetScore() {
         :style="{ left: icon.x + 'px', top: icon.y + 'px' }"
         :data-icon-id="icon.id"
       >
-        <img :src="icon.icon" alt="Game Icon" />
+        <a href="javascript:void(0)">
+          <img :src="icon.icon" alt="Game Icon" unselectable="on" />
+        </a>
       </div>
     </div>
 
@@ -230,13 +218,8 @@ function resetScore() {
   width: 100%;
   height: 100%;
   filter: invert(1);
-}
-
-.game-instructions {
-  padding: 10px 20px;
-  background-color: #e0e0e0;
-  text-align: center;
-  font-size: 14px;
-  color: #333;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 </style>
