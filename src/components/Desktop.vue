@@ -5,9 +5,9 @@ import ProjectsApp from './apps/ProjectsApp.vue';
 import SkillsApp from './apps/SkillsApp.vue';
 import ExperiencesApp from './apps/ExperiencesApp.vue';
 import EducationApp from './apps/EducationApp.vue';
-import HobbiesApp from './apps/HobbiesApp.vue';
 import MusicApp from './apps/MusicApp.vue';
 import VideoGamesApp from './apps/VideoGamesApp.vue';
+import IconShooterGame from './apps/IconShooterGame.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 // Application windows state
@@ -28,6 +28,11 @@ const socialLinks = [
     name: "LinkedIn",
     icon: "/icons/linkedin.svg",
     url: "https://www.linkedin.com/in/emmanuel-ardoin-819217251/"
+  },
+  {
+    name: "Discord",
+    icon: "/icons/discord.svg",
+    url: "https://discord.com/users/334695006663344151"
   }
 ];
 
@@ -60,26 +65,21 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 
-// Function to open an application window
 function openApp(appName) {
-  // Check if the app is already open
   const existingAppIndex = openWindows.value.findIndex(window => window.name === appName);
 
   if (existingAppIndex !== -1) {
-    // If app is already open, bring it to front
     const app = openWindows.value[existingAppIndex];
     app.zIndex = nextZIndex.value++;
     return;
   }
 
-  // Add new window
   openWindows.value.push({
     name: appName,
     zIndex: nextZIndex.value++
   });
 }
 
-// Function to close an application window
 function closeApp(appName) {
   const index = openWindows.value.findIndex(window => window.name === appName);
   if (index !== -1) {
@@ -87,7 +87,6 @@ function closeApp(appName) {
   }
 }
 
-// Desktop icons configuration
 const desktopIcons = [
   {
     category: "Applications",
@@ -113,11 +112,6 @@ const desktopIcons = [
         onClick: () => openApp("Formation")
       },
       {
-        name: "Loisirs",
-        icon: "/icons/photography.svg",
-        onClick: () => openApp("Loisirs")
-      },
-      {
         name: "Musique",
         icon: "/icons/music.svg",
         onClick: () => openApp("Musique")
@@ -134,7 +128,11 @@ const desktopIcons = [
 
 <template>
   <div id="desktop">
-    <!-- Desktop Icons -->
+    <!-- Icon Shooter Game integrated directly on the desktop -->
+    <div class="desktop-game-container">
+      <IconShooterGame />
+    </div>
+
     <div class="desktop-icons-container">
       <div v-for="(category, categoryIndex) in desktopIcons" :key="categoryIndex" class="icon-category">
         <h2 class="category-title">{{ category.category }}</h2>
@@ -150,8 +148,7 @@ const desktopIcons = [
       </div>
     </div>
 
-    <!-- Application Windows -->
-    <AppWindow 
+    <AppWindow
       v-for="window in openWindows" 
       :key="window.name"
       :title="window.name"
@@ -159,12 +156,10 @@ const desktopIcons = [
       :zIndex="window.zIndex"
       @close="closeApp(window.name)"
     >
-      <!-- Dynamic component based on window type -->
       <ProjectsApp v-if="window.name === 'Projets'" />
       <SkillsApp v-else-if="window.name === 'Compétences'" />
       <ExperiencesApp v-else-if="window.name === 'Expériences'" />
       <EducationApp v-else-if="window.name === 'Formation'" />
-      <HobbiesApp v-else-if="window.name === 'Loisirs'" />
       <MusicApp v-else-if="window.name === 'Musique'" />
       <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'" />
       <div v-else class="placeholder-content">
@@ -172,7 +167,6 @@ const desktopIcons = [
       </div>
     </AppWindow>
 
-    <!-- Taskbar -->
     <div class="taskbar">
       <div class="start-button" @click="toggleStartMenu">
         <img src="/icons/start.svg" alt="Démarrer" />
@@ -180,15 +174,13 @@ const desktopIcons = [
       </div>
     </div>
 
-    <!-- Start Menu -->
     <div v-if="isStartMenuOpen" class="start-menu">
       <div class="start-menu-header">
         <img src="/icons/start.svg" alt="Démarrer" class="start-menu-logo" />
-        <span>Menu Portfolio</span>
+        <span>Emmanuel ARDOIN</span>
       </div>
 
       <div class="start-menu-content">
-        <!-- Social Links Section -->
         <div class="start-menu-section">
           <h3 class="section-title">Liens Sociaux</h3>
           <div class="menu-items">
@@ -199,7 +191,6 @@ const desktopIcons = [
           </div>
         </div>
 
-        <!-- Applications Section -->
         <div class="start-menu-section">
           <h3 class="section-title">Applications</h3>
           <div class="menu-items">
@@ -247,6 +238,45 @@ const desktopIcons = [
   pointer-events: none;
 }
 
+/* Desktop Game Container */
+.desktop-game-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none; /* Allow clicks to pass through to desktop icons */
+  overflow: hidden;
+}
+
+/* Make all game elements clickable */
+.desktop-game-container * {
+  pointer-events: auto !important;
+}
+
+/* Adjust game header to be less intrusive */
+.desktop-game-container .game-header {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  padding: 5px 10px;
+  z-index: 2;
+}
+
+/* Make game container transparent */
+.desktop-game-container .game-container {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Hide game instructions */
+.desktop-game-container .game-instructions {
+  display: none;
+}
+
 @keyframes lightSweep {
   0%, 100% { left: -150%; }
   50% { left: 150%; }
@@ -254,10 +284,12 @@ const desktopIcons = [
 
 
 .desktop-icons-container {
-  display: flex;
-  padding: 20px;
-  flex-wrap: wrap;
-  padding-bottom: 60px; /* Make room for taskbar */
+  display: inline-flex;
+  margin-top: 60px;
+  padding-left: 20px;
+  position: relative;
+  z-index: 2; /* Higher than the game container's z-index */
+  width: auto;
 }
 
 .icon-category {

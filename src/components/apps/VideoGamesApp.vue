@@ -12,30 +12,13 @@ function setActiveTab(tab) {
 
 <template>
   <div class="videogames-app">
-    <div class="tabs">
-      <button
-          class="tab-button"
-          :class="{ active: activeTab === 'competitive' }"
-          @click="setActiveTab('competitive')"
-      >
-        Jeux Compétitif
-      </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'action' }" 
-        @click="setActiveTab('action')"
-      >
-        Jeux d'Action
-      </button>
-
-    </div>
 
     <div class="videogames-container">
-      <div v-if="videogames[activeTab].length === 0" class="no-games">
+      <div v-if="videogames.length === 0" class="no-games">
         Aucun jeu à afficher.
       </div>
 
-      <div v-for="game in videogames[activeTab]" :key="game.id" class="game-card">
+      <div v-for="game in videogames" :key="game.id" class="game-card">
         <div class="game-image">
           <img :src="game.image" :alt="game.name" onerror="this.src='/icons/games.svg'">
         </div>
@@ -45,11 +28,9 @@ function setActiveTab(tab) {
           <p v-if="game.pseudo" class="game-pseudo">Pseudo : {{game.pseudo}}</p>
           <div class="game-achievements">
             <h4>Réalisations:</h4>
-            <ul>
-              <li v-for="(achievement, index) in game.achievements" :key="index">
-                {{ achievement }}
-              </li>
-            </ul>
+            <p>
+              {{ game.achievements.join(' / ') }}
+            </p>
           </div>
         </div>
       </div>
@@ -150,21 +131,15 @@ function setActiveTab(tab) {
 .game-achievements {
   margin-top: auto;
 }
+.game-achievements p {
+  font-size: 13px;
+  padding-left: 20px;
+}
 
 .game-achievements h4 {
   margin: 0 0 8px 0;
   font-size: 14px;
   color: var(--color-2);
-}
-
-.game-achievements ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.game-achievements li {
-  font-size: 13px;
-  margin-bottom: 4px;
 }
 
 .no-games {

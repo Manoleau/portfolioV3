@@ -1,19 +1,9 @@
-{
-  "action": [
-    {
-      "id": 1,
-      "name": "Assassin's Creed",
-      "description": "J'aime la saga Assassin's Creed.",
-      "achievements": ["Fan de la série"],
-      "image": "/images/games/ac.png"
-    }
-  ],
-  "competitive": [
+[
     {
       "id": 2,
       "name": "League of Legends",
       "description": "MOBA développé par Riot Games.",
-      "achievements": ["Emeraude 3"],
+      "achievements": ["Emeraude 3 en SoloQ"],
       "image": "/images/games/lol.webp",
       "pseudo": "Manolo#GGEZ"
     },
@@ -21,26 +11,38 @@
       "id": 3,
       "name": "Rocket League",
       "description": "Jeu de football avec des voitures.",
-      "achievements": ["Champion 3"],
+      "achievements": ["Champion 3 en SoloQ"],
       "image": "/images/games/rl.png",
       "pseudo": "Manolo.TM"
     },
     {
       "id": 4,
-      "name": "ZrT Cup 2022 (Trackmania)",
+      "name": "Trackmania",
       "description": "Tournoi compétitif de Trackmania.",
-      "achievements": ["Top 48"],
+      "achievements": ["Zerator TM CUP 2022 : Top 48", "Zerator TM CUP 2021 : Top 30"],
       "image": "/images/games/tm.jpg",
       "pseudo": "Manolo"
     },
     {
       "id": 5,
+      "name": "Trackmania Turbo",
+      "achievements": ["Toutes les trackmasters obtenues"],
+      "image": "/images/games/tmturbo.avif",
+      "pseudo": "Manolo"
+    },
+    {
+      "id": 6,
       "name": "Valorant",
       "description": "FPS tactique développé par Riot Games.",
       "achievements": ["Platine 2"],
       "image": "/images/games/valo.jpg",
       "pseudo": "Manolo#GGEZ"
+    },
+    {
+      "id": 7,
+      "name": "Geometry Dash",
+      "achievements": ["200 Demons", "Hardest : Retention"],
+      "image": "/images/games/gd.png",
+      "pseudo": "DetyxD"
     }
-  ],
-  "strategy": []
-}
+]

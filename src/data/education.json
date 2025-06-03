@@ -15,7 +15,7 @@
     {
       "id": 2,
       "degree": "BUT Informatique",
-      "institution": "Université Claude Bernard",
+      "institution": "Université Claude Bernard Lyon1",
       "location": "Lyon, 69000",
       "startDate": "2022-09",
       "endDate": "2025-08",
@@ -37,7 +37,10 @@
         "Vue.JS",
         "Angular",
         "Node/npm",
-        "Nest"
+        "Nest",
+        "MongoDB",
+        "Neo4J",
+        "SQL"
       ]
     }
   ]
