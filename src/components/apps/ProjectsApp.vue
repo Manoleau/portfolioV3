@@ -42,6 +42,7 @@ function setActiveTab(tab) {
           <h2 class="project-name">{{ project.name }}</h2>
           <small v-if="project.school">{{project.school}}</small>
           <small v-if="project.note">Note : {{project.note}}</small>
+          <small v-if="project.classement">Classement : {{project.classement}} <img width="10" v-if="project.classement === 'Toute la classe est ensemble'" src="/images/projects/clown-face.svg" alt="ggez"/></small>
           <p class="project-description" v-html="project.description"></p>
           <div class="project-technologies">
             <span v-for="(tech, index) in project.technologies" :key="index" class="tech-tag">

@@ -12,28 +12,22 @@
   ],
   "academic": [
     {
-      "id": 5,
-      "name": "Aide à la Décision",
-      "school": "BUT Informatique Lyon 1 - Semestre 2 - Java / IHM",
+      "id": 7,
+      "name": "ERP IUT (Semestre 6)",
+      "school": "BUT Informatique Lyon 1 - Semestre 6 - Développement avancé",
       "technologies": ["Java"],
-      "description": "Application qui sert à aider les ambulances et autres sur le choix de parcours entre deux dispensaires selon plusieurs critère (Durée, Distance, Fiabilité) à l'aide de Dijkstra",
-      "image": "/images/projects/saejava.png",
-      "link": null,
-      "note": "17/20",
-      "classement": "10/19 (équipe de 2)",
-      "github": "https://github.com/Manoleau/SaeAideALaDecision"
+      "classement": "Toute la classe est ensemble"
     },
     {
-      "id": 2,
-      "name": "League Mastery",
-      "school": "BUT Informatique Lyon 1 - Semestre 4 - Développement Mobile",
-      "description": "Une application mobile qui montre les maîtrise d'un joueur de League of Legends avec des statistiques et des graphes. J'ai du créer une API personnalisé pour gérer les données.",
-      "technologies": ["Kotlin", "Java", "SQLite", "JavaScript", "Mongoose"],
-      "image": "/images/projects/leaguemastery.webp",
+      "id": 6,
+      "name": "ERP IUT (Semestre 5)",
+      "school": "BUT Informatique Lyon 1 - Semestre 5 - Développement avancé",
+      "description": "",
+      "technologies": ["Nest.JS", "Prisma", "Angular", "Tailwind", "Docker"],
       "link": null,
-      "note": "19/20",
-      "classement": "1/26 (seul)",
-      "github": "https://github.com/Manoleau/league-mastery.git"
+      "image": "/images/projects/quizzoflegends.png",
+
+      "classement": "Toute la classe est ensemble"
     },
     {
       "id": 3,
@@ -48,6 +42,19 @@
       "github": "https://github.com/Manoleau/QuizzOfLegends"
     },
     {
+      "id": 2,
+      "name": "League Mastery",
+      "school": "BUT Informatique Lyon 1 - Semestre 4 - Développement Mobile",
+      "description": "Une application mobile qui montre les maîtrise d'un joueur de League of Legends avec des statistiques et des graphes. J'ai du créer une API personnalisé pour gérer les données.",
+      "technologies": ["Kotlin", "Java", "SQLite", "JavaScript", "Mongoose"],
+      "image": "/images/projects/leaguemastery.webp",
+      "link": null,
+      "note": "19/20",
+      "classement": "1/26 (seul)",
+      "github": "https://github.com/Manoleau/league-mastery.git"
+    },
+
+    {
       "id": 4,
       "name": "Liste2Course",
       "school": "BUT Informatique Lyon 1 - Semestre 4 - Symfony",
@@ -57,6 +64,18 @@
       "image": "/images/projects/liste2course.jpg",
       "classement": "1/20 (équipe de 3)",
       "github": "https://github.com/Manoleau/Liste2Course"
+    },
+    {
+      "id": 5,
+      "name": "Aide à la Décision",
+      "school": "BUT Informatique Lyon 1 - Semestre 2 - Java / IHM",
+      "technologies": ["Java"],
+      "description": "Application qui sert à aider les ambulances et autres sur le choix de parcours entre deux dispensaires selon plusieurs critère (Durée, Distance, Fiabilité) à l'aide de Dijkstra",
+      "image": "/images/projects/saejava.png",
+      "link": null,
+      "note": "17/20",
+      "classement": "10/19 (équipe de 2)",
+      "github": "https://github.com/Manoleau/SaeAideALaDecision"
     }
   ]
 }
