@@ -1,5 +1,33 @@
 {
   "personal": [
+
+    {
+      "id": 8,
+      "name": "EDT IUT",
+      "description": "Bot Discord qui consiste à récupérer les emplois du temps des étudiants à l'IUT Informatique pour les afficher sur notre groupe discord. Il peut aussi afficher les salles de cours qui sont libre.",
+      "technologies": ["Python", "Discord.py"],
+      "image": "https://www.aht.li/3813545/logo_EDTIUT.png",
+      "link": null,
+      "github": "https://github.com/Manoleau/edt-iut"
+    },
+    {
+      "id": 9,
+      "name": "League DLE Version Bot Discord",
+      "description": "Mini jeu de quiz sur le theme de LoL avec un système de récompenses et d'ouverture de coffres pour obtenir des skins.",
+      "technologies": ["Python", "Discord.py", "SQLite"],
+      "image": "https://www.aht.li/3813533/logo_leaguedle.png",
+      "link": null,
+      "github": "https://github.com/Manoleau/edt-iut"
+    },
+    {
+      "id": 9,
+      "name": "League DLE Version Web",
+      "description": "Mini jeu de quiz sur le theme de LoL. Ce site a été pour apprendre Angular.",
+      "technologies": ["Angular"],
+      "image": "/",
+      "link": "https://loldletitle.netlify.app/",
+      "github": "https://github.com/Manoleau/edt-iut"
+    },
     {
       "id": 1,
       "name": "Portfolio",
@@ -15,8 +43,10 @@
       "id": 7,
       "name": "ERP IUT (Semestre 6)",
       "school": "BUT Informatique Lyon 1 - Semestre 6 - Développement avancé",
-      "technologies": ["Java"],
-      "classement": "Toute la classe est ensemble"
+      "technologies": ["Java", "SpringBoot", "Angular", "Docker"],
+      "classement": "Toute la classe est ensemble (20 personnes)",
+      "link": null,
+      "image": "/images/projects/ra3.png"
     },
     {
       "id": 6,
@@ -25,9 +55,8 @@
       "description": "",
       "technologies": ["Nest.JS", "Prisma", "Angular", "Tailwind", "Docker"],
       "link": null,
-      "image": "/images/projects/quizzoflegends.png",
-
-      "classement": "Toute la classe est ensemble"
+      "image": "/images/projects/ramses.png",
+      "classement": "Toute la classe est ensemble (20 personnes)"
     },
     {
       "id": 3,
