@@ -12,12 +12,24 @@
   ],
   "academic": [
     {
+      "id": 5,
+      "name": "Aide à la Décision",
+      "school": "BUT Informatique Lyon 1 - Semestre 2 - Java / IHM",
+      "technologies": ["Java"],
+      "description": "Application qui sert à aider les ambulances et autres sur le choix de parcours entre deux dispensaires selon plusieurs critère (Durée, Distance, Fiabilité) à l'aide de Dijkstra",
+      "image": "/images/projects/saejava.png",
+      "link": null,
+      "note": "17/20",
+      "classement": "10/19 (équipe de 2)",
+      "github": "https://github.com/Manoleau/SaeAideALaDecision"
+    },
+    {
       "id": 2,
       "name": "League Mastery",
       "school": "BUT Informatique Lyon 1 - Semestre 4 - Développement Mobile",
       "description": "Une application mobile qui montre les maîtrise d'un joueur de League of Legends avec des statistiques et des graphes. J'ai du créer une API personnalisé pour gérer les données.",
       "technologies": ["Kotlin", "Java", "SQLite", "JavaScript", "Mongoose"],
-      "image": null,
+      "image": "/images/projects/leaguemastery.webp",
       "link": null,
       "note": "19/20",
       "classement": "1/26 (seul)",
@@ -29,19 +41,20 @@
       "school": "BUT Informatique Lyon 1 - Semestre 5 - Qualité de développement",
       "description": "Un site web qui permet de jouer à des quiz sur League of Legends (Nom de champion, Icône de champion, Nom d'item, etc...). Le code a été conçue pour qu'on puisse ajouter des quiz très simplement",
       "technologies": ["Python", "Django", "HTML", "CSS", "Docker"],
-      "image": null,
+      "image": "/images/projects/quizzoflegends.png",
       "link": null,
       "note": "16.50/20",
       "classement": "1/20 (équipe de 3)",
       "github": "https://github.com/Manoleau/QuizzOfLegends"
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "Liste2Course",
       "school": "BUT Informatique Lyon 1 - Semestre 4 - Symfony",
       "description": "Initialisation à symfony et DQL. C'est un site web qui permet de créer ses propres listes de course avec un choix varié de produits.",
       "technologies": ["PHP", "Symfony", "HTML", "CSS", "Docker"],
       "note": "16/20",
+      "image": "/images/projects/liste2course.jpg",
       "classement": "1/20 (équipe de 3)",
       "github": "https://github.com/Manoleau/Liste2Course"
     }

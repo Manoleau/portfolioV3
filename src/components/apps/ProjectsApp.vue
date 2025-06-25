@@ -111,7 +111,6 @@ function setActiveTab(tab) {
 
 .project-image {
   width: 200px;
-  height: 150px;
   overflow: hidden;
 }
 
