@@ -2,12 +2,7 @@
 import { ref } from 'vue';
 import videogamesData from '@/data/videogames.json';
 
-const activeTab = ref('competitive');
 const videogames = ref(videogamesData);
-
-function setActiveTab(tab) {
-  activeTab.value = tab;
-}
 </script>
 
 <template>
@@ -42,32 +37,6 @@ function setActiveTab(tab) {
 .videogames-app {
   display: flex;
   flex-direction: column;
-}
-
-.tabs {
-  display: flex;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ddd;
-}
-
-.tab-button {
-  padding: 8px 16px;
-  background-color: transparent;
-  border: none;
-  border-right: 1px solid #ddd;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
-}
-
-.tab-button:hover {
-  background-color: #e0e0e0;
-}
-
-.tab-button.active {
-  background-color: white;
-  border-bottom: 2px solid var(--color-2);
-  font-weight: bold;
 }
 
 .videogames-container {

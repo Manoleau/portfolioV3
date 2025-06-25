@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-
-const props = defineProps({
+defineProps({
   title: {
     type: String,
     required: true
@@ -15,7 +14,6 @@ const props = defineProps({
     default: 1
   }
 });
-
 const emit = defineEmits(['close']);
 
 const appWindow = ref(null);
@@ -57,7 +55,6 @@ function closeWindow() {
 }
 
 onMounted(() => {
-  // Center the window on the screen
   if (window.innerWidth > windowSize.value.width) {
     position.value.x = (window.innerWidth - windowSize.value.width) / 2;
   }

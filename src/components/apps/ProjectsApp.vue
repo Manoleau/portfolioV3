@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import projectsData from '@/data/projects.json';
 
 const activeTab = ref('personal');
@@ -20,14 +20,7 @@ function setActiveTab(tab) {
       >
         Personal Projects
       </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'group' }" 
-        @click="setActiveTab('group')"
-      >
-        Group Projects
-      </button>
-      <button 
+      <button
         class="tab-button" 
         :class="{ active: activeTab === 'academic' }" 
         @click="setActiveTab('academic')"
@@ -46,16 +39,18 @@ function setActiveTab(tab) {
           <img :src="project.image" :alt="project.name" onerror="this.src='/icons/portfolio.svg'">
         </div>
         <div class="project-details">
-          <h3 class="project-name">{{ project.name }}</h3>
-          <p class="project-description">{{ project.description }}</p>
+          <h2 class="project-name">{{ project.name }}</h2>
+          <small v-if="project.school">{{project.school}}</small>
+          <small v-if="project.note">Note : {{project.note}}</small>
+          <p class="project-description" v-html="project.description"></p>
           <div class="project-technologies">
             <span v-for="(tech, index) in project.technologies" :key="index" class="tech-tag">
               {{ tech }}
             </span>
           </div>
           <div class="project-links">
-            <a :href="project.link" target="_blank" class="project-link">View Project</a>
-            <a :href="project.github" target="_blank" class="project-link">GitHub</a>
+            <a v-if="project.link" :href="project.link" target="_blank" class="project-link">View Project</a>
+            <a v-if="project.github" :href="project.github" target="_blank" class="project-link">GitHub</a>
           </div>
         </div>
       </div>
@@ -139,7 +134,7 @@ function setActiveTab(tab) {
 }
 
 .project-description {
-  margin: 0 0 12px 0;
+  margin: 5px 0 12px 0;
   font-size: 14px;
   color: #555;
   flex: 1;

@@ -200,7 +200,6 @@ function resetScore() {
   background-image: url('/images/wallpaper.svg');
   background-size: cover;
   background-position: center;
-  cursor: crosshair;
 }
 
 .game-icon {

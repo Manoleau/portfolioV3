@@ -8,7 +8,6 @@ import EducationApp from './apps/EducationApp.vue';
 import MusicApp from './apps/MusicApp.vue';
 import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
-import GeometryDashGame from './apps/GeometryDashGame.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 // Application windows state
@@ -121,11 +120,6 @@ const desktopIcons = [
         name: "Jeux Vidéo",
         icon: "/icons/games.svg",
         onClick: () => openApp("Jeux Vidéo")
-      },
-      {
-        name: "Geometry Dash",
-        icon: "/icons/games.svg",
-        onClick: () => openApp("Geometry Dash")
       }
     ]
   }
@@ -134,7 +128,6 @@ const desktopIcons = [
 
 <template>
   <div id="desktop">
-    <!-- Icon Shooter Game integrated directly on the desktop -->
     <div class="desktop-game-container">
       <IconShooterGame />
     </div>
@@ -168,7 +161,6 @@ const desktopIcons = [
       <EducationApp v-else-if="window.name === 'Formation'" />
       <MusicApp v-else-if="window.name === 'Musique'" />
       <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'" />
-      <GeometryDashGame v-else-if="window.name === 'Geometry Dash'" />
       <div v-else class="placeholder-content">
         {{ window.name }} contenu à venir...
       </div>
@@ -260,28 +252,6 @@ const desktopIcons = [
 /* Make all game elements clickable */
 .desktop-game-container * {
   pointer-events: auto !important;
-}
-
-/* Adjust game header to be less intrusive */
-.desktop-game-container .game-header {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 8px;
-  padding: 5px 10px;
-  z-index: 2;
-}
-
-/* Make game container transparent */
-.desktop-game-container .game-container {
-  background-color: transparent !important;
-  background-image: none !important;
-}
-
-/* Hide game instructions */
-.desktop-game-container .game-instructions {
-  display: none;
 }
 
 @keyframes lightSweep {
