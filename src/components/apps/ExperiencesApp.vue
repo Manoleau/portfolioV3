@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import experiencesData from '@/data/experiences.json';
 
 const activeTab = ref('work');
@@ -13,8 +13,8 @@ function formatDate(dateString) {
   if (dateString === 'Present') return 'Present';
 
   const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', { 
-    year: 'numeric', 
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
     month: 'short'
   }).format(date);
 }
@@ -55,17 +55,17 @@ function calculateDuration(startDate, endDate) {
 <template>
   <div class="experiences-app">
     <div class="tabs">
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'work' }" 
-        @click="setActiveTab('work')"
+      <button
+          :class="{ active: activeTab === 'work' }"
+          class="tab-button"
+          @click="setActiveTab('work')"
       >
         Work Experience
       </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'volunteer' }" 
-        @click="setActiveTab('volunteer')"
+      <button
+          :class="{ active: activeTab === 'volunteer' }"
+          class="tab-button"
+          @click="setActiveTab('volunteer')"
       >
         Volunteer Experience
       </button>

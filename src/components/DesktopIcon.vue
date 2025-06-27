@@ -10,7 +10,8 @@ defineProps({
   },
   onClick: {
     type: Function,
-    default: () => {}
+    default: () => {
+    }
   }
 });
 </script>
@@ -18,7 +19,7 @@ defineProps({
 <template>
   <div class="desktop-icon" @click="onClick">
     <div class="icon">
-      <img :src="icon" alt="icon" />
+      <img :src="icon" alt="icon"/>
     </div>
     <div class="name">{{ name }}</div>
   </div>

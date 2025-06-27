@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import educationData from '@/data/education.json';
 
 const activeTab = ref('degrees');
@@ -14,7 +14,7 @@ function formatDate(dateString) {
 
   const date = new Date(dateString);
   return new Intl.DateTimeFormat('fr-FR', {
-    year: 'numeric', 
+    year: 'numeric',
     month: 'short'
   }).format(date);
 }
@@ -39,14 +39,14 @@ function formatDate(dateString) {
               {{ formatDate(degree.startDate) }} - {{ formatDate(degree.endDate) }}
             </div>
             <div class="location">{{ degree.location }}</div>
-            <div class="gpa" v-if="degree.gpa">GPA: {{ degree.gpa }}</div>
+            <div v-if="degree.gpa" class="gpa">GPA: {{ degree.gpa }}</div>
           </div>
         </div>
 
         <p class="education-description">{{ degree.description }}</p>
 
         <div class="education-details">
-          <div class="achievements" v-if="degree.achievements && degree.achievements.length">
+          <div v-if="degree.achievements && degree.achievements.length" class="achievements">
             <h5>Compétences:</h5>
             <ul>
               <li v-for="(achievement, index) in degree.achievements" :key="index">

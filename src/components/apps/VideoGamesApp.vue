@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import videogamesData from '@/data/videogames.json';
 
 const videogames = ref(videogamesData);
@@ -15,12 +15,12 @@ const videogames = ref(videogamesData);
 
       <div v-for="game in videogames" :key="game.id" class="game-card">
         <div class="game-image">
-          <img :src="game.image" :alt="game.name" onerror="this.src='/icons/games.svg'">
+          <img :alt="game.name" :src="game.image" onerror="this.src='/icons/games.svg'">
         </div>
         <div class="game-details">
           <h3 class="game-name">{{ game.name }}</h3>
           <p class="game-description">{{ game.description }}</p>
-          <p v-if="game.pseudo" class="game-pseudo">Pseudo : {{game.pseudo}}</p>
+          <p v-if="game.pseudo" class="game-pseudo">Pseudo : {{ game.pseudo }}</p>
           <div class="game-achievements">
             <h4>Réalisations:</h4>
             <p>
@@ -100,6 +100,7 @@ const videogames = ref(videogamesData);
 .game-achievements {
   margin-top: auto;
 }
+
 .game-achievements p {
   font-size: 13px;
   padding-left: 20px;

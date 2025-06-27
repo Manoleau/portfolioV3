@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import projectsData from '@/data/projects.json';
 
 const activeTab = ref('personal');
@@ -13,17 +13,17 @@ function setActiveTab(tab) {
 <template>
   <div class="projects-app">
     <div class="tabs">
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'personal' }" 
-        @click="setActiveTab('personal')"
+      <button
+          :class="{ active: activeTab === 'personal' }"
+          class="tab-button"
+          @click="setActiveTab('personal')"
       >
         Personal Projects
       </button>
       <button
-        class="tab-button" 
-        :class="{ active: activeTab === 'academic' }" 
-        @click="setActiveTab('academic')"
+          :class="{ active: activeTab === 'academic' }"
+          class="tab-button"
+          @click="setActiveTab('academic')"
       >
         Academic Projects
       </button>
@@ -36,13 +36,17 @@ function setActiveTab(tab) {
 
       <div v-for="project in projects[activeTab]" :key="project.id" class="project-card">
         <div class="project-image">
-          <img :src="project.image" :alt="project.name" onerror="this.src='/icons/portfolio.svg'">
+          <img :alt="project.name" :src="project.image" onerror="this.src='/icons/portfolio.svg'">
         </div>
         <div class="project-details">
           <h2 class="project-name">{{ project.name }}</h2>
-          <small v-if="project.school">{{project.school}}</small>
-          <small v-if="project.note">Note : {{project.note}}</small>
-          <small v-if="project.classement">Classement : {{project.classement}} <img width="10" v-if="project.classement === 'Toute la classe est ensemble (20 personnes)'" src="/images/projects/clown-face.svg" alt="ggez"/></small>
+          <small v-if="project.school">{{ project.school }}</small>
+          <small v-if="project.note">Note : {{ project.note }}</small>
+          <small v-if="project.classement">Classement : {{ project.classement }} <img
+              v-if="project.classement === 'Toute la classe est ensemble (20 personnes)'"
+              alt="ggez"
+              src="/images/projects/clown-face.svg"
+              width="10"/></small>
           <p class="project-description" v-html="project.description"></p>
           <div class="project-technologies">
             <span v-for="(tech, index) in project.technologies" :key="index" class="tech-tag">
@@ -50,8 +54,8 @@ function setActiveTab(tab) {
             </span>
           </div>
           <div class="project-links">
-            <a v-if="project.link" :href="project.link" target="_blank" class="project-link">View Project</a>
-            <a v-if="project.github" :href="project.github" target="_blank" class="project-link">GitHub</a>
+            <a v-if="project.link" :href="project.link" class="project-link" target="_blank">View Project</a>
+            <a v-if="project.github" :href="project.github" class="project-link" target="_blank">GitHub</a>
           </div>
         </div>
       </div>

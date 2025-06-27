@@ -1,11 +1,13 @@
 {
   "personal": [
-
     {
       "id": 8,
       "name": "EDT IUT",
       "description": "Bot Discord qui consiste à récupérer les emplois du temps des étudiants à l'IUT Informatique pour les afficher sur notre groupe discord. Il peut aussi afficher les salles de cours qui sont libre.",
-      "technologies": ["Python", "Discord.py"],
+      "technologies": [
+        "Python",
+        "Discord.py"
+      ],
       "image": "https://www.aht.li/3813545/logo_EDTIUT.png",
       "link": null,
       "github": "https://github.com/Manoleau/edt-iut"
@@ -14,7 +16,11 @@
       "id": 9,
       "name": "League DLE Version Bot Discord",
       "description": "Mini jeu de quiz sur le theme de LoL avec un système de récompenses et d'ouverture de coffres pour obtenir des skins.",
-      "technologies": ["Python", "Discord.py", "SQLite"],
+      "technologies": [
+        "Python",
+        "Discord.py",
+        "SQLite"
+      ],
       "image": "https://www.aht.li/3813533/logo_leaguedle.png",
       "link": null,
       "github": "https://github.com/Manoleau/edt-iut"
@@ -23,7 +29,9 @@
       "id": 9,
       "name": "League DLE Version Web",
       "description": "Mini jeu de quiz sur le theme de LoL. Ce site a été pour apprendre Angular.",
-      "technologies": ["Angular"],
+      "technologies": [
+        "Angular"
+      ],
       "image": "/",
       "link": "https://loldletitle.netlify.app/",
       "github": "https://github.com/Manoleau/edt-iut"
@@ -32,7 +40,11 @@
       "id": 1,
       "name": "Portfolio",
       "description": "Un site sur le thème de Windows présentant mes compétences, mes projets et autres.",
-      "technologies": ["Vue.js", "JavaScript", "CSS"],
+      "technologies": [
+        "Vue.js",
+        "JavaScript",
+        "CSS"
+      ],
       "image": "/images/projects/portfolio.jpg",
       "link": "https://manholodev.netlify.app/",
       "github": "https://github.com/Manoleau/portfolioV3"
@@ -43,7 +55,12 @@
       "id": 7,
       "name": "ERP IUT (Semestre 6)",
       "school": "BUT Informatique Lyon 1 - Semestre 6 - Développement avancé",
-      "technologies": ["Java", "SpringBoot", "Angular", "Docker"],
+      "technologies": [
+        "Java",
+        "SpringBoot",
+        "Angular",
+        "Docker"
+      ],
       "classement": "Toute la classe est ensemble (20 personnes)",
       "link": null,
       "image": "/images/projects/ra3.png"
@@ -53,7 +70,13 @@
       "name": "ERP IUT (Semestre 5)",
       "school": "BUT Informatique Lyon 1 - Semestre 5 - Développement avancé",
       "description": "",
-      "technologies": ["Nest.JS", "Prisma", "Angular", "Tailwind", "Docker"],
+      "technologies": [
+        "Nest.JS",
+        "Prisma",
+        "Angular",
+        "Tailwind",
+        "Docker"
+      ],
       "link": null,
       "image": "/images/projects/ramses.png",
       "classement": "Toute la classe est ensemble (20 personnes)"
@@ -63,7 +86,13 @@
       "name": "Quizz of Legends",
       "school": "BUT Informatique Lyon 1 - Semestre 5 - Qualité de développement",
       "description": "Un site web qui permet de jouer à des quiz sur League of Legends (Nom de champion, Icône de champion, Nom d'item, etc...). Le code a été conçue pour qu'on puisse ajouter des quiz très simplement",
-      "technologies": ["Python", "Django", "HTML", "CSS", "Docker"],
+      "technologies": [
+        "Python",
+        "Django",
+        "HTML",
+        "CSS",
+        "Docker"
+      ],
       "image": "/images/projects/quizzoflegends.png",
       "link": null,
       "note": "16.50/20",
@@ -75,20 +104,31 @@
       "name": "League Mastery",
       "school": "BUT Informatique Lyon 1 - Semestre 4 - Développement Mobile",
       "description": "Une application mobile qui montre les maîtrise d'un joueur de League of Legends avec des statistiques et des graphes. J'ai du créer une API personnalisé pour gérer les données.",
-      "technologies": ["Kotlin", "Java", "SQLite", "JavaScript", "Mongoose"],
+      "technologies": [
+        "Kotlin",
+        "Java",
+        "SQLite",
+        "JavaScript",
+        "Mongoose"
+      ],
       "image": "/images/projects/leaguemastery.webp",
       "link": null,
       "note": "19/20",
       "classement": "1/26 (seul)",
       "github": "https://github.com/Manoleau/league-mastery.git"
     },
-
     {
       "id": 4,
       "name": "Liste2Course",
       "school": "BUT Informatique Lyon 1 - Semestre 4 - Symfony",
       "description": "Initialisation à symfony et DQL. C'est un site web qui permet de créer ses propres listes de course avec un choix varié de produits.",
-      "technologies": ["PHP", "Symfony", "HTML", "CSS", "Docker"],
+      "technologies": [
+        "PHP",
+        "Symfony",
+        "HTML",
+        "CSS",
+        "Docker"
+      ],
       "note": "16/20",
       "image": "/images/projects/liste2course.jpg",
       "classement": "1/20 (équipe de 3)",
@@ -98,7 +138,9 @@
       "id": 5,
       "name": "Aide à la Décision",
       "school": "BUT Informatique Lyon 1 - Semestre 2 - Java / IHM",
-      "technologies": ["Java"],
+      "technologies": [
+        "Java"
+      ],
       "description": "Application qui sert à aider les ambulances et autres sur le choix de parcours entre deux dispensaires selon plusieurs critère (Durée, Distance, Fiabilité) à l'aide de Dijkstra",
       "image": "/images/projects/saejava.png",
       "link": null,

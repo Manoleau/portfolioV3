@@ -8,7 +8,7 @@ import EducationApp from './apps/EducationApp.vue';
 import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
 import SpotifyApp from './apps/SpotifyApp.vue';
-import { ref, onMounted, onUnmounted } from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 
 // Application windows state
 const openWindows = ref([]);
@@ -129,7 +129,7 @@ const desktopIcons = [
 <template>
   <div id="desktop">
     <div class="desktop-game-container">
-      <IconShooterGame />
+      <IconShooterGame/>
     </div>
 
     <div class="desktop-icons-container">
@@ -137,10 +137,10 @@ const desktopIcons = [
         <h2 class="category-title">{{ category.category }}</h2>
         <div class="icon-grid">
           <div v-for="(item, itemIndex) in category.items" :key="itemIndex">
-            <DesktopIcon 
-              :name="item.name" 
-              :icon="item.icon" 
-              :onClick="item.onClick" 
+            <DesktopIcon
+                :icon="item.icon"
+                :name="item.name"
+                :onClick="item.onClick"
             />
           </div>
         </div>
@@ -148,19 +148,19 @@ const desktopIcons = [
     </div>
 
     <AppWindow
-      v-for="window in openWindows" 
-      :key="window.name"
-      :title="window.name"
-      :isOpen="true"
-      :zIndex="window.zIndex"
-      @close="closeApp(window.name)"
+        v-for="window in openWindows"
+        :key="window.name"
+        :isOpen="true"
+        :title="window.name"
+        :zIndex="window.zIndex"
+        @close="closeApp(window.name)"
     >
-      <ProjectsApp v-if="window.name === 'Projets'" />
-      <SkillsApp v-else-if="window.name === 'Compétences'" />
-      <ExperiencesApp v-else-if="window.name === 'Expériences'" />
-      <EducationApp v-else-if="window.name === 'Formation'" />
-      <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'" />
-      <SpotifyApp v-else-if="window.name === 'Spotify'" />
+      <ProjectsApp v-if="window.name === 'Projets'"/>
+      <SkillsApp v-else-if="window.name === 'Compétences'"/>
+      <ExperiencesApp v-else-if="window.name === 'Expériences'"/>
+      <EducationApp v-else-if="window.name === 'Formation'"/>
+      <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'"/>
+      <SpotifyApp v-else-if="window.name === 'Spotify'"/>
       <div v-else class="placeholder-content">
         {{ window.name }} contenu à venir...
       </div>
@@ -168,14 +168,14 @@ const desktopIcons = [
 
     <div class="taskbar">
       <div class="start-button" @click="toggleStartMenu">
-        <img src="/icons/start.svg" alt="Démarrer" />
+        <img alt="Démarrer" src="/icons/start.svg"/>
         <span>Démarrer</span>
       </div>
     </div>
 
     <div v-if="isStartMenuOpen" class="start-menu">
       <div class="start-menu-header">
-        <img src="/icons/start.svg" alt="Démarrer" class="start-menu-logo" />
+        <img alt="Démarrer" class="start-menu-logo" src="/icons/start.svg"/>
         <span>Emmanuel ARDOIN</span>
       </div>
 
@@ -183,8 +183,8 @@ const desktopIcons = [
         <div class="start-menu-section">
           <h3 class="section-title">Liens Sociaux</h3>
           <div class="menu-items">
-            <a v-for="link in socialLinks" :key="link.name" :href="link.url" target="_blank" class="menu-item">
-              <img :src="link.icon" :alt="link.name" class="menu-item-icon" />
+            <a v-for="link in socialLinks" :key="link.name" :href="link.url" class="menu-item" target="_blank">
+              <img :alt="link.name" :src="link.icon" class="menu-item-icon"/>
               <span class="menu-item-name">{{ link.name }}</span>
             </a>
           </div>
@@ -193,8 +193,9 @@ const desktopIcons = [
         <div class="start-menu-section">
           <h3 class="section-title">Applications</h3>
           <div class="menu-items">
-            <div v-for="item in desktopIcons[0].items" :key="item.name" class="menu-item" @click="item.onClick(); toggleStartMenu()">
-              <img :src="item.icon" :alt="item.name" class="menu-item-icon" />
+            <div v-for="item in desktopIcons[0].items" :key="item.name" class="menu-item"
+                 @click="item.onClick(); toggleStartMenu()">
+              <img :alt="item.name" :src="item.icon" class="menu-item-icon"/>
               <span class="menu-item-name">{{ item.name }}</span>
             </div>
           </div>
@@ -255,8 +256,12 @@ const desktopIcons = [
 }
 
 @keyframes lightSweep {
-  0%, 100% { left: -150%; }
-  50% { left: 150%; }
+  0%, 100% {
+    left: -150%;
+  }
+  50% {
+    left: 150%;
+  }
 }
 
 
@@ -361,8 +366,12 @@ const desktopIcons = [
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .start-menu-header {

@@ -15,7 +15,13 @@
         "Optimized application performance, reducing load time by 40%",
         "Implemented automated testing with Jest and Cypress, achieving 85% code coverage"
       ],
-      "technologies": ["Vue.js", "JavaScript", "HTML/CSS", "REST APIs", "Git"]
+      "technologies": [
+        "Vue.js",
+        "JavaScript",
+        "HTML/CSS",
+        "REST APIs",
+        "Git"
+      ]
     },
     {
       "id": 2,
@@ -32,7 +38,13 @@
         "Collaborated with backend developers to integrate frontend with APIs",
         "Participated in agile development processes, including daily standups and sprint planning"
       ],
-      "technologies": ["JavaScript", "React", "HTML/CSS", "SASS", "Webpack"]
+      "technologies": [
+        "JavaScript",
+        "React",
+        "HTML/CSS",
+        "SASS",
+        "Webpack"
+      ]
     },
     {
       "id": 3,
@@ -49,7 +61,13 @@
         "Participated in client meetings and contributed to project planning",
         "Learned and implemented best practices for web accessibility and SEO"
       ],
-      "technologies": ["HTML", "CSS", "JavaScript", "jQuery", "WordPress"]
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "jQuery",
+        "WordPress"
+      ]
     }
   ],
   "volunteer": [
@@ -67,7 +85,12 @@
         "Mentored coding bootcamp graduates on real-world projects",
         "Participated in weekend hackathons to build solutions for community problems"
       ],
-      "technologies": ["JavaScript", "Vue.js", "Node.js", "MongoDB"]
+      "technologies": [
+        "JavaScript",
+        "Vue.js",
+        "Node.js",
+        "MongoDB"
+      ]
     },
     {
       "id": 5,
@@ -83,7 +106,12 @@
         "Provided one-on-one mentoring to students working on personal projects",
         "Organized coding events and hackathons for the local community"
       ],
-      "technologies": ["HTML", "CSS", "JavaScript", "Git"]
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Git"
+      ]
     }
   ]
 }

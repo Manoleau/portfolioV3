@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
+
 defineProps({
   title: {
     type: String,
@@ -18,9 +19,9 @@ const emit = defineEmits(['close']);
 
 const appWindow = ref(null);
 const isDragging = ref(false);
-const dragOffset = ref({ x: 0, y: 0 });
-const position = ref({ x: 50, y: 50 });
-const windowSize = ref({ width: 800, height: 600 });
+const dragOffset = ref({x: 0, y: 0});
+const position = ref({x: 50, y: 50});
+const windowSize = ref({width: 800, height: 600});
 
 function startDrag(event) {
   if (event.target.closest('.window-content')) return;
@@ -70,8 +71,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="isOpen" 
-       class="app-window" 
+  <div v-if="isOpen"
        ref="appWindow"
        :style="{
          left: `${position.x}px`,
@@ -79,7 +79,8 @@ onUnmounted(() => {
          width: `${windowSize.width}px`,
          height: `${windowSize.height}px`,
          zIndex: zIndex
-       }">
+       }"
+       class="app-window">
     <div class="window-title-bar" @mousedown="startDrag">
       <div class="window-title">{{ title }}</div>
       <div class="window-controls">

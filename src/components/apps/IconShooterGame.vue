@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 
 const score = ref(0);
 const icons = ref([]);
@@ -123,15 +123,15 @@ function resetScore() {
     </div>
 
     <div class="game-container">
-      <div 
-        v-for="icon in icons" 
-        :key="icon.id" 
-        class="game-icon"
-        :style="{ left: icon.x + 'px', top: icon.y + 'px' }"
-        :data-icon-id="icon.id"
+      <div
+          v-for="icon in icons"
+          :key="icon.id"
+          :data-icon-id="icon.id"
+          :style="{ left: icon.x + 'px', top: icon.y + 'px' }"
+          class="game-icon"
       >
         <a href="javascript:void(0)">
-          <img :src="icon.icon" alt="Game Icon" unselectable="on" />
+          <img :src="icon.icon" alt="Game Icon" unselectable="on"/>
         </a>
       </div>
     </div>

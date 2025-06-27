@@ -4,8 +4,8 @@ import TaskBar from "@/components/TaskBar.vue";
 </script>
 
 <template>
-  <Desktop style="height: 97vh" />
-  <TaskBar style="height: 3vh" />
+  <Desktop style="height: 97vh"/>
+  <TaskBar style="height: 3vh"/>
 </template>
 
 <style scoped>

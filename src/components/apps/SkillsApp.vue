@@ -1,5 +1,5 @@
 <script setup>
-import {ref, computed} from 'vue';
+import {computed, ref} from 'vue';
 import skillsData from '@/data/skills.json';
 
 const activeTab = ref('technique');
@@ -26,7 +26,7 @@ const displayedSkills = computed(() => {
   return filteredSkills.sort((a, b) => {
     if (sortBy.value === 'level') {
       // Sort by level (Confirmé > Moyen > Débutant)
-      const levelOrder = { 'Confirmé': 3, 'Moyen': 2, 'Débutant': 1 };
+      const levelOrder = {'Confirmé': 3, 'Moyen': 2, 'Débutant': 1};
       return levelOrder[b.level] - levelOrder[a.level];
     } else {
       // Sort by name alphabetically
@@ -67,22 +67,22 @@ function getLevelPercentage(level) {
   <div class="skills-app">
     <div class="tabs">
       <button
-          class="tab-button"
           :class="{ active: activeTab === 'technique' }"
+          class="tab-button"
           @click="setActiveTab('technique')"
       >
         Compétences Techniques
       </button>
       <button
-          class="tab-button"
           :class="{ active: activeTab === 'competences' }"
+          class="tab-button"
           @click="setActiveTab('competences')"
       >
         Compétences Générales
       </button>
       <button
-          class="tab-button"
           :class="{ active: activeTab === 'langues' }"
+          class="tab-button"
           @click="setActiveTab('langues')"
       >
         Langues
@@ -93,12 +93,12 @@ function getLevelPercentage(level) {
       <!-- Type filter for technical skills -->
       <div v-if="activeTab === 'technique'" class="type-filter">
         <span>Type:</span>
-        <button 
-          v-for="type in skillTypes" 
-          :key="type" 
-          @click="setActiveType(type)"
-          :class="{ active: activeType === type }"
-          class="filter-button"
+        <button
+            v-for="type in skillTypes"
+            :key="type"
+            :class="{ active: activeType === type }"
+            class="filter-button"
+            @click="setActiveType(type)"
         >
           {{ type === 'all' ? 'Tous' : type }}
         </button>
@@ -107,17 +107,17 @@ function getLevelPercentage(level) {
       <!-- Sort controls for all tabs -->
       <div class="sort-controls">
         <span>Trier par:</span>
-        <button 
-          @click="setSortBy('name')" 
-          :class="{ active: sortBy === 'name' }"
-          class="sort-button"
+        <button
+            :class="{ active: sortBy === 'name' }"
+            class="sort-button"
+            @click="setSortBy('name')"
         >
           Nom
         </button>
-        <button 
-          @click="setSortBy('level')" 
-          :class="{ active: sortBy === 'level' }"
-          class="sort-button"
+        <button
+            :class="{ active: sortBy === 'level' }"
+            class="sort-button"
+            @click="setSortBy('level')"
         >
           Niveau
         </button>
@@ -131,7 +131,7 @@ function getLevelPercentage(level) {
 
       <div v-for="skill in displayedSkills" :key="skill.name" class="skill-card">
         <div v-if="skill.icon" class="skill-icon">
-          <img :src="skill.icon" :alt="skill.name">
+          <img :alt="skill.name" :src="skill.icon">
         </div>
         <div class="skill-details">
           <div class="skill-header">
@@ -143,7 +143,7 @@ function getLevelPercentage(level) {
           </div>
           <div class="skill-progress-container">
             <div class="skill-progress-bar">
-              <div class="skill-progress" :style="{ width: `${getLevelPercentage(skill.level)}%` }"></div>
+              <div :style="{ width: `${getLevelPercentage(skill.level)}%` }" class="skill-progress"></div>
             </div>
           </div>
           <p class="skill-description">{{ skill.description }}</p>

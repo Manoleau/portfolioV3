@@ -2,56 +2,33 @@
 import {onMounted, ref} from 'vue';
 import SpotifyService from '@/services/SpotifyService';
 
-const accessToken = ref(null);
 const userProfile = ref(null);
 const topTracks = ref([]);
-const recentlyPlayed = ref([]);
-const userStats = ref(null);
+const topArtists = ref([]);
+const favoriteGenres = ref([]);
 const loading = ref(false);
 const error = ref(null);
 const activeTab = ref('profile');
 
 onMounted(() => {
-  initializeApp();
+  loadData();
 });
 
-async function ensureValidToken() {
-  const storedToken = localStorage.getItem('spotify_access_token');
-  const tokenExpiry = localStorage.getItem('spotify_token_expiry');
-
-  if (!storedToken || Date.now() > parseInt(tokenExpiry || 0)) {
-    try {
-      const tokenResponse = await SpotifyService.getAccessToken();
-      accessToken.value = tokenResponse.access_token;
-
-      localStorage.setItem('spotify_access_token', tokenResponse.access_token);
-      localStorage.setItem('spotify_token_expiry', Date.now() + (tokenResponse.expires_in * 1000));
-
-      return true;
-    } catch (err) {
-      console.error('Token acquisition error:', err);
-      return false;
-    }
-  } else {
-    accessToken.value = storedToken;
-    return true;
-  }
-}
-
-async function loadUserData() {
+async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    userProfile.value = await SpotifyService.getUserProfile(localStorage.getItem('spotify_access_token'));
+    // Get user profile information
+    userProfile.value = await SpotifyService.getUserInfo();
 
-    // Get top tracks from the user's playlists
-    const topTracksResponse = await SpotifyService.getTopTracks(localStorage.getItem('spotify_access_token'));
-    topTracks.value = topTracksResponse.items;
+    // Get top tracks
+    topTracks.value = await SpotifyService.getTopTracks();
 
-    // Get user stats
-    userStats.value = await SpotifyService.getUserStats(localStorage.getItem('spotify_access_token'));
+    // Get top artists
+    topArtists.value = await SpotifyService.getTopArtists();
 
-    recentlyPlayed.value = [];
+    // Get favorite genres
+    favoriteGenres.value = await SpotifyService.getFavoriteGenres();
 
   } catch (err) {
     error.value = `Failed to load data: ${err.message}`;
@@ -61,74 +38,8 @@ async function loadUserData() {
   }
 }
 
-async function initializeApp() {
-  loading.value = true;
-
-  const isValid = await ensureValidToken();
-
-  if (isValid) {
-    await loadUserData();
-  }
-
-  loading.value = false;
-}
-
 function setActiveTab(tab) {
   activeTab.value = tab;
-}
-
-// Helper functions for audio features
-function formatFeatureName(feature) {
-  const names = {
-    danceability: 'Dansabilité',
-    energy: 'Énergie',
-    loudness: 'Volume',
-    speechiness: 'Voix',
-    acousticness: 'Acoustique',
-    instrumentalness: 'Instrumental',
-    liveness: 'Live',
-    valence: 'Positivité',
-    tempo: 'Tempo'
-  };
-  return names[feature] || feature;
-}
-
-function getFeatureDescription(feature) {
-  const descriptions = {
-    danceability: 'À quel point le morceau est adapté à la danse (0.0 = pas dansable, 1.0 = très dansable)',
-    energy: 'Mesure de l\'intensité et de l\'activité (0.0 = calme, 1.0 = énergique)',
-    loudness: 'Volume global du morceau en décibels (dB), généralement entre -60 et 0',
-    speechiness: 'Présence de mots parlés (0.0 = instrumental, 1.0 = uniquement des paroles)',
-    acousticness: 'Mesure de l\'acoustique du morceau (0.0 = électronique, 1.0 = acoustique)',
-    instrumentalness: 'Prédiction de l\'absence de voix (0.0 = vocal, 1.0 = instrumental)',
-    liveness: 'Détecte la présence d\'un public (0.0 = studio, 1.0 = live)',
-    valence: 'Positivité musicale (0.0 = négatif/triste, 1.0 = positif/joyeux)',
-    tempo: 'Tempo estimé en battements par minute (BPM)'
-  };
-  return descriptions[feature] || '';
-}
-
-function getFeatureWidth(feature, value) {
-  // For most features, the range is 0-1, so we multiply by 100
-  if (feature === 'loudness') {
-    // Loudness is typically between -60 and 0 dB
-    return Math.min(100, Math.max(0, (value + 60) * (100 / 60)));
-  } else if (feature === 'tempo') {
-    // Tempo is typically between 50 and 200 BPM
-    return Math.min(100, Math.max(0, (value - 50) * (100 / 150)));
-  } else {
-    return value * 100;
-  }
-}
-
-function formatFeatureValue(feature, value) {
-  if (feature === 'loudness') {
-    return value.toFixed(1) + ' dB';
-  } else if (feature === 'tempo') {
-    return value.toFixed(0) + ' BPM';
-  } else {
-    return value.toFixed(2);
-  }
 }
 
 </script>
@@ -143,29 +54,29 @@ function formatFeatureValue(feature, value) {
     <div v-else-if="error" class="error-container">
       <h3>Erreur</h3>
       <p>{{ error }}</p>
-      <button @click="initializeApp" class="retry-button">Réessayer</button>
+      <button class="retry-button" @click="initializeApp">Réessayer</button>
     </div>
 
     <div v-else class="spotify-content">
       <div class="tabs">
         <button
-          class="tab-button"
-          :class="{ active: activeTab === 'profile' }"
-          @click="setActiveTab('profile')"
+            :class="{ active: activeTab === 'profile' }"
+            class="tab-button"
+            @click="setActiveTab('profile')"
         >
           Profil
         </button>
         <button
-          class="tab-button"
-          :class="{ active: activeTab === 'top-tracks' }"
-          @click="setActiveTab('top-tracks')"
+            :class="{ active: activeTab === 'top-tracks' }"
+            class="tab-button"
+            @click="setActiveTab('top-tracks')"
         >
           Morceaux des Playlists
         </button>
         <button
-          class="tab-button"
-          :class="{ active: activeTab === 'stats' }"
-          @click="setActiveTab('stats')"
+            :class="{ active: activeTab === 'stats' }"
+            class="tab-button"
+            @click="setActiveTab('stats')"
         >
           Statistiques
         </button>
@@ -174,111 +85,102 @@ function formatFeatureValue(feature, value) {
       <div v-if="activeTab === 'profile'" class="profile-container">
         <div v-if="userProfile" class="user-profile">
           <div class="profile-header">
-            <div class="profile-image" v-if="userProfile.images && userProfile.images.length > 0">
-              <img :src="userProfile.images[0].url" alt="Profile Picture" />
+            <div v-if="userProfile.profile_image" class="profile-image">
+              <img :src="userProfile.profile_image" alt="Profile Picture"/>
             </div>
             <div class="profile-info">
               <h2>{{ userProfile.display_name }}</h2>
-              <p v-if="userProfile.email">Email: {{ userProfile.email }}</p>
-              <p>Followers: {{ userProfile.followers?.total || 0 }}</p>
               <p v-if="userProfile.country">Country: {{ userProfile.country }}</p>
-              <a :href="userProfile.external_urls?.spotify" target="_blank" class="spotify-link">
+              <p>Followers: {{ userProfile.followers || 0 }}</p>
+              <p v-if="userProfile.product">Product: {{ userProfile.product }}</p>
+              <a v-if="userProfile.uri" :href="userProfile.uri" class="spotify-link" target="_blank">
                 Voir sur Spotify
               </a>
             </div>
           </div>
         </div>
         <div v-else class="no-data">
-          <p>Les données de profil utilisateur ne sont pas disponibles avec l'authentification client_credentials.</p>
-          <p>Cette méthode d'authentification ne permet pas d'accéder aux données spécifiques à un utilisateur.</p>
+          <p>Les données de profil utilisateur ne sont pas disponibles.</p>
+          <p>Veuillez réessayer plus tard.</p>
         </div>
       </div>
 
       <!-- Top Tracks Tab -->
       <div v-if="activeTab === 'top-tracks'" class="tracks-container">
-        <h3>Top morceaux des playlists</h3>
+        <h3>Top morceaux</h3>
         <div v-if="topTracks.length > 0" class="tracks-list">
           <div v-for="(track, index) in topTracks" :key="track.id" class="track-item">
             <div class="track-number">{{ index + 1 }}</div>
-            <div class="track-image" v-if="track.album.images && track.album.images.length > 0">
-              <img :src="track.album.images[track.album.images.length - 1].url" alt="Album Cover" />
-            </div>
             <div class="track-info">
               <div class="track-name">{{ track.name }}</div>
-              <div class="track-artist">{{ track.artists.map(artist => artist.name).join(', ') }}</div>
+              <div class="track-artist">{{ track.artist }}</div>
             </div>
-            <div class="track-album">{{ track.album.name }}</div>
-            <a :href="track.external_urls.spotify" target="_blank" class="track-link">
+            <div class="track-album">{{ track.album }}</div>
+            <div class="track-popularity">Popularité: {{ track.popularity }}</div>
+            <div class="track-duration">{{
+                Math.floor(track.duration_ms / 60000)
+              }}:{{ String(Math.floor((track.duration_ms % 60000) / 1000)).padStart(2, '0') }}
+            </div>
+            <a v-if="track.uri" :href="track.uri" class="track-link" target="_blank">
               <span class="play-icon">▶</span>
+            </a>
+            <a v-if="track.preview_url" :href="track.preview_url" class="preview-link" target="_blank">
+              <span class="preview-icon">🔊</span>
             </a>
           </div>
         </div>
         <div v-else class="no-data">
-          <p>Aucun morceau trouvé dans les playlists de l'utilisateur.</p>
-          <p>Essayez de rafraîchir la page ou vérifiez que l'utilisateur a des playlists publiques.</p>
+          <p>Aucun morceau trouvé.</p>
+          <p>Essayez de rafraîchir la page.</p>
         </div>
       </div>
 
       <!-- Stats Tab -->
       <div v-if="activeTab === 'stats'" class="stats-container">
         <h3>Statistiques de l'utilisateur</h3>
-        <div v-if="userStats" class="stats-content">
-          <!-- General Stats -->
-          <div class="stats-section">
-            <h4>Statistiques générales</h4>
-            <div class="stats-cards">
-              <div class="stats-card">
-                <div class="stats-card-value">{{ userStats.totalPlaylists }}</div>
-                <div class="stats-card-label">Playlists</div>
-              </div>
-              <div class="stats-card">
-                <div class="stats-card-value">{{ userStats.totalTracks }}</div>
-                <div class="stats-card-label">Morceaux</div>
-              </div>
-            </div>
-          </div>
-
+        <div class="stats-content">
           <!-- Top Artists -->
           <div class="stats-section">
             <h4>Artistes les plus écoutés</h4>
-            <div v-if="userStats.artists && userStats.artists.length > 0" class="artists-list">
-              <div v-for="(artist, index) in userStats.artists" :key="artist.id" class="artist-item">
+            <div v-if="topArtists && topArtists.length > 0" class="artists-list">
+              <div v-for="(artist, index) in topArtists" :key="artist.id" class="artist-item">
                 <div class="artist-rank">{{ index + 1 }}</div>
                 <div class="artist-info">
                   <div class="artist-name">{{ artist.name }}</div>
-                  <div class="artist-count">{{ artist.count }} morceaux</div>
+                  <div class="artist-details">
+                    <span v-if="artist.popularity">Popularité: {{ artist.popularity }}</span>
+                    <span v-if="artist.followers">Followers: {{ artist.followers }}</span>
+                  </div>
                 </div>
+                <a v-if="artist.uri" :href="artist.uri" class="artist-link" target="_blank">
+                  <span class="play-icon">▶</span>
+                </a>
               </div>
             </div>
             <div v-else class="no-data">
-              <p>Aucun artiste trouvé dans les playlists de l'utilisateur.</p>
+              <p>Aucun artiste trouvé.</p>
             </div>
           </div>
 
-          <!-- Audio Features -->
+          <!-- Favorite Genres -->
           <div class="stats-section">
-            <h4>Caractéristiques audio moyennes</h4>
-            <p class="audio-features-note">Note: Certaines valeurs sont estimées en raison des limitations de l'API Spotify avec l'authentification client_credentials.</p>
-            <div v-if="userStats.audioFeatures && Object.keys(userStats.audioFeatures).length > 0" class="audio-features">
-              <div class="feature-item" v-for="(value, feature) in userStats.audioFeatures" :key="feature">
-                <div class="feature-label">
-                  {{ formatFeatureName(feature) }}
-                  <span class="feature-tooltip">{{ getFeatureDescription(feature) }}</span>
+            <h4>Genres préférés</h4>
+            <div v-if="favoriteGenres && favoriteGenres.length > 0" class="genres-list">
+              <div v-for="(genre, index) in favoriteGenres" :key="index" class="genre-item">
+                <div class="genre-rank">{{ index + 1 }}</div>
+                <div class="genre-info">
+                  <div class="genre-name">{{ genre.name }}</div>
+                  <div class="genre-count">{{ genre.count }} morceaux</div>
                 </div>
-                <div class="feature-bar-container">
-                  <div class="feature-bar" :style="{ width: getFeatureWidth(feature, value) + '%' }"></div>
-                  <div class="feature-value">{{ formatFeatureValue(feature, value) }}</div>
+                <div class="genre-bar-container">
+                  <div :style="{ width: (genre.count / favoriteGenres[0].count * 100) + '%' }" class="genre-bar"></div>
                 </div>
               </div>
             </div>
             <div v-else class="no-data">
-              <p>Aucune caractéristique audio disponible pour les morceaux de l'utilisateur.</p>
+              <p>Aucun genre trouvé.</p>
             </div>
           </div>
-        </div>
-        <div v-else class="no-data">
-          <p>Les statistiques ne sont pas disponibles pour le moment.</p>
-          <p>Essayez de rafraîchir la page ou vérifiez que l'utilisateur a des playlists publiques.</p>
         </div>
       </div>
 
@@ -315,7 +217,9 @@ function formatFeatureValue(feature, value) {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .error-container {
@@ -515,12 +419,25 @@ function formatFeatureValue(feature, value) {
   transition: color 0.2s;
 }
 
-.track-link:hover {
+.track-link:hover, .preview-link:hover, .artist-link:hover {
   color: #1DB954;
 }
 
-.play-icon {
+.play-icon, .preview-icon {
   font-size: 20px;
+}
+
+.track-popularity, .track-duration {
+  font-size: 14px;
+  color: #b3b3b3;
+  margin: 0 8px;
+}
+
+.preview-link {
+  color: #b3b3b3;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-left: 8px;
 }
 
 .no-data {
@@ -625,9 +542,21 @@ function formatFeatureValue(feature, value) {
   text-overflow: ellipsis;
 }
 
-.artist-count {
+.artist-count, .artist-details {
   font-size: 14px;
   color: #b3b3b3;
+}
+
+.artist-details {
+  display: flex;
+  gap: 12px;
+}
+
+.artist-link {
+  color: #b3b3b3;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-left: auto;
 }
 
 .audio-features {
@@ -701,6 +630,65 @@ function formatFeatureValue(feature, value) {
   font-style: italic;
   margin-top: 0;
   margin-bottom: 16px;
+}
+
+.genres-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.genre-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #181818;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.genre-item:hover {
+  background-color: #333;
+}
+
+.genre-rank {
+  width: 24px;
+  text-align: center;
+  color: #b3b3b3;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.genre-info {
+  flex: 0 0 200px;
+  margin-left: 16px;
+}
+
+.genre-name {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.genre-count {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.genre-bar-container {
+  flex: 1;
+  height: 8px;
+  background-color: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: 16px;
+}
+
+.genre-bar {
+  height: 100%;
+  background-color: #1DB954;
+  border-radius: 4px;
 }
 
 </style>
