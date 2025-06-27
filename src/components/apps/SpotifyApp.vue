@@ -71,14 +71,21 @@ function setActiveTab(tab) {
             class="tab-button"
             @click="setActiveTab('top-tracks')"
         >
-          Morceaux des Playlists
+          Top musique
         </button>
         <button
-            :class="{ active: activeTab === 'stats' }"
+            :class="{ active: activeTab === 'top-artists' }"
             class="tab-button"
-            @click="setActiveTab('stats')"
+            @click="setActiveTab('top-artists')"
         >
-          Statistiques
+          Top artiste
+        </button>
+        <button
+            :class="{ active: activeTab === 'favorite-genres' }"
+            class="tab-button"
+            @click="setActiveTab('favorite-genres')"
+        >
+          Genres préférés
         </button>
       </div>
 
@@ -90,9 +97,6 @@ function setActiveTab(tab) {
             </div>
             <div class="profile-info">
               <h2>{{ userProfile.display_name }}</h2>
-              <p v-if="userProfile.country">Country: {{ userProfile.country }}</p>
-              <p>Followers: {{ userProfile.followers || 0 }}</p>
-              <p v-if="userProfile.product">Product: {{ userProfile.product }}</p>
               <a v-if="userProfile.uri" :href="userProfile.uri" class="spotify-link" target="_blank">
                 Voir sur Spotify
               </a>
@@ -105,12 +109,13 @@ function setActiveTab(tab) {
         </div>
       </div>
 
-      <!-- Top Tracks Tab -->
       <div v-if="activeTab === 'top-tracks'" class="tracks-container">
-        <h3>Top morceaux</h3>
         <div v-if="topTracks.length > 0" class="tracks-list">
           <div v-for="(track, index) in topTracks" :key="track.id" class="track-item">
             <div class="track-number">{{ index + 1 }}</div>
+            <div v-if="track.image" class="track-image">
+              <img :src="track.image" alt="Track Cover"/>
+            </div>
             <div class="track-info">
               <div class="track-name">{{ track.name }}</div>
               <div class="track-artist">{{ track.artist }}</div>
@@ -135,52 +140,44 @@ function setActiveTab(tab) {
         </div>
       </div>
 
-      <!-- Stats Tab -->
-      <div v-if="activeTab === 'stats'" class="stats-container">
-        <h3>Statistiques de l'utilisateur</h3>
-        <div class="stats-content">
-          <!-- Top Artists -->
-          <div class="stats-section">
-            <h4>Artistes les plus écoutés</h4>
-            <div v-if="topArtists && topArtists.length > 0" class="artists-list">
-              <div v-for="(artist, index) in topArtists" :key="artist.id" class="artist-item">
-                <div class="artist-rank">{{ index + 1 }}</div>
-                <div class="artist-info">
-                  <div class="artist-name">{{ artist.name }}</div>
-                  <div class="artist-details">
-                    <span v-if="artist.popularity">Popularité: {{ artist.popularity }}</span>
-                    <span v-if="artist.followers">Followers: {{ artist.followers }}</span>
-                  </div>
-                </div>
-                <a v-if="artist.uri" :href="artist.uri" class="artist-link" target="_blank">
-                  <span class="play-icon">▶</span>
-                </a>
+      <div v-if="activeTab === 'top-artists'" class="stats-container">
+        <div v-if="topArtists && topArtists.length > 0" class="artists-list">
+          <div v-for="(artist, index) in topArtists" :key="artist.id" class="artist-item">
+            <div class="artist-rank">{{ index + 1 }}</div>
+            <div v-if="artist.image" class="artist-image">
+              <img :src="artist.image" alt="Artist Image"/>
+            </div>
+            <div class="artist-info">
+              <div class="artist-name">{{ artist.name }}</div>
+              <div class="artist-details">
+                <span v-if="artist.popularity">Popularité: {{ artist.popularity }}</span>
+                <span v-if="artist.followers">Followers: {{ artist.followers }}</span>
               </div>
             </div>
-            <div v-else class="no-data">
-              <p>Aucun artiste trouvé.</p>
+            <a v-if="artist.uri" :href="artist.uri" class="artist-link" target="_blank">
+              <span class="play-icon">▶</span>
+            </a>
+          </div>
+        </div>
+        <div v-else class="no-data">
+          <p>Aucun artiste trouvé.</p>
+        </div>
+      </div>
+      <div v-if="activeTab === 'favorite-genres'" class="stats-container">
+        <div v-if="favoriteGenres && favoriteGenres.length > 0" class="genres-list">
+          <div v-for="(genre, index) in favoriteGenres" :key="index" class="genre-item">
+            <div class="genre-rank">{{ index + 1 }}</div>
+            <div class="genre-info">
+              <div class="genre-name">{{ genre.name }}</div>
+              <div class="genre-count">{{ genre.count }} morceaux</div>
+            </div>
+            <div class="genre-bar-container">
+              <div :style="{ width: (genre.count / favoriteGenres[0].count * 100) + '%' }" class="genre-bar"></div>
             </div>
           </div>
-
-          <!-- Favorite Genres -->
-          <div class="stats-section">
-            <h4>Genres préférés</h4>
-            <div v-if="favoriteGenres && favoriteGenres.length > 0" class="genres-list">
-              <div v-for="(genre, index) in favoriteGenres" :key="index" class="genre-item">
-                <div class="genre-rank">{{ index + 1 }}</div>
-                <div class="genre-info">
-                  <div class="genre-name">{{ genre.name }}</div>
-                  <div class="genre-count">{{ genre.count }} morceaux</div>
-                </div>
-                <div class="genre-bar-container">
-                  <div :style="{ width: (genre.count / favoriteGenres[0].count * 100) + '%' }" class="genre-bar"></div>
-                </div>
-              </div>
-            </div>
-            <div v-else class="no-data">
-              <p>Aucun genre trouvé.</p>
-            </div>
-          </div>
+        </div>
+        <div v-else class="no-data">
+          <p>Aucun genre trouvé.</p>
         </div>
       </div>
 
@@ -374,7 +371,9 @@ function setActiveTab(tab) {
 .track-image {
   width: 40px;
   height: 40px;
-  margin: 0 16px;
+  margin-right: 12px;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .track-image img {
@@ -458,49 +457,11 @@ function setActiveTab(tab) {
   padding: 24px;
 }
 
-.stats-content {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.stats-section {
-  background-color: #282828;
-  border-radius: 8px;
-  padding: 24px;
-}
-
 .stats-section h4 {
   margin-top: 0;
   margin-bottom: 16px;
   font-size: 18px;
   color: white;
-}
-
-.stats-cards {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.stats-card {
-  background-color: #181818;
-  border-radius: 8px;
-  padding: 16px;
-  min-width: 120px;
-  text-align: center;
-}
-
-.stats-card-value {
-  font-size: 32px;
-  font-weight: bold;
-  color: #1DB954;
-  margin-bottom: 8px;
-}
-
-.stats-card-label {
-  font-size: 14px;
-  color: #b3b3b3;
 }
 
 .artists-list {
@@ -530,6 +491,20 @@ function setActiveTab(tab) {
   font-weight: bold;
 }
 
+.artist-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.artist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .artist-info {
   flex: 1;
   margin-left: 16px;
@@ -542,11 +517,6 @@ function setActiveTab(tab) {
   text-overflow: ellipsis;
 }
 
-.artist-count, .artist-details {
-  font-size: 14px;
-  color: #b3b3b3;
-}
-
 .artist-details {
   display: flex;
   gap: 12px;
@@ -557,79 +527,6 @@ function setActiveTab(tab) {
   text-decoration: none;
   transition: color 0.2s;
   margin-left: auto;
-}
-
-.audio-features {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.feature-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.feature-label {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: white;
-  position: relative;
-}
-
-.feature-tooltip {
-  visibility: hidden;
-  width: 300px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 12px;
-  font-weight: normal;
-}
-
-.feature-label:hover .feature-tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.feature-bar-container {
-  height: 8px;
-  background-color: #181818;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.feature-bar {
-  height: 100%;
-  background-color: #1DB954;
-  border-radius: 4px;
-}
-
-.feature-value {
-  position: absolute;
-  right: 0;
-  top: -20px;
-  font-size: 12px;
-  color: #b3b3b3;
-}
-
-.audio-features-note {
-  font-size: 12px;
-  color: #b3b3b3;
-  font-style: italic;
-  margin-top: 0;
-  margin-bottom: 16px;
 }
 
 .genres-list {
