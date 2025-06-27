@@ -97,6 +97,20 @@
       "description": "Maîtrise du framework Angular pour la création d'applications web dynamiques et réactives.",
       "icon": "/icons/angular.svg",
       "type": "Frontend"
+    },
+    {
+      "name": "Docker",
+      "level": "Moyen",
+      "description": "Expérience avec Docker pour la conteneurisation d'applications et la gestion des environnements de développement.",
+      "icon": "/icons/docker.svg",
+      "type": "DevOps"
+    },
+    {
+      "name": "SQL",
+      "level": "Confirmé",
+      "description": "Maîtrise des bases de données relationnelles et du langage SQL pour la conception, l'optimisation et la gestion des données.",
+      "icon": "/icons/sql.svg",
+      "type": "Backend"
     }
   ],
   "competences": [
