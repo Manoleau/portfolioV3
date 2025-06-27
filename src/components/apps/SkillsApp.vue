@@ -1,60 +1,150 @@
 <script setup>
-import { ref } from 'vue';
+import {ref, computed} from 'vue';
 import skillsData from '@/data/skills.json';
 
-const activeTab = ref('technical');
+const activeTab = ref('technique');
 const skills = ref(skillsData);
+const sortBy = ref('name'); // Default sort by name
+const activeType = ref('all'); // For filtering technique skills by type
+
+// Get unique types from technical skills
+const skillTypes = computed(() => {
+  const types = skills.value.technique.map(skill => skill.type);
+  return ['all', ...new Set(types)];
+});
+
+// Sorted and filtered skills
+const displayedSkills = computed(() => {
+  let filteredSkills = [...skills.value[activeTab.value]];
+
+  // Filter by type if we're on the technique tab
+  if (activeTab.value === 'technique' && activeType.value !== 'all') {
+    filteredSkills = filteredSkills.filter(skill => skill.type === activeType.value);
+  }
+
+  // Sort skills
+  return filteredSkills.sort((a, b) => {
+    if (sortBy.value === 'level') {
+      // Sort by level (Confirmé > Moyen > Débutant)
+      const levelOrder = { 'Confirmé': 3, 'Moyen': 2, 'Débutant': 1 };
+      return levelOrder[b.level] - levelOrder[a.level];
+    } else {
+      // Sort by name alphabetically
+      return a.name.localeCompare(b.name);
+    }
+  });
+});
 
 function setActiveTab(tab) {
   activeTab.value = tab;
+  // Reset type filter when changing tabs
+  activeType.value = 'all';
+}
+
+function setActiveType(type) {
+  activeType.value = type;
+}
+
+function setSortBy(sort) {
+  sortBy.value = sort;
+}
+
+function getLevelPercentage(level) {
+  switch (level) {
+    case 'Débutant':
+      return 33;
+    case 'Moyen':
+      return 66;
+    case 'Confirmé':
+      return 100;
+    default:
+      return 0;
+  }
 }
 </script>
 
 <template>
   <div class="skills-app">
     <div class="tabs">
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'technical' }" 
-        @click="setActiveTab('technical')"
+      <button
+          class="tab-button"
+          :class="{ active: activeTab === 'technique' }"
+          @click="setActiveTab('technique')"
       >
-        Technical Skills
+        Compétences Techniques
       </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'soft' }" 
-        @click="setActiveTab('soft')"
+      <button
+          class="tab-button"
+          :class="{ active: activeTab === 'competences' }"
+          @click="setActiveTab('competences')"
       >
-        Soft Skills
+        Compétences Générales
       </button>
-      <button 
-        class="tab-button" 
-        :class="{ active: activeTab === 'languages' }" 
-        @click="setActiveTab('languages')"
+      <button
+          class="tab-button"
+          :class="{ active: activeTab === 'langues' }"
+          @click="setActiveTab('langues')"
       >
-        Languages
+        Langues
       </button>
     </div>
 
-    <div class="skills-container">
-      <div v-if="skills[activeTab].length === 0" class="no-skills">
-        No skills to display.
+    <div class="controls">
+      <!-- Type filter for technical skills -->
+      <div v-if="activeTab === 'technique'" class="type-filter">
+        <span>Type:</span>
+        <button 
+          v-for="type in skillTypes" 
+          :key="type" 
+          @click="setActiveType(type)"
+          :class="{ active: activeType === type }"
+          class="filter-button"
+        >
+          {{ type === 'all' ? 'Tous' : type }}
+        </button>
       </div>
 
-      <div v-for="skill in skills[activeTab]" :key="skill.name" class="skill-card">
+      <!-- Sort controls for all tabs -->
+      <div class="sort-controls">
+        <span>Trier par:</span>
+        <button 
+          @click="setSortBy('name')" 
+          :class="{ active: sortBy === 'name' }"
+          class="sort-button"
+        >
+          Nom
+        </button>
+        <button 
+          @click="setSortBy('level')" 
+          :class="{ active: sortBy === 'level' }"
+          class="sort-button"
+        >
+          Niveau
+        </button>
+      </div>
+    </div>
+
+    <div class="skills-container">
+      <div v-if="displayedSkills.length === 0" class="no-skills">
+        Aucune compétence à afficher.
+      </div>
+
+      <div v-for="skill in displayedSkills" :key="skill.name" class="skill-card">
         <div v-if="skill.icon" class="skill-icon">
           <img :src="skill.icon" :alt="skill.name">
         </div>
         <div class="skill-details">
           <div class="skill-header">
             <h3 class="skill-name">{{ skill.name }}</h3>
-            <div class="skill-years">{{ skill.years }} years</div>
+            <div class="skill-info">
+              <span v-if="activeTab === 'technique'" class="skill-type">{{ skill.type }}</span>
+              <span class="skill-level">{{ skill.level }}</span>
+            </div>
           </div>
           <div class="skill-progress-container">
             <div class="skill-progress-bar">
-              <div class="skill-progress" :style="{ width: `${skill.level}%` }"></div>
+              <div class="skill-progress" :style="{ width: `${getLevelPercentage(skill.level)}%` }"></div>
             </div>
-            <div class="skill-level">{{ skill.level }}%</div>
           </div>
           <p class="skill-description">{{ skill.description }}</p>
         </div>
@@ -147,7 +237,23 @@ function setActiveTab(tab) {
   color: var(--color-1);
 }
 
-.skill-years {
+.skill-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.skill-type {
+  font-size: 12px;
+  color: white;
+  background-color: var(--color-1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: normal;
+}
+
+.skill-level {
   font-size: 14px;
   color: #666;
   font-weight: bold;
@@ -174,18 +280,46 @@ function setActiveTab(tab) {
   border-radius: 4px;
 }
 
-.skill-level {
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--color-2);
-  width: 40px;
-  text-align: right;
-}
-
 .skill-description {
   margin: 0;
   font-size: 14px;
   color: #555;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.type-filter, .sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-button, .sort-button {
+  padding: 4px 8px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.filter-button:hover, .sort-button:hover {
+  background-color: #f0f0f0;
+}
+
+.filter-button.active, .sort-button.active {
+  background-color: var(--color-2);
+  color: white;
+  border-color: var(--color-2);
 }
 
 .no-skills {

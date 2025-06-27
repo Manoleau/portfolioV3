@@ -1,91 +1,146 @@
 {
-  "technical": [
+  "technique": [
+    {
+      "name": "HTML/CSS",
+      "level": "Confirmé",
+      "description": "Expert en HTML5 sémantique et techniques CSS modernes incluant Flexbox, Grid, et animations CSS.",
+      "icon": "/icons/html-css.svg",
+      "type": "Frontend"
+    },
     {
       "name": "JavaScript",
-      "level": 90,
-      "description": "Proficient in modern JavaScript (ES6+), including async/await, promises, and functional programming concepts.",
+      "level": "Confirmé",
+      "description": "Maîtrise du JavaScript moderne (ES6+), y compris async/await, promises, et concepts de programmation fonctionnelle.",
       "icon": "/icons/javascript.svg",
-      "years": 5
+      "type": "Frontend"
     },
     {
       "name": "Vue.js",
-      "level": 85,
-      "description": "Experienced with Vue.js framework, including Vue 3 composition API, Vuex for state management, and Vue Router.",
+      "level": "Moyen",
+      "description": "Expérience avec le framework Vue.js, y compris l'API de composition Vue 3, Vuex pour la gestion d'état, et Vue Router.",
       "icon": "/icons/vue.svg",
-      "years": 3
-    },
-    {
-      "name": "HTML/CSS",
-      "level": 95,
-      "description": "Expert in semantic HTML5 and modern CSS techniques including Flexbox, Grid, and CSS animations.",
-      "icon": "/icons/html-css.svg",
-      "years": 7
+      "type": "Frontend"
     },
     {
       "name": "Node.js",
-      "level": 80,
-      "description": "Strong knowledge of server-side JavaScript using Node.js, including Express framework and RESTful API development.",
-      "icon": "/icons/javascript.svg",
-      "years": 4
+      "level": "Confirmé",
+      "description": "Solide connaissance du JavaScript côté serveur avec Node.js, y compris le framework Express et le développement d'API RESTful.",
+      "icon": "/icons/nodejs.svg",
+      "type": "Backend"
     },
     {
       "name": "Git",
-      "level": 85,
-      "description": "Proficient with Git version control, including branching strategies, merge conflict resolution, and collaborative workflows.",
-      "icon": "/icons/javascript.svg",
-      "years": 5
+      "level": "Confirmé",
+      "description": "Maîtrise du contrôle de version Git, y compris les stratégies de branchement, la résolution de conflits de fusion, et les flux de travail collaboratifs.",
+      "icon": "/icons/git.svg",
+      "type": "DevOps"
+    },
+    {
+      "name": "PHP",
+      "level": "Confirmé",
+      "description": "Maîtrise du développement PHP, incluant les concepts avancés et les bonnes pratiques de programmation.",
+      "icon": "/icons/php.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "Symfony",
+      "level": "Confirmé",
+      "description": "Expertise dans le framework Symfony, incluant la création d'applications web robustes et évolutives.",
+      "icon": "/icons/symfony.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "Nest.js",
+      "level": "Moyen",
+      "description": "Expérience avec le framework Nest.js pour la création d'applications Node.js efficaces et bien structurées.",
+      "icon": "/icons/nestjs.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "Springboot",
+      "level": "Moyen",
+      "description": "Compétence dans le développement d'applications Java avec le framework Spring Boot.",
+      "icon": "/icons/spring.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "Java",
+      "level": "Confirmé",
+      "description": "Maîtrise du langage Java et de son écosystème pour le développement d'applications robustes.",
+      "icon": "/icons/java.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "Python",
+      "level": "Confirmé",
+      "description": "Expertise en Python pour le développement d'applications, l'automatisation et l'analyse de données.",
+      "icon": "/icons/python.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "Django",
+      "level": "Moyen",
+      "description": "Expérience avec le framework Django pour le développement d'applications web en Python.",
+      "icon": "/icons/django.svg",
+      "type": "Backend"
+    },
+    {
+      "name": "React",
+      "level": "Moyen",
+      "description": "Compétence dans le développement d'interfaces utilisateur avec la bibliothèque React.",
+      "icon": "/icons/react.svg",
+      "type": "Frontend"
+    },
+    {
+      "name": "Angular",
+      "level": "Confirmé",
+      "description": "Maîtrise du framework Angular pour la création d'applications web dynamiques et réactives.",
+      "icon": "/icons/angular.svg",
+      "type": "Frontend"
     }
   ],
-  "soft": [
+  "competences": [
     {
       "name": "Communication",
-      "level": 90,
-      "description": "Excellent verbal and written communication skills, able to explain complex technical concepts to non-technical stakeholders.",
-      "years": 8
+      "level": "Moyen",
+      "description": "Excellentes compétences en communication verbale et écrite, capable d'expliquer des concepts techniques complexes à des parties prenantes non techniques."
     },
     {
-      "name": "Problem Solving",
-      "level": 95,
-      "description": "Strong analytical and problem-solving abilities, with a methodical approach to debugging and troubleshooting.",
-      "years": 10
+      "name": "Résolution de problèmes",
+      "level": "Confirmé",
+      "description": "Fortes capacités analytiques et de résolution de problèmes, avec une approche méthodique du débogage et du dépannage."
     },
     {
-      "name": "Teamwork",
-      "level": 85,
-      "description": "Collaborative team player with experience in agile development environments and cross-functional teams.",
-      "years": 6
+      "name": "Travail d'équipe",
+      "level": "Confirmé",
+      "description": "Collaborateur d'équipe avec expérience dans des environnements de développement agile et des équipes pluridisciplinaires."
     },
     {
-      "name": "Time Management",
-      "level": 80,
-      "description": "Effective at prioritizing tasks, meeting deadlines, and managing multiple projects simultaneously.",
-      "years": 5
+      "name": "Gestion du temps",
+      "level": "Moyen",
+      "description": "Efficace pour prioriser les tâches, respecter les délais et gérer plusieurs projets simultanément."
     },
     {
-      "name": "Adaptability",
-      "level": 90,
-      "description": "Quick learner who adapts well to new technologies, methodologies, and changing project requirements.",
-      "years": 7
+      "name": "Adaptabilité",
+      "level": "Confirmé",
+      "description": "Apprend rapidement et s'adapte bien aux nouvelles technologies, méthodologies et aux changements d'exigences des projets."
     }
   ],
-  "languages": [
+  "langues": [
     {
-      "name": "English",
-      "level": 95,
-      "description": "Native or bilingual proficiency",
-      "years": 30
+      "name": "Français",
+      "level": "Confirmé",
+      "description": "Langue natale"
     },
     {
-      "name": "French",
-      "level": 80,
-      "description": "Professional working proficiency",
-      "years": 15
+      "name": "Anglais",
+      "level": "Moyen",
+      "description": "Niveau B2"
     },
     {
-      "name": "Spanish",
-      "level": 60,
-      "description": "Limited working proficiency",
-      "years": 5
+      "name": "Japonais",
+      "level": "Débutant",
+      "description": "Je viens de commencer l'apprentissage"
     }
   ]
 }
