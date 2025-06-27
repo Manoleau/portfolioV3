@@ -121,7 +121,6 @@ function setActiveTab(tab) {
               <div class="track-artist">{{ track.artist }}</div>
             </div>
             <div class="track-album">{{ track.album }}</div>
-            <div class="track-popularity">Popularité: {{ track.popularity }}</div>
             <div class="track-duration">{{
                 Math.floor(track.duration_ms / 60000)
               }}:{{ String(Math.floor((track.duration_ms % 60000) / 1000)).padStart(2, '0') }}
@@ -150,7 +149,6 @@ function setActiveTab(tab) {
             <div class="artist-info">
               <div class="artist-name">{{ artist.name }}</div>
               <div class="artist-details">
-                <span v-if="artist.popularity">Popularité: {{ artist.popularity }}</span>
                 <span v-if="artist.followers">Followers: {{ artist.followers }}</span>
               </div>
             </div>
