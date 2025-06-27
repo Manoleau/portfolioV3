@@ -18,6 +18,7 @@
     "vite-plugin-vue-devtools": "^7.7.2"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.6.1"
+    "@rollup/rollup-linux-x64-gnu": "4.6.1",
+    "@esbuild/linux-x64": "0.25.2"
   }
 }
