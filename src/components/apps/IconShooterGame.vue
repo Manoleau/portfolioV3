@@ -64,7 +64,6 @@ function spawnIcon() {
     '/icons/html-css.svg',
     '/icons/portfolio.svg',
     '/icons/blog.svg',
-    '/icons/music.svg',
     '/icons/games.svg',
     '/icons/ecommerce.svg'
   ];

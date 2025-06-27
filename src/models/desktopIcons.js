@@ -36,13 +36,6 @@ export const desktopIcons = [
         }
       },
       {
-        name: "Music",
-        icon: "/icons/music.svg",
-        onClick: () => {
-          console.log("Music clicked");
-        }
-      },
-      {
         name: "Travel",
         icon: "/icons/travel.svg",
         onClick: () => {

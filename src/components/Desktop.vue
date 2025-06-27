@@ -5,9 +5,9 @@ import ProjectsApp from './apps/ProjectsApp.vue';
 import SkillsApp from './apps/SkillsApp.vue';
 import ExperiencesApp from './apps/ExperiencesApp.vue';
 import EducationApp from './apps/EducationApp.vue';
-import MusicApp from './apps/MusicApp.vue';
 import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
+import SpotifyApp from './apps/SpotifyApp.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 // Application windows state
@@ -112,14 +112,14 @@ const desktopIcons = [
         onClick: () => openApp("Formation")
       },
       {
-        name: "Musique",
-        icon: "/icons/music.svg",
-        onClick: () => openApp("Musique")
-      },
-      {
         name: "Jeux Vidéo",
         icon: "/icons/games.svg",
         onClick: () => openApp("Jeux Vidéo")
+      },
+      {
+        name: "Spotify",
+        icon: "/icons/spotify.svg",
+        onClick: () => openApp("Spotify")
       }
     ]
   }
@@ -159,8 +159,8 @@ const desktopIcons = [
       <SkillsApp v-else-if="window.name === 'Compétences'" />
       <ExperiencesApp v-else-if="window.name === 'Expériences'" />
       <EducationApp v-else-if="window.name === 'Formation'" />
-      <MusicApp v-else-if="window.name === 'Musique'" />
       <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'" />
+      <SpotifyApp v-else-if="window.name === 'Spotify'" />
       <div v-else class="placeholder-content">
         {{ window.name }} contenu à venir...
       </div>
