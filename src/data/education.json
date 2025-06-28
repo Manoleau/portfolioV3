@@ -1,18 +1,6 @@
 {
   "degrees": [
     {
-      "id": 1,
-      "degree": "Baccalauréat Général",
-      "institution": "Lycée Paul-Émile VICTOR",
-      "location": "Champagnole, 39300",
-      "startDate": "2020-09",
-      "endDate": "2022-06",
-      "courses": [
-        "Mathématiques",
-        "NSI"
-      ]
-    },
-    {
       "id": 2,
       "degree": "BUT Informatique",
       "institution": "Université Claude Bernard Lyon1",
@@ -41,6 +29,18 @@
         "MongoDB",
         "Neo4J",
         "SQL"
+      ]
+    },
+    {
+      "id": 1,
+      "degree": "Baccalauréat Général",
+      "institution": "Lycée Paul-Émile VICTOR",
+      "location": "Champagnole, 39300",
+      "startDate": "2020-09",
+      "endDate": "2022-06",
+      "courses": [
+        "Mathématiques",
+        "NSI"
       ]
     }
   ]

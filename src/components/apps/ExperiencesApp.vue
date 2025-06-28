@@ -1,54 +1,107 @@
 <script setup>
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 import experiencesData from '@/data/experiences.json';
 
 const activeTab = ref('work');
 const experiences = ref(experiencesData);
+const sortBy = ref('date'); // Default sort by date (most recent first)
+
+// Sorted experiences
+const displayedExperiences = computed(() => {
+  let filteredExperiences = [...experiences.value[activeTab.value]];
+
+  // Sort experiences
+  return filteredExperiences.sort((a, b) => {
+    if (sortBy.value === 'date') {
+      // Sort by date (most recent first)
+      const dateA = new Date(a.startDate);
+      const dateB = new Date(b.startDate);
+      return dateB - dateA; // Most recent first
+    } else {
+      // Sort by company name alphabetically
+      const nameA = activeTab.value === 'work' ? a.company : a.organization;
+      const nameB = activeTab.value === 'work' ? b.company : b.organization;
+      return nameA.localeCompare(nameB);
+    }
+  });
+});
 
 function setActiveTab(tab) {
   activeTab.value = tab;
 }
 
-function formatDate(dateString) {
-  if (dateString === 'Present') return 'Present';
+function setSortBy(sort) {
+  sortBy.value = sort;
+}
 
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short'
-  }).format(date);
+function formatDate(dateString) {
+  if (dateString === 'Present' || dateString === 'present') return 'Présent';
+
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      console.error(`Invalid date: ${dateString}`);
+      return 'Date invalide';
+    }
+    return new Intl.DateTimeFormat('fr-FR', {
+      year: 'numeric',
+      month: 'short'
+    }).format(date);
+  } catch (error) {
+    console.error(`Error formatting date: ${dateString}`, error);
+    return 'Date invalide';
+  }
 }
 
 function calculateDuration(startDate, endDate) {
-  if (endDate === 'Present') {
-    endDate = new Date().toISOString().slice(0, 7);
+  try {
+    if (endDate === 'Présent' || endDate === 'present') {
+      endDate = new Date().toISOString().slice(0, 7);
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    console.log('Start: ', start);
+    console.log('End: ', end);
+
+    // Check if dates are valid
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      console.error(`Invalid date in calculateDuration: startDate=${startDate}, endDate=${endDate}`);
+      return 'Durée indéterminée';
+    }
+
+    const yearDiff = end.getFullYear() - start.getFullYear();
+    const monthDiff = end.getMonth() - start.getMonth();
+
+    let years = yearDiff;
+    let months = monthDiff;
+
+    if (monthDiff < 0) {
+      years--;
+      months += 12;
+    }
+
+    // Handle negative duration (if end date is before start date)
+    if (years < 0 || (years === 0 && months < 0)) {
+      console.error(`End date is before start date: startDate=${startDate}, endDate=${endDate}`);
+      return 'Durée indéterminée';
+    }
+
+    let result = '';
+    if (years > 0) {
+      result += `${years} ${years > 1 ? 'ans' : 'an'}`;
+    }
+
+    if (months > 0) {
+      if (result) result += ', ';
+      result += `${months} mois`;
+    }
+
+    return result || 'Moins d\'un mois';
+  } catch (error) {
+    console.error(`Error calculating duration: startDate=${startDate}, endDate=${endDate}`, error);
+    return 'Durée indéterminée';
   }
-
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-
-  const yearDiff = end.getFullYear() - start.getFullYear();
-  const monthDiff = end.getMonth() - start.getMonth();
-
-  let years = yearDiff;
-  let months = monthDiff;
-
-  if (monthDiff < 0) {
-    years--;
-    months += 12;
-  }
-
-  let result = '';
-  if (years > 0) {
-    result += `${years} year${years > 1 ? 's' : ''}`;
-  }
-
-  if (months > 0) {
-    if (result) result += ', ';
-    result += `${months} month${months > 1 ? 's' : ''}`;
-  }
-
-  return result || 'Less than a month';
 }
 </script>
 
@@ -60,23 +113,36 @@ function calculateDuration(startDate, endDate) {
           class="tab-button"
           @click="setActiveTab('work')"
       >
-        Work Experience
-      </button>
-      <button
-          :class="{ active: activeTab === 'volunteer' }"
-          class="tab-button"
-          @click="setActiveTab('volunteer')"
-      >
-        Volunteer Experience
+        Professionel
       </button>
     </div>
 
+    <div class="controls">
+      <div class="sort-controls">
+        <span>Trier par:</span>
+        <button
+            :class="{ active: sortBy === 'name' }"
+            class="sort-button"
+            @click="setSortBy('name')"
+        >
+          Nom
+        </button>
+        <button
+            :class="{ active: sortBy === 'date' }"
+            class="sort-button"
+            @click="setSortBy('date')"
+        >
+          Date
+        </button>
+      </div>
+    </div>
+
     <div class="experiences-container">
-      <div v-if="experiences[activeTab].length === 0" class="no-experiences">
-        No experiences to display.
+      <div v-if="displayedExperiences.length === 0" class="no-experiences">
+        Pas d'experiences
       </div>
 
-      <div v-for="experience in experiences[activeTab]" :key="experience.id" class="experience-card">
+      <div v-for="experience in displayedExperiences" :key="experience.id" class="experience-card">
         <div class="experience-header">
           <div class="experience-title">
             <h3 class="position">{{ experience.position }}</h3>
@@ -96,7 +162,7 @@ function calculateDuration(startDate, endDate) {
         <p class="experience-description">{{ experience.description }}</p>
 
         <div class="experience-responsibilities">
-          <h5>Responsibilities:</h5>
+          <h5>Responsabilités:</h5>
           <ul>
             <li v-for="(responsibility, index) in experience.responsibilities" :key="index">
               {{ responsibility }}
@@ -144,6 +210,42 @@ function calculateDuration(startDate, endDate) {
   background-color: white;
   border-bottom: 2px solid var(--color-2);
   font-weight: bold;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-button {
+  padding: 4px 8px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.sort-button:hover {
+  background-color: #f0f0f0;
+}
+
+.sort-button.active {
+  background-color: var(--color-2);
+  color: white;
+  border-color: var(--color-2);
 }
 
 .experiences-container {

@@ -2,115 +2,77 @@
   "work": [
     {
       "id": 1,
-      "company": "Tech Innovations Inc.",
-      "position": "Senior Frontend Developer",
-      "location": "San Francisco, CA",
-      "startDate": "2020-03",
-      "endDate": "Present",
-      "description": "Leading the frontend development team in building modern web applications using Vue.js and related technologies.",
+      "company": "Colruyt",
+      "position": "Job d'été",
+      "location": "Mouchard",
+      "startDate": "2022-07-04",
+      "endDate": "2022-08-26",
+      "description": "Ajouter description",
       "responsibilities": [
-        "Architected and implemented the company's flagship SaaS product using Vue.js and Vuex",
-        "Mentored junior developers and conducted code reviews to ensure code quality",
-        "Collaborated with UX/UI designers to implement responsive and accessible interfaces",
-        "Optimized application performance, reducing load time by 40%",
-        "Implemented automated testing with Jest and Cypress, achieving 85% code coverage"
+        "Caissier",
+        "Mise en rayon des produits"
       ],
       "technologies": [
-        "Vue.js",
-        "JavaScript",
-        "HTML/CSS",
-        "REST APIs",
-        "Git"
+        "Adaptation",
+        "Travail d’équipe",
+        "Communication",
+        "Agilité"
       ]
     },
     {
       "id": 2,
-      "company": "WebSolutions Co.",
-      "position": "Frontend Developer",
-      "location": "Boston, MA",
-      "startDate": "2018-06",
-      "endDate": "2020-02",
-      "description": "Developed and maintained client websites and web applications using modern frontend technologies.",
+      "company": "ONYL Rocks",
+      "position": "Stage Développeur Symfony",
+      "location": "Lyon",
+      "startDate": "2024-04-15",
+      "endDate": "2024-06-28",
+      "description": "Ajouter description",
       "responsibilities": [
-        "Built responsive websites for clients across various industries",
-        "Converted design mockups into functional web interfaces",
-        "Implemented e-commerce functionality using Shopify and custom solutions",
-        "Collaborated with backend developers to integrate frontend with APIs",
-        "Participated in agile development processes, including daily standups and sprint planning"
+        "Formation continue sur les bonnes pratiques de développement Symfony et l'utilisation des outils de versioning",
+        "Collaboration avec une équipe de développeurs pour la mise en place de bonnes pratiques de développement"
       ],
       "technologies": [
+        "Symfony",
         "JavaScript",
-        "React",
-        "HTML/CSS",
-        "SASS",
-        "Webpack"
+        "jQuery",
+        "AJAX",
+        "Bootstrap",
+        "Git",
+        "SQL",
+        "PHP",
+        "PhpMyAdmin",
+        "Travail d’équipe",
+        "Résolution de problèmes",
+        "Rédaction de rapport",
+        "Discipline positive"
       ]
     },
     {
       "id": 3,
-      "company": "Digital Agency XYZ",
-      "position": "Web Developer Intern",
-      "location": "New York, NY",
-      "startDate": "2017-09",
-      "endDate": "2018-05",
-      "description": "Assisted in the development of websites and digital marketing materials for agency clients.",
+      "company": "YPOK",
+      "position": "Alternant Développeur Symfony",
+      "location": "Miribel",
+      "startDate": "2024-10-21",
+      "endDate": "present",
+      "description": "Ajouter description",
       "responsibilities": [
-        "Developed and maintained client websites using HTML, CSS, and JavaScript",
-        "Created email marketing templates that were responsive across different email clients",
-        "Assisted senior developers with debugging and quality assurance",
-        "Participated in client meetings and contributed to project planning",
-        "Learned and implemented best practices for web accessibility and SEO"
+        "Formation continue sur les bonnes pratiques de développement Symfony et l'utilisation des outils de versioning",
+        "Collaboration avec une équipe de développeurs pour la mise en place de bonnes pratiques de développement"
       ],
       "technologies": [
-        "HTML",
-        "CSS",
+        "Symfony",
         "JavaScript",
         "jQuery",
-        "WordPress"
-      ]
-    }
-  ],
-  "volunteer": [
-    {
-      "id": 4,
-      "organization": "Code for Good",
-      "position": "Volunteer Developer",
-      "location": "Remote",
-      "startDate": "2019-01",
-      "endDate": "Present",
-      "description": "Contributing to open-source projects that support non-profit organizations and social causes.",
-      "responsibilities": [
-        "Developed features for a volunteer management system used by multiple non-profits",
-        "Fixed bugs and improved accessibility in existing applications",
-        "Mentored coding bootcamp graduates on real-world projects",
-        "Participated in weekend hackathons to build solutions for community problems"
-      ],
-      "technologies": [
-        "JavaScript",
-        "Vue.js",
-        "Node.js",
-        "MongoDB"
-      ]
-    },
-    {
-      "id": 5,
-      "organization": "Tech Mentors Network",
-      "position": "Programming Instructor",
-      "location": "Chicago, IL",
-      "startDate": "2018-09",
-      "endDate": "2019-12",
-      "description": "Taught web development skills to underrepresented groups in the tech industry.",
-      "responsibilities": [
-        "Conducted weekly workshops on HTML, CSS, and JavaScript fundamentals",
-        "Created curriculum and learning materials for beginner web developers",
-        "Provided one-on-one mentoring to students working on personal projects",
-        "Organized coding events and hackathons for the local community"
-      ],
-      "technologies": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "Git"
+        "AJAX",
+        "Bootstrap",
+        "Git",
+        "SQL",
+        "PHP",
+        "PhpMyAdmin",
+        "Travail d’équipe",
+        "Résolution de problèmes",
+        "Rédaction de rapport",
+        "Discipline positive"
       ]
     }
   ]

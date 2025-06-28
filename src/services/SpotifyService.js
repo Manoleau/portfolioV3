@@ -121,7 +121,7 @@ export default {
                          JOIN user_genres ug ON ag.genre_id = ug.genre_id
                 WHERE ug.user_id = ${SPOTIFY_USER_ID}
                 ORDER BY ua.rank
-                LIMIT 10
+                LIMIT 20
             `;
             return result;
         } catch (error) {
@@ -137,7 +137,7 @@ export default {
                          JOIN user_tracks ut ON t.id = ut.track_id
                 WHERE ut.user_id = ${SPOTIFY_USER_ID}
                 ORDER BY ut.rank
-                LIMIT 10
+                LIMIT 20
             `;
             return result;
         } catch (error) {
