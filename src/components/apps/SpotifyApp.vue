@@ -18,21 +18,16 @@ async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    // Get user profile information
     userProfile.value = await SpotifyService.getUserInfo();
 
-    // Get top tracks
     topTracks.value = await SpotifyService.getTopTracks();
 
-    // Get top artists
     topArtists.value = await SpotifyService.getTopArtists();
 
-    // Get favorite genres
     favoriteGenres.value = await SpotifyService.getFavoriteGenres();
 
   } catch (err) {
     error.value = `Failed to load data: ${err.message}`;
-    console.error('Data loading error:', err);
   } finally {
     loading.value = false;
   }

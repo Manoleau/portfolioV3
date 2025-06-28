@@ -1,29 +1,80 @@
-import {neon} from '@netlify/neon';
-
-// Use a try-catch block to handle potential errors with the database connection
+import { neon } from '@neondatabase/serverless';
 let sql;
+
+function createCustomFetch() {
+    return (url, options = {}) => {
+        try {
+            let cleanUrl = url;
+
+            if (typeof url === 'string') {
+                cleanUrl = url
+                    .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+                    .replace(/[^\x20-\x7E]/g, (char) => encodeURIComponent(char));
+
+                try {
+                    new URL(cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`);
+                } catch {
+                    cleanUrl = encodeURI(url);
+                }
+            }
+
+            return fetch(cleanUrl, {
+                ...options,
+                cache: 'no-store',
+                credentials: 'omit'
+            });
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    };
+}
+
+function sanitizeDatabaseUrl(url) {
+    if (!url || typeof url !== 'string') return url;
+
+    try {
+        const match = url.match(/^(postgresql:\/\/)([^:]+):([^@]+)@(.+)$/);
+        if (match) {
+            const [, protocol, username, password, rest] = match;
+
+            const cleanUsername = username
+                .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+                .replace(/[^a-zA-Z0-9._-]/g, (char) => encodeURIComponent(char));
+
+            const cleanPassword = password
+                .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
+                .replace(/[^a-zA-Z0-9._-]/g, (char) => encodeURIComponent(char));
+
+            return `${protocol}${cleanUsername}:${cleanPassword}@${rest}`;
+        }
+
+        return url;
+    } catch (error) {
+        return url;
+    }
+}
+
 try {
-    // Ensure the URL is properly formatted
-    const dbUrl = import.meta.env.VITE_NETLIFY_DATABASE_URL;
+    let dbUrl = import.meta.env.VITE_NETLIFY_DATABASE_URL;
+
     if (!dbUrl) {
         throw new Error('Database URL is not defined');
     }
 
-    // Configure neon with options to handle fetch properly
+    dbUrl = sanitizeDatabaseUrl(dbUrl);
+
     sql = neon(dbUrl, {
-        // Add fetch options to ensure proper URL handling
+        fetch: createCustomFetch(),
         fetchOptions: {
-            // Use default fetch behavior
-            cache: 'no-cache',
-            credentials: 'same-origin'
+            cache: 'no-store',
+            credentials: 'omit'
         }
     });
 
-    console.log('Connected to the Neon PostgreSQL database.');
 } catch (error) {
-    console.error('Error connecting to database:', error);
-    // Provide a fallback implementation that returns empty arrays
-    sql = () => Promise.resolve([]);
+    sql = () => {
+        return Promise.resolve([]);
+    };
 }
 
 const SPOTIFY_USER_ID = import.meta.env.VITE_SPOTIFY_USER_ID;
@@ -31,15 +82,31 @@ const SPOTIFY_USER_ID = import.meta.env.VITE_SPOTIFY_USER_ID;
 export default {
     async getUserInfo() {
         try {
-            const rows = await sql`SELECT *
-                                   FROM users
-                                   WHERE id = ${SPOTIFY_USER_ID}`;
+            const rows = await sql`SELECT * FROM users WHERE id = ${SPOTIFY_USER_ID}`;
+
             if (rows.length === 0) {
-                throw new Error(`Failed to get user`);
+                throw new Error(`No user found with ID: ${SPOTIFY_USER_ID}`);
             }
             return rows[0];
         } catch (error) {
-            console.error(error);
+            if (error.message.includes('Invalid name') || error.message.includes('fetch')) {
+                try {
+                    const fallbackSql = neon(import.meta.env.VITE_NETLIFY_DATABASE_URL, {
+                        fetchOptions: {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            cache: 'no-store'
+                        }
+                    });
+
+                    const fallbackRows = await fallbackSql`SELECT * FROM users WHERE id = ${SPOTIFY_USER_ID}`;
+                    return fallbackRows[0];
+                } catch (fallbackError) {
+                }
+            }
+
             throw error;
         }
     },
@@ -58,10 +125,10 @@ export default {
             `;
             return result;
         } catch (error) {
-            console.error('Error fetching top artists:', error);
             return [];
         }
     },
+
     async getTopTracks() {
         try {
             const result = await sql`
@@ -74,10 +141,10 @@ export default {
             `;
             return result;
         } catch (error) {
-            console.error('Error fetching top tracks:', error);
             return [];
         }
     },
+
     async getFavoriteGenres() {
         try {
             const result = await sql`
@@ -90,7 +157,6 @@ export default {
             `;
             return result;
         } catch (error) {
-            console.error('Error fetching favorite genres:', error);
             return [];
         }
     }
