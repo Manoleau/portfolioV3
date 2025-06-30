@@ -12,16 +12,20 @@ defineProps({
     type: Function,
     default: () => {
     }
+  },
+  isMobile: {
+    type: Boolean,
+    default: false
   }
 });
 </script>
 
 <template>
-  <div class="desktop-icon" @click="onClick">
-    <div class="icon">
+  <div class="desktop-icon" :class="{ 'mobile': isMobile }" @click="onClick">
+    <div class="icon" :class="{ 'mobile': isMobile }">
       <img :src="icon" alt="icon"/>
     </div>
-    <div class="name">{{ name }}</div>
+    <div class="name" :class="{ 'mobile': isMobile }">{{ name }}</div>
   </div>
 </template>
 
@@ -35,6 +39,15 @@ defineProps({
   margin: 10px;
   cursor: pointer;
   user-select: none;
+  transition: background-color 0.2s;
+}
+
+/* Mobile desktop icon */
+.desktop-icon.mobile {
+  width: 100px;
+  height: 110px;
+  margin: 5px;
+  padding: 10px 5px;
 }
 
 .desktop-icon:hover {
@@ -54,6 +67,12 @@ defineProps({
   align-items: center;
 }
 
+/* Mobile icon */
+.icon.mobile {
+  width: 60px;
+  height: 60px;
+}
+
 .icon img {
   max-width: 100%;
   max-height: 100%;
@@ -70,5 +89,12 @@ defineProps({
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+/* Mobile name */
+.name.mobile {
+  font-size: 14px;
+  margin-top: 8px;
+  max-width: 90px;
 }
 </style>
