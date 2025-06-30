@@ -105,8 +105,24 @@ function stopDrag() {
   document.removeEventListener('touchend', stopDrag);
 }
 
-function closeWindow() {
-  emit('close');
+function closeWindow(event) {
+  // Prevent event propagation to avoid triggering other handlers
+  if (event) {
+    event.stopPropagation();
+  }
+
+  // For touchend events, add a small delay to prevent accidental touches
+  if (event && event.type === 'touchend') {
+    // Prevent default browser behavior
+    event.preventDefault();
+
+    // Add a small delay for better mobile UX
+    setTimeout(() => {
+      emit('close');
+    }, 50);
+  } else {
+    emit('close');
+  }
 }
 
 // Handle window resize
@@ -158,7 +174,7 @@ onUnmounted(() => {
          @touchstart="startDrag">
       <div class="window-title">{{ title }}</div>
       <div class="window-controls">
-        <button class="window-close" @click="closeWindow">×</button>
+        <button class="window-close" @click="closeWindow" @touchend.prevent="closeWindow">×</button>
       </div>
     </div>
     <div class="window-content">
@@ -246,9 +262,12 @@ onUnmounted(() => {
 
 /* Larger close button for mobile */
 .app-window.mobile .window-close {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   font-size: 24px;
+  padding: 10px;
+  margin-right: -10px; /* Compensate for padding */
+  touch-action: manipulation; /* Improve touch responsiveness */
 }
 
 .window-close:hover {
