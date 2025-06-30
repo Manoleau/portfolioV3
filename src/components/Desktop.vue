@@ -12,7 +12,7 @@ import {onMounted, onUnmounted, ref} from 'vue';
 
 // Application windows state
 const openWindows = ref([]);
-const nextZIndex = ref(1);
+const nextZIndex = ref(3);
 
 // Start menu state
 const isStartMenuOpen = ref(false);
