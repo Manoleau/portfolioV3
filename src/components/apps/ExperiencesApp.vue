@@ -4,21 +4,17 @@ import experiencesData from '@/data/experiences.json';
 
 const activeTab = ref('work');
 const experiences = ref(experiencesData);
-const sortBy = ref('date'); // Default sort by date (most recent first)
+const sortBy = ref('date');
 
-// Sorted experiences
 const displayedExperiences = computed(() => {
   let filteredExperiences = [...experiences.value[activeTab.value]];
 
-  // Sort experiences
   return filteredExperiences.sort((a, b) => {
     if (sortBy.value === 'date') {
-      // Sort by date (most recent first)
       const dateA = new Date(a.startDate);
       const dateB = new Date(b.startDate);
-      return dateB - dateA; // Most recent first
+      return dateB - dateA;
     } else {
-      // Sort by company name alphabetically
       const nameA = activeTab.value === 'work' ? a.company : a.organization;
       const nameB = activeTab.value === 'work' ? b.company : b.organization;
       return nameA.localeCompare(nameB);
@@ -64,7 +60,6 @@ function calculateDuration(startDate, endDate) {
     console.log('Start: ', start);
     console.log('End: ', end);
 
-    // Check if dates are valid
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       console.error(`Invalid date in calculateDuration: startDate=${startDate}, endDate=${endDate}`);
       return 'Durée indéterminée';
@@ -81,7 +76,6 @@ function calculateDuration(startDate, endDate) {
       months += 12;
     }
 
-    // Handle negative duration (if end date is before start date)
     if (years < 0 || (years === 0 && months < 0)) {
       console.error(`End date is before start date: startDate=${startDate}, endDate=${endDate}`);
       return 'Durée indéterminée';

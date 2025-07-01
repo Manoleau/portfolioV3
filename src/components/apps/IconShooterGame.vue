@@ -4,10 +4,11 @@ import {onMounted, onUnmounted, ref} from 'vue';
 const score = ref(0);
 const icons = ref([]);
 const gameActive = ref(true);
-const gameSpeed = ref(2); // Base speed of icons
-const spawnRate = ref(1500); // Time in ms between icon spawns
+const gameSpeed = ref(2);
+const spawnRate = ref(1500);
 let gameLoop = null;
 let spawnInterval = null;
+let wasActive = true;
 
 onMounted(() => {
   const savedScore = localStorage.getItem('iconShooterScore');
@@ -18,12 +19,14 @@ onMounted(() => {
   startGame();
 
   document.addEventListener('mousedown', handleGlobalClick);
+  document.addEventListener('visibilitychange', handleVisibilityChange);
 });
 
 onUnmounted(() => {
   stopGame();
 
   document.removeEventListener('mousedown', handleGlobalClick);
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
 });
 
 function handleGlobalClick(event) {
@@ -47,13 +50,15 @@ function startGame() {
   if (gameActive.value) {
     spawnInterval = setInterval(spawnIcon, spawnRate.value);
 
-    gameLoop = setInterval(updateGame, 16); // ~60fps
+    gameLoop = setInterval(updateGame, 16);
   }
 }
 
 function stopGame() {
   clearInterval(gameLoop);
   clearInterval(spawnInterval);
+  gameLoop = null;
+  spawnInterval = null;
 }
 
 function spawnIcon() {
@@ -109,6 +114,21 @@ function destroyIcon(iconId) {
 function resetScore() {
   score.value = 0;
   localStorage.setItem('iconShooterScore', '0');
+}
+
+function handleVisibilityChange() {
+  if (document.hidden) {
+    wasActive = gameActive.value;
+    if (gameActive.value) {
+      stopGame();
+    }
+  } else {
+    icons.value = [];
+
+    if (wasActive && gameActive.value) {
+      startGame();
+    }
+  }
 }
 </script>
 

@@ -23,7 +23,6 @@ const dragOffset = ref({x: 0, y: 0});
 const position = ref({x: 50, y: 50});
 const isMobile = ref(false);
 
-// Responsive window size based on screen width
 const windowSize = computed(() => {
   if (isMobile.value) {
     return {
@@ -34,12 +33,10 @@ const windowSize = computed(() => {
   return { width: 800, height: 600 };
 });
 
-// Check if device is mobile
 function checkMobile() {
   isMobile.value = window.innerWidth <= 768;
 }
 
-// Ensure window stays within viewport
 function constrainPosition() {
   const maxX = window.innerWidth - windowSize.value.width;
   const maxY = window.innerHeight - windowSize.value.height;
@@ -53,7 +50,6 @@ function startDrag(event) {
 
   isDragging.value = true;
 
-  // Handle both mouse and touch events
   const clientX = event.clientX || (event.touches && event.touches[0].clientX);
   const clientY = event.clientY || (event.touches && event.touches[0].clientY);
 
@@ -62,13 +58,11 @@ function startDrag(event) {
     y: clientY - position.value.y
   };
 
-  // Add both mouse and touch event listeners
   document.addEventListener('mousemove', onDrag);
   document.addEventListener('touchmove', onDrag, { passive: false });
   document.addEventListener('mouseup', stopDrag);
   document.addEventListener('touchend', stopDrag);
 
-  // Prevent default touch behavior to avoid scrolling while dragging
   if (event.type === 'touchstart') {
     event.preventDefault();
   }
@@ -77,7 +71,6 @@ function startDrag(event) {
 function onDrag(event) {
   if (!isDragging.value) return;
 
-  // Handle both mouse and touch events
   const clientX = event.clientX || (event.touches && event.touches[0].clientX);
   const clientY = event.clientY || (event.touches && event.touches[0].clientY);
 
@@ -86,10 +79,8 @@ function onDrag(event) {
     y: clientY - dragOffset.value.y
   };
 
-  // Ensure window stays within viewport
   constrainPosition();
 
-  // Prevent default to stop scrolling on mobile
   if (event.type === 'touchmove') {
     event.preventDefault();
   }
@@ -98,7 +89,6 @@ function onDrag(event) {
 function stopDrag() {
   isDragging.value = false;
 
-  // Remove both mouse and touch event listeners
   document.removeEventListener('mousemove', onDrag);
   document.removeEventListener('touchmove', onDrag);
   document.removeEventListener('mouseup', stopDrag);
@@ -106,17 +96,13 @@ function stopDrag() {
 }
 
 function closeWindow(event) {
-  // Prevent event propagation to avoid triggering other handlers
   if (event) {
     event.stopPropagation();
   }
 
-  // For touchend events, add a small delay to prevent accidental touches
   if (event && event.type === 'touchend') {
-    // Prevent default browser behavior
     event.preventDefault();
 
-    // Add a small delay for better mobile UX
     setTimeout(() => {
       emit('close');
     }, 50);
@@ -125,12 +111,10 @@ function closeWindow(event) {
   }
 }
 
-// Handle window resize
 function handleResize() {
   checkMobile();
   constrainPosition();
 
-  // Center window if it's bigger than the screen
   if (window.innerWidth > windowSize.value.width) {
     position.value.x = (window.innerWidth - windowSize.value.width) / 2;
   }
@@ -140,16 +124,13 @@ function handleResize() {
 }
 
 onMounted(() => {
-  // Initial checks
   checkMobile();
   handleResize();
 
-  // Add resize event listener
   window.addEventListener('resize', handleResize);
 });
 
 onUnmounted(() => {
-  // Clean up all event listeners
   document.removeEventListener('mousemove', onDrag);
   document.removeEventListener('touchmove', onDrag);
   document.removeEventListener('mouseup', stopDrag);

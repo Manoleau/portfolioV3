@@ -4,32 +4,26 @@ import skillsData from '@/data/skills.json';
 
 const activeTab = ref('technique');
 const skills = ref(skillsData);
-const sortBy = ref('name'); // Default sort by name
-const activeType = ref('all'); // For filtering technique skills by type
+const sortBy = ref('name');
+const activeType = ref('all');
 
-// Get unique types from technical skills
 const skillTypes = computed(() => {
   const types = skills.value.technique.map(skill => skill.type);
   return ['all', ...new Set(types)];
 });
 
-// Sorted and filtered skills
 const displayedSkills = computed(() => {
   let filteredSkills = [...skills.value[activeTab.value]];
 
-  // Filter by type if we're on the technique tab
   if (activeTab.value === 'technique' && activeType.value !== 'all') {
     filteredSkills = filteredSkills.filter(skill => skill.type === activeType.value);
   }
 
-  // Sort skills
   return filteredSkills.sort((a, b) => {
     if (sortBy.value === 'level') {
-      // Sort by level (Confirmé > Moyen > Débutant)
       const levelOrder = {'Confirmé': 3, 'Moyen': 2, 'Débutant': 1};
       return levelOrder[b.level] - levelOrder[a.level];
     } else {
-      // Sort by name alphabetically
       return a.name.localeCompare(b.name);
     }
   });
@@ -37,7 +31,6 @@ const displayedSkills = computed(() => {
 
 function setActiveTab(tab) {
   activeTab.value = tab;
-  // Reset type filter when changing tabs
   activeType.value = 'all';
 }
 

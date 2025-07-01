@@ -8,29 +8,24 @@ import EducationApp from './apps/EducationApp.vue';
 import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
 import SpotifyApp from './apps/SpotifyApp.vue';
+import VoyageApp from './apps/VoyageApp.vue';
 import {onMounted, onUnmounted, ref, computed} from 'vue';
 
-// Application windows state
 const openWindows = ref([]);
 const nextZIndex = ref(3);
 
-// Start menu state
 const isStartMenuOpen = ref(false);
 
-// Responsive state
 const isMobile = ref(false);
 
-// Check if device is mobile
 function checkMobile() {
   isMobile.value = window.innerWidth <= 768;
 }
 
-// Handle window resize
 function handleResize() {
   checkMobile();
 }
 
-// Social links
 const socialLinks = [
   {
     name: "GitHub",
@@ -49,15 +44,12 @@ const socialLinks = [
   }
 ];
 
-// Toggle start menu
 function toggleStartMenu() {
   isStartMenuOpen.value = !isStartMenuOpen.value;
 }
 
-// Close start menu when clicking outside
 function handleClickOutside(event) {
   if (isStartMenuOpen.value) {
-    // Check if click is outside the start menu and not on the start button
     const startMenu = document.querySelector('.start-menu');
     const startButton = document.querySelector('.start-button');
 
@@ -69,14 +61,11 @@ function handleClickOutside(event) {
   }
 }
 
-// Add and remove event listeners
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 
-  // Initialize mobile detection
   checkMobile();
 
-  // Add resize event listener
   window.addEventListener('resize', handleResize);
 });
 
@@ -140,6 +129,11 @@ const desktopIcons = [
         name: "Spotify",
         icon: "/icons/spotify.svg",
         onClick: () => openApp("Spotify")
+      },
+      {
+        name: "Voyage",
+        icon: "/icons/travel.svg",
+        onClick: () => openApp("Voyage")
       }
     ]
   }
@@ -180,6 +174,7 @@ const desktopIcons = [
       <SkillsApp v-else-if="window.name === 'Compétences'"/>
       <ExperiencesApp v-else-if="window.name === 'Expériences'"/>
       <EducationApp v-else-if="window.name === 'Formation'"/>
+      <VoyageApp v-else-if="window.name === 'Voyage'"/>
       <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'"/>
       <SpotifyApp v-else-if="window.name === 'Spotify'"/>
       <div v-else class="placeholder-content">

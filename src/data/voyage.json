@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "Japon",
+    "description": "Pays insulaire situé dans l'océan Pacifique, connu pour sa culture unique, ses temples anciens et sa technologie moderne.",
+    "attractions": [
+      "Tokyo (1 semaine) - Akihabara, Shibuya, TeamLabs (2 visites), restaurants locaux, Daikoku Parking",
+      "Kyoto/Osaka (1 semaine) - Temples traditionnels, Nara (parc aux biches), Expo 2025, expérience onsen"
+    ],
+    "image": "/images/travel/japan.jpg",
+    "visited": "Juin 2025"
+  }
+]
