@@ -21,11 +21,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="desktop-icon" :class="{ 'mobile': isMobile }" @click="onClick">
-    <div class="icon" :class="{ 'mobile': isMobile }">
+  <div :class="{ 'mobile': isMobile }" class="desktop-icon" @click="onClick">
+    <div :class="{ 'mobile': isMobile }" class="icon">
       <img :src="icon" alt="icon"/>
     </div>
-    <div class="name" :class="{ 'mobile': isMobile }">{{ name }}</div>
+    <div :class="{ 'mobile': isMobile }" class="name">{{ name }}</div>
   </div>
 </template>
 

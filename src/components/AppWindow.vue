@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, onUnmounted, ref, computed} from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 defineProps({
   title: {
@@ -30,7 +30,7 @@ const windowSize = computed(() => {
       height: Math.min(window.innerHeight - 80, 600)
     };
   }
-  return { width: 800, height: 600 };
+  return {width: 800, height: 600};
 });
 
 function checkMobile() {
@@ -59,7 +59,7 @@ function startDrag(event) {
   };
 
   document.addEventListener('mousemove', onDrag);
-  document.addEventListener('touchmove', onDrag, { passive: false });
+  document.addEventListener('touchmove', onDrag, {passive: false});
   document.addEventListener('mouseup', stopDrag);
   document.addEventListener('touchend', stopDrag);
 
@@ -142,15 +142,15 @@ onUnmounted(() => {
 <template>
   <div v-if="isOpen"
        ref="appWindow"
+       :class="['app-window', { 'mobile': isMobile }]"
        :style="{
          left: `${position.x}px`,
          top: `${position.y}px`,
          width: `${windowSize.width}px`,
          height: `${windowSize.height}px`,
          zIndex: zIndex
-       }"
-       :class="['app-window', { 'mobile': isMobile }]">
-    <div class="window-title-bar" 
+       }">
+    <div class="window-title-bar"
          @mousedown="startDrag"
          @touchstart="startDrag">
       <div class="window-title">{{ title }}</div>

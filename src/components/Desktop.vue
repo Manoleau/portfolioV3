@@ -9,7 +9,7 @@ import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
 import SpotifyApp from './apps/SpotifyApp.vue';
 import VoyageApp from './apps/VoyageApp.vue';
-import {onMounted, onUnmounted, ref, computed} from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
 
 const openWindows = ref([]);
 const nextZIndex = ref(3);
@@ -142,20 +142,20 @@ const desktopIcons = [
 
 <template>
   <div id="desktop" :class="{ 'mobile': isMobile }">
-    <div class="desktop-game-container" v-if="!isMobile">
+    <div v-if="!isMobile" class="desktop-game-container">
       <IconShooterGame/>
     </div>
 
-    <div class="desktop-icons-container" :class="{ 'mobile': isMobile }">
+    <div :class="{ 'mobile': isMobile }" class="desktop-icons-container">
       <div v-for="(category, categoryIndex) in desktopIcons" :key="categoryIndex" class="icon-category">
         <h2 class="category-title">{{ category.category }}</h2>
         <div class="icon-grid">
           <div v-for="(item, itemIndex) in category.items" :key="itemIndex">
             <DesktopIcon
                 :icon="item.icon"
+                :isMobile="isMobile"
                 :name="item.name"
                 :onClick="item.onClick"
-                :isMobile="isMobile"
             />
           </div>
         </div>
@@ -182,22 +182,22 @@ const desktopIcons = [
       </div>
     </AppWindow>
 
-    <div class="taskbar" :class="{ 'mobile': isMobile }">
-      <div class="start-button" @click="toggleStartMenu" :class="{ 'mobile': isMobile }">
+    <div :class="{ 'mobile': isMobile }" class="taskbar">
+      <div :class="{ 'mobile': isMobile }" class="start-button" @click="toggleStartMenu">
         <img alt="Démarrer" src="/icons/start.svg"/>
         <span v-if="!isMobile">Démarrer</span>
       </div>
 
       <!-- Quick app buttons for mobile -->
       <div v-if="isMobile" class="mobile-quick-apps">
-        <div v-for="item in desktopIcons[0].items.slice(0, 4)" :key="item.name" 
+        <div v-for="item in desktopIcons[0].items.slice(0, 4)" :key="item.name"
              class="mobile-app-button" @click="item.onClick()">
-          <img :alt="item.name" :src="item.icon" />
+          <img :alt="item.name" :src="item.icon"/>
         </div>
       </div>
     </div>
 
-    <div v-if="isStartMenuOpen" class="start-menu" :class="{ 'mobile': isMobile }">
+    <div v-if="isStartMenuOpen" :class="{ 'mobile': isMobile }" class="start-menu">
       <div class="start-menu-header">
         <img alt="Démarrer" class="start-menu-logo" src="/icons/start.svg"/>
         <span>Emmanuel ARDOIN</span>
@@ -208,8 +208,8 @@ const desktopIcons = [
         <div class="start-menu-section">
           <h3 class="section-title">Liens Sociaux</h3>
           <div class="menu-items">
-            <a v-for="link in socialLinks" :key="link.name" :href="link.url" class="menu-item" 
-               :class="{ 'mobile': isMobile }" target="_blank">
+            <a v-for="link in socialLinks" :key="link.name" :class="{ 'mobile': isMobile }" :href="link.url"
+               class="menu-item" target="_blank">
               <img :alt="link.name" :src="link.icon" class="menu-item-icon"/>
               <span class="menu-item-name">{{ link.name }}</span>
             </a>
@@ -219,8 +219,8 @@ const desktopIcons = [
         <div class="start-menu-section">
           <h3 class="section-title">Applications</h3>
           <div class="menu-items">
-            <div v-for="item in desktopIcons[0].items" :key="item.name" class="menu-item"
-                 :class="{ 'mobile': isMobile }" @click="item.onClick(); toggleStartMenu()">
+            <div v-for="item in desktopIcons[0].items" :key="item.name" :class="{ 'mobile': isMobile }"
+                 class="menu-item" @click="item.onClick(); toggleStartMenu()">
               <img :alt="item.name" :src="item.icon" class="menu-item-icon"/>
               <span class="menu-item-name">{{ item.name }}</span>
             </div>
