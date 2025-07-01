@@ -18,14 +18,14 @@ function setActiveTab(tab) {
           class="tab-button"
           @click="setActiveTab('personal')"
       >
-        Personal Projects
+        Projets Personnels
       </button>
       <button
           :class="{ active: activeTab === 'academic' }"
           class="tab-button"
           @click="setActiveTab('academic')"
       >
-        Academic Projects
+        Projets Académiques
       </button>
     </div>
 
@@ -54,7 +54,7 @@ function setActiveTab(tab) {
             </span>
           </div>
           <div class="project-links">
-            <a v-if="project.link" :href="project.link" class="project-link" target="_blank">View Project</a>
+            <a v-if="project.link" :href="project.link" class="project-link" target="_blank">Voir le projet</a>
             <a v-if="project.github" :href="project.github" class="project-link" target="_blank">GitHub</a>
           </div>
         </div>

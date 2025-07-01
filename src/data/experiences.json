@@ -7,7 +7,6 @@
       "location": "Mouchard",
       "startDate": "2022-07-04",
       "endDate": "2022-08-26",
-      "description": "Ajouter description",
       "responsibilities": [
         "Caissier",
         "Mise en rayon des produits"
@@ -26,7 +25,6 @@
       "location": "Lyon",
       "startDate": "2024-04-15",
       "endDate": "2024-06-28",
-      "description": "Ajouter description",
       "responsibilities": [
         "Formation continue sur les bonnes pratiques de développement Symfony et l'utilisation des outils de versioning",
         "Collaboration avec une équipe de développeurs pour la mise en place de bonnes pratiques de développement"
@@ -54,10 +52,16 @@
       "location": "Miribel",
       "startDate": "2024-10-21",
       "endDate": "present",
-      "description": "Ajouter description",
       "responsibilities": [
-        "Formation continue sur les bonnes pratiques de développement Symfony et l'utilisation des outils de versioning",
-        "Collaboration avec une équipe de développeurs pour la mise en place de bonnes pratiques de développement"
+        "Analyse des besoins clients, étude de la faisabilité de leur projet et établissement du cahier des charges",
+        "Amélioration de logiciels existants en effectuant la mise à niveau des interfaces et l'adaptation à un nouveau matériel",
+        "Implémentation d'API RESTful pour faciliter l'intégration entre différents systèmes et services web",
+        "Suivi des bonnes pratiques de sécurité informatique pour protéger les données sensibles et prévenir les cyberattaques",
+        "Implémentation d'APIs permettant l'intégration avec divers services externes améliorant ainsi les fonctionnalités offertes",
+        "Optimisation du code existant pour améliorer la performance et la convivialité des applications web",
+        "Prise en charge de la maintenance évolutive et corrective des produits pour assurer la fiabilité des outils",
+        "Support technique impliquant le traitement des anomalies remontées par les utilisateurs et la correction des bugs",
+        "Maintenance de l'application mobile avec Android Studio"
       ],
       "technologies": [
         "Symfony",
@@ -69,6 +73,8 @@
         "SQL",
         "PHP",
         "PhpMyAdmin",
+        "Kotlin",
+        "API Rest",
         "Travail d’équipe",
         "Résolution de problèmes",
         "Rédaction de rapport",
