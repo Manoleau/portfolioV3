@@ -5,7 +5,8 @@ let sql = neon(import.meta.env.VITE_NETLIFY_DATABASE_URL, {
     fetchOptions: {
         cache: 'no-store',
         credentials: 'omit'
-    }
+    },
+    disableWarningInBrowsers: true
 });
 
 function createCustomFetch() {
@@ -57,7 +58,8 @@ export default {
                                 'Content-Type': 'application/json'
                             },
                             cache: 'no-store'
-                        }
+                        },
+                        disableWarningInBrowsers: true
                     });
 
                     const fallbackRows = await fallbackSql`SELECT * FROM users WHERE id = ${SPOTIFY_USER_ID}`;
