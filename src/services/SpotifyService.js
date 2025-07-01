@@ -1,6 +1,12 @@
 import {neon} from '@neondatabase/serverless';
 
-let sql;
+let sql = neon(import.meta.env.VITE_NETLIFY_DATABASE_URL, {
+    fetch: createCustomFetch(),
+    fetchOptions: {
+        cache: 'no-store',
+        credentials: 'omit'
+    }
+});
 
 function createCustomFetch() {
     return (url, options = {}) => {
@@ -27,54 +33,6 @@ function createCustomFetch() {
         } catch (error) {
             return Promise.reject(error);
         }
-    };
-}
-
-function sanitizeDatabaseUrl(url) {
-    if (!url || typeof url !== 'string') return url;
-
-    try {
-        const match = url.match(/^(postgresql:\/\/)([^:]+):([^@]+)@(.+)$/);
-        if (match) {
-            const [, protocol, username, password, rest] = match;
-
-            const cleanUsername = username
-                .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
-                .replace(/[^a-zA-Z0-9._-]/g, (char) => encodeURIComponent(char));
-
-            const cleanPassword = password
-                .replace(/[\u0000-\u001f\u007f-\u009f]/g, '')
-                .replace(/[^a-zA-Z0-9._-]/g, (char) => encodeURIComponent(char));
-
-            return `${protocol}${cleanUsername}:${cleanPassword}@${rest}`;
-        }
-
-        return url;
-    } catch (error) {
-        return url;
-    }
-}
-
-try {
-    let dbUrl = import.meta.env.VITE_NETLIFY_DATABASE_URL;
-
-    if (!dbUrl) {
-        throw new Error('Database URL is not defined');
-    }
-
-    dbUrl = sanitizeDatabaseUrl(dbUrl);
-
-    sql = neon(dbUrl, {
-        fetch: createCustomFetch(),
-        fetchOptions: {
-            cache: 'no-store',
-            credentials: 'omit'
-        }
-    });
-
-} catch (error) {
-    sql = () => {
-        return Promise.resolve([]);
     };
 }
 
