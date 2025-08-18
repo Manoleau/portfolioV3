@@ -10,10 +10,19 @@ import IconShooterGame from './apps/IconShooterGame.vue';
 import SpotifyApp from './apps/SpotifyApp.vue';
 import VoyageApp from './apps/VoyageApp.vue';
 import CompetenciesApp from './apps/CompetenciesApp.vue';
-import {onMounted, onUnmounted, ref} from 'vue';
+import {onMounted, onUnmounted, ref, computed} from 'vue';
 
 const openWindows = ref([]);
 const nextZIndex = ref(2000);
+
+const allTaskbarWindows = computed(() => {
+  return openWindows.value.map(window => ({
+    name: window.name,
+    icon: getIconForApp(window.name),
+    iconColor: getIconColorForApp(window.name),
+    zIndex: window.zIndex
+  }));
+});
 
 const isStartMenuOpen = ref(false);
 const startMenuPage = ref(0);
@@ -53,7 +62,7 @@ const socialLinks = [
 function toggleStartMenu() {
   isStartMenuOpen.value = !isStartMenuOpen.value;
   if (isStartMenuOpen.value) {
-    startMenuPage.value = 0; // Reset to first page when opening
+    startMenuPage.value = 0;
   }
 }
 
@@ -133,6 +142,15 @@ function openApp(appName) {
     zIndex: nextZIndex.value++,
     isReady: false
   });
+}
+
+
+function focusApp(appName) {
+  const index = openWindows.value.findIndex(window => window.name === appName);
+
+  if (index !== -1) {
+    openWindows.value[index].zIndex = nextZIndex.value++;
+  }
 }
 
 function closeApp(appName) {
@@ -272,7 +290,16 @@ const desktopIcons = [
         <span v-if="!isMobile">Démarrer</span>
       </div>
 
-      <!-- Quick app buttons for mobile -->
+      <div class="taskbar-apps">
+        <div v-for="app in allTaskbarWindows" :key="app.name" 
+             class="taskbar-app taskbar-app-active" 
+             @click="focusApp(app.name)" 
+             :title="app.name">
+          <i v-if="app.icon" :class="app.icon" :style="{ color: app.iconColor }"></i>
+          <span v-if="!isMobile" class="taskbar-app-name">{{ app.name }}</span>
+        </div>
+      </div>
+
       <div v-if="isMobile" class="mobile-quick-apps">
         <div v-for="item in desktopIcons[0].items.slice(0, 4)" :key="item.name"
              class="mobile-app-button" @click="item.onClick()">
@@ -333,7 +360,6 @@ const desktopIcons = [
 </template>
 
 <style scoped>
-/* Loading Screen Styles */
 .loading-screen {
   position: fixed;
   top: 0;
@@ -424,7 +450,6 @@ const desktopIcons = [
   pointer-events: none;
 }
 
-/* Desktop Game Container */
 .desktop-game-container {
   position: absolute;
   top: 0;
@@ -432,11 +457,10 @@ const desktopIcons = [
   width: 100%;
   height: 100%;
   z-index: 1;
-  pointer-events: none; /* Allow clicks to pass through to desktop icons */
+  pointer-events: none;
   overflow: hidden;
 }
 
-/* Make all game elements clickable */
 .desktop-game-container * {
   pointer-events: auto !important;
 }
@@ -456,11 +480,10 @@ const desktopIcons = [
   margin-top: 60px;
   padding-left: 20px;
   position: relative;
-  z-index: 2; /* Higher than the game container's z-index */
+  z-index: 2;
   width: auto;
 }
 
-/* Mobile desktop icons container */
 .desktop-icons-container.mobile {
   display: flex;
   flex-direction: column;
@@ -479,7 +502,6 @@ const desktopIcons = [
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Mobile icon category */
 .desktop-icons-container.mobile .icon-category {
   margin-right: 0;
   width: 100%;
@@ -501,7 +523,6 @@ const desktopIcons = [
   gap: 10px;
 }
 
-/* Mobile icon grid */
 .desktop-icons-container.mobile .icon-grid {
   justify-content: space-between;
 }
@@ -516,7 +537,6 @@ const desktopIcons = [
   font-style: italic;
 }
 
-/* Taskbar Styles */
 .taskbar {
   position: fixed;
   bottom: 0;
@@ -531,7 +551,6 @@ const desktopIcons = [
   z-index: 1000;
 }
 
-/* Mobile taskbar */
 .taskbar.mobile {
   height: 50px;
   justify-content: space-between;
@@ -549,7 +568,6 @@ const desktopIcons = [
   transition: background-color 0.2s;
 }
 
-/* Mobile start button */
 .start-button.mobile {
   padding: 8px;
   border-radius: 50%;
@@ -575,7 +593,6 @@ const desktopIcons = [
   filter: none;
 }
 
-/* Mobile start button icon */
 .start-button.mobile img, .start-button.mobile i {
   margin-right: 0;
 }
@@ -590,15 +607,63 @@ const desktopIcons = [
   font-size: 14px;
 }
 
-/* Mobile quick apps */
+.taskbar-apps {
+  display: flex;
+  flex: 1;
+  margin: 0 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.taskbar-apps::-webkit-scrollbar {
+  display: none;
+}
+
+.taskbar-app {
+  display: flex;
+  align-items: center;
+  padding: 3px 15px;
+  height: 100%;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-right: 8px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  min-width: 70px;
+  justify-content: center;
+}
+
+.taskbar-app:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.taskbar-app-active {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-bottom: 4px solid var(--color-4);
+}
+
+.taskbar-app i {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.taskbar-app-name {
+  font-size: 14px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
 .mobile-quick-apps {
   display: flex;
   gap: 10px;
 }
 
 .mobile-app-button {
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.1);
   display: flex;
@@ -612,20 +677,19 @@ const desktopIcons = [
 }
 
 .mobile-app-button img {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   filter: invert(1);
 }
 
 .mobile-app-button .fa-icon {
-  font-size: 20px;
+  font-size: 24px;
   color: white;
 }
 
-/* Start Menu Styles */
 .start-menu {
   position: fixed;
-  bottom: 40px;
+  bottom: 50px;
   left: 0;
   width: 300px;
   background-color: rgba(40, 40, 40, 0.95);
@@ -636,11 +700,10 @@ const desktopIcons = [
   animation: slideUp 0.2s ease-out;
 }
 
-/* Mobile start menu */
 .start-menu.mobile {
-  bottom: 50px;
+  bottom: 70px;
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 70px);
   border-radius: 0;
   overflow-y: auto;
 }
@@ -662,7 +725,6 @@ const desktopIcons = [
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Mobile start menu header */
 .start-menu.mobile .start-menu-header {
   justify-content: space-between;
   padding: 15px 20px;
@@ -687,7 +749,6 @@ i.start-menu-logo {
   font-weight: bold;
 }
 
-/* Start menu close button for mobile */
 .start-menu-close {
   background-color: transparent;
   border: none;
@@ -713,7 +774,6 @@ i.start-menu-logo {
   overflow-y: auto;
 }
 
-/* Mobile start menu content */
 .start-menu.mobile .start-menu-content {
   padding: 15px;
   max-height: none;
@@ -724,7 +784,6 @@ i.start-menu-logo {
   margin-bottom: 20px;
 }
 
-/* Mobile start menu section */
 .start-menu.mobile .start-menu-section {
   margin-bottom: 30px;
 }
@@ -780,17 +839,14 @@ i.start-menu-logo {
   text-align: center;
 }
 
-/* Mobile section header */
 .start-menu.mobile .section-header {
   margin-bottom: 15px;
 }
 
-/* Mobile section title */
 .start-menu.mobile .section-title {
   font-size: 16px;
 }
 
-/* Mobile navigation controls */
 .start-menu.mobile .navigation-controls {
   gap: 8px;
 }
@@ -812,7 +868,6 @@ i.start-menu-logo {
   gap: 5px;
 }
 
-/* Mobile menu items */
 .start-menu.mobile .menu-items {
   gap: 10px;
 }
@@ -827,7 +882,6 @@ i.start-menu-logo {
   text-decoration: none;
 }
 
-/* Mobile menu item */
 .menu-item.mobile {
   padding: 12px;
 }
@@ -849,7 +903,6 @@ i.start-menu-logo {
   filter: none;
 }
 
-/* Mobile menu item icon */
 .menu-item.mobile .menu-item-icon {
   width: 20px;
   height: 20px;
@@ -865,7 +918,6 @@ i.start-menu-logo {
   font-size: 14px;
 }
 
-/* Mobile menu item name */
 .menu-item.mobile .menu-item-name {
   font-size: 16px;
 }

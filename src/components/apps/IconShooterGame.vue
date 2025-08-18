@@ -5,7 +5,8 @@ const score = ref(0);
 const icons = ref([]);
 const gameActive = ref(true);
 const gameSpeed = ref(1);
-const spawnRate = ref(1500);
+const spawnRate = ref(3000); // Increased from 1500ms to 3000ms to reduce spawn frequency
+const maxIcons = 5; // Maximum number of icons on screen at once
 let gameLoop = null;
 let spawnInterval = null;
 let wasActive = true;
@@ -62,6 +63,11 @@ function stopGame() {
 }
 
 function spawnIcon() {
+  // Only spawn a new icon if we're below the maximum limit
+  if (icons.value.length >= maxIcons) {
+    return;
+  }
+
   const iconTypes = [
     'fa-brands fa-github',
     'fa-brands fa-linkedin',

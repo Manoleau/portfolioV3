@@ -1,7 +1,7 @@
 <script setup>
 import {computed, onMounted, onUnmounted, ref, nextTick} from 'vue';
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true
@@ -109,6 +109,7 @@ function stopDrag() {
   document.removeEventListener('touchend', stopDrag);
 }
 
+
 function closeWindow(event) {
   if (event) {
     event.stopPropagation();
@@ -125,7 +126,7 @@ function closeWindow(event) {
     } else {
       emit('close');
     }
-  }, 300);
+  }, 500);
 }
 
 function handleResize() {
@@ -236,9 +237,10 @@ onUnmounted(() => {
   }
   to {
     opacity: 0;
-    transform: scale(0.9) translateY(20px);
+    transform: scale(0.9) translateY(20%);
   }
 }
+
 
 .app-window {
   position: fixed;
@@ -260,9 +262,10 @@ onUnmounted(() => {
 }
 
 .app-window.closing {
-  animation: windowClose 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+  animation: windowClose 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
   pointer-events: none;
 }
+
 
 .app-window.active {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
@@ -336,7 +339,6 @@ onUnmounted(() => {
     color-mix(in srgb, var(--color-1) 80%, white));
 }
 
-/* Larger touch target for mobile */
 .app-window.mobile .window-title-bar {
   height: 40px;
   padding: 8px 12px;
@@ -389,26 +391,21 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   border-radius: 3px;
+  overflow: hidden;
   transition: background-color 0.2s, transform 0.2s;
 }
 
 .window-close:hover {
   background-color: #e81123;
-  transform: scale(1.1);
 }
 
-.window-close:active {
-  transform: scale(0.95);
-}
-
-/* Larger close button for mobile */
 .app-window.mobile .window-close {
   width: 44px;
   height: 44px;
   font-size: 24px;
   padding: 10px;
-  margin-right: -10px; /* Compensate for padding */
-  touch-action: manipulation; /* Improve touch responsiveness */
+  margin-right: -10px;
+  touch-action: manipulation;
 }
 
 .window-content {
@@ -416,7 +413,7 @@ onUnmounted(() => {
   overflow: auto;
   padding: 10px;
   background-color: white;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
   opacity: 0;
   animation: fadeIn 0.3s ease-out 0.1s forwards;
 }
@@ -432,12 +429,11 @@ onUnmounted(() => {
 
 .app-window.mobile .window-content {
   padding: 15px;
-  max-height: calc(100vh - 80px); /* Account for taskbar and title bar */
+  max-height: calc(100vh - 80px);
   opacity: 1;
   animation: none;
 }
 
-/* Add a subtle pulsing effect to the active window */
 @keyframes subtle-pulse {
   0% {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
