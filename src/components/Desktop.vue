@@ -300,6 +300,10 @@ const desktopIcons = [
         </div>
       </div>
 
+      <div v-if="!isMobile" class="taskbar-right">
+        <span class="taskbar-copyright">© 2025 Emmanuel Ardoin</span>
+      </div>
+
       <div v-if="isMobile" class="mobile-quick-apps">
         <div v-for="item in desktopIcons[0].items.slice(0, 4)" :key="item.name"
              class="mobile-app-button" @click="item.onClick()">
@@ -654,6 +658,19 @@ const desktopIcons = [
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 120px;
+}
+
+.taskbar-right {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.taskbar-right .taskbar-copyright {
+  white-space: nowrap;
 }
 
 .mobile-quick-apps {
