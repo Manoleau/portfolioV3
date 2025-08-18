@@ -17,7 +17,6 @@ const competencies = ref(competenciesData.competencies.map(comp => ({
 
 const iconsAnimated = ref(false);
 
-// Map color names to CSS color values
 const colorMap = {
   red: '#ff5252',
   orange: '#ff9800',
@@ -27,58 +26,52 @@ const colorMap = {
   black: '#333333'
 };
 
-// Function to get the text color based on background color
 function getTextColor(bgColor) {
-  // For yellow and light colors, use dark text
   return bgColor === 'yellow' ? '#333333' : '#ffffff';
 }
 
-// Toggle details visibility with animation
 function toggleDetails(competency) {
   const wasShowing = competency.showDetails;
+  let anyWasShowing = false;
 
-  // Close all competencies with animation
   competencies.value.forEach(comp => {
     if (comp.showDetails) {
+      anyWasShowing = true;
       comp.animated = false;
-      // Small delay before hiding to allow animation to complete
       setTimeout(() => {
         comp.showDetails = false;
       }, 300);
     }
   });
 
-  // If the clicked competency wasn't showing before, show it now with animation
   if (!wasShowing) {
-    competency.showDetails = true;
-    // Small delay to trigger animation after display
+    const showDelay = anyWasShowing ? 350 : 0;
+
     setTimeout(() => {
-      competency.animated = true;
-    }, 50);
+      competency.showDetails = true;
+      setTimeout(() => {
+        competency.animated = true;
+      }, 50);
+    }, showDelay);
   }
 }
 
-// Get animation delay for staggered animations
 function getAnimationDelay(index) {
   return `${index * 0.1}s`;
 }
 
-// Function to start animations
 function startAnimations() {
-  // Trigger icon animations
   setTimeout(() => {
     iconsAnimated.value = true;
   }, 300);
 }
 
 onMounted(() => {
-  // If window is already ready, start animations
   if (props.isReady) {
     startAnimations();
   }
 });
 
-// Watch for changes to isReady prop
 watch(() => props.isReady, (newValue) => {
   if (newValue === true) {
     startAnimations();
@@ -423,23 +416,6 @@ watch(() => props.isReady, (newValue) => {
   position: relative;
 }
 
-.competency-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease-out;
-}
-
-.competency-card.animated .competency-header::after {
-  transform: scaleX(1);
-}
-
 .competency-title {
   margin: 0;
   font-size: 18px;
@@ -460,7 +436,7 @@ watch(() => props.isReady, (newValue) => {
   background: none;
   border: none;
   color: inherit;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
   padding: 0 8px;
   margin-left: auto;
@@ -471,11 +447,6 @@ watch(() => props.isReady, (newValue) => {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.close-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
 }
 
 /* Content Animations */
