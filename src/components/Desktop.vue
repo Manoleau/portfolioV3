@@ -18,6 +18,9 @@ const isStartMenuOpen = ref(false);
 
 const isMobile = ref(false);
 
+const isLoading = ref(true);
+const loadingProgress = ref(0);
+
 function checkMobile() {
   isMobile.value = window.innerWidth <= 768;
 }
@@ -61,12 +64,29 @@ function handleClickOutside(event) {
   }
 }
 
+function simulateLoading() {
+  const randomIncrement = () => Math.random() * 15 + 5;
+  const interval = setInterval(() => {
+    if (loadingProgress.value < 100) {
+      const remaining = 100 - loadingProgress.value;
+      const increment = Math.min(randomIncrement(), remaining);
+      loadingProgress.value += increment;
+    } else {
+      clearInterval(interval);
+      setTimeout(() => {
+        isLoading.value = false;
+      }, 500);
+    }
+  }, 400);
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 
   checkMobile();
 
   window.addEventListener('resize', handleResize);
+  simulateLoading();
 });
 
 onUnmounted(() => {
@@ -141,7 +161,17 @@ const desktopIcons = [
 </script>
 
 <template>
-  <div id="desktop" :class="{ 'mobile': isMobile }">
+  <div v-if="isLoading" class="loading-screen">
+    <div class="loading-content">
+      <h2>Chargement...</h2>
+      <div class="loading-bar-container">
+        <div class="loading-bar" :style="{ width: `${loadingProgress}%` }"></div>
+      </div>
+      <div class="loading-percentage">{{ Math.floor(loadingProgress) }}%</div>
+    </div>
+  </div>
+
+  <div id="desktop" :class="{ 'mobile': isMobile }" v-show="!isLoading">
     <div v-if="!isMobile" class="desktop-game-container">
       <IconShooterGame/>
     </div>
@@ -232,6 +262,65 @@ const desktopIcons = [
 </template>
 
 <style scoped>
+/* Loading Screen Styles */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  background-image: url('/images/wallpaper.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.loading-content {
+  background-color: rgba(40, 40, 40, 0.9);
+  border-radius: 8px;
+  padding: 30px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  border: 1px solid var(--color-4);
+}
+
+.loading-content h2 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-shadow: 0 0 10px var(--color-4);
+}
+
+.loading-bar-container {
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-1), var(--color-4));
+  border-radius: 10px;
+  transition: width 0.4s ease-out;
+  box-shadow: 0 0 10px var(--color-4);
+}
+
+.loading-percentage {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 #desktop {
   background-color: #000;
   position: relative;
