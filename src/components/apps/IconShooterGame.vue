@@ -4,7 +4,7 @@ import {onMounted, onUnmounted, ref} from 'vue';
 const score = ref(0);
 const icons = ref([]);
 const gameActive = ref(true);
-const gameSpeed = ref(2);
+const gameSpeed = ref(1);
 const spawnRate = ref(1500);
 let gameLoop = null;
 let spawnInterval = null;
@@ -63,14 +63,13 @@ function stopGame() {
 
 function spawnIcon() {
   const iconTypes = [
-    '/icons/github.svg',
-    '/icons/linkedin.svg',
-    '/icons/discord.svg',
-    '/icons/html-css.svg',
-    '/icons/portfolio.svg',
-    '/icons/blog.svg',
-    '/icons/games.svg',
-    '/icons/ecommerce.svg'
+    'fa-brands fa-github',
+    'fa-brands fa-linkedin',
+    'fa-brands fa-discord',
+    'fa-solid fa-code',
+    'fa-solid fa-folder-open',
+    'fa-solid fa-gamepad',
+    'fa-solid fa-cart-shopping'
   ];
 
   const randomIcon = iconTypes[Math.floor(Math.random() * iconTypes.length)];
@@ -84,7 +83,7 @@ function spawnIcon() {
       icon: randomIcon,
       x: -50,
       y: Math.random() * (containerHeight - 50),
-      speed: gameSpeed.value + (Math.random() * 2)
+      speed: gameSpeed.value + (Math.random() * 1)
     });
   }
 }
@@ -151,7 +150,7 @@ function handleVisibilityChange() {
           class="game-icon"
       >
         <a href="javascript:void(0)">
-          <img :src="icon.icon" alt="Game Icon" unselectable="on"/>
+          <i :class="icon.icon" class="fa-icon" unselectable="on"></i>
         </a>
       </div>
     </div>
@@ -236,6 +235,24 @@ function handleVisibilityChange() {
   width: 100%;
   height: 100%;
   filter: invert(1);
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.game-icon a {
+  text-decoration: none;
+  color: white;
+}
+
+.game-icon .fa-icon {
+  font-size: 30px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;

@@ -9,12 +9,15 @@ import VideoGamesApp from './apps/VideoGamesApp.vue';
 import IconShooterGame from './apps/IconShooterGame.vue';
 import SpotifyApp from './apps/SpotifyApp.vue';
 import VoyageApp from './apps/VoyageApp.vue';
+import CompetenciesApp from './apps/CompetenciesApp.vue';
 import {onMounted, onUnmounted, ref} from 'vue';
 
 const openWindows = ref([]);
-const nextZIndex = ref(3);
+const nextZIndex = ref(2000);
 
 const isStartMenuOpen = ref(false);
+const startMenuPage = ref(0);
+const itemsPerPage = 6;
 
 const isMobile = ref(false);
 
@@ -32,23 +35,45 @@ function handleResize() {
 const socialLinks = [
   {
     name: "GitHub",
-    icon: "/icons/github.svg",
+    icon: "fa-brands fa-github",
     url: "https://github.com/Manoleau"
   },
   {
     name: "LinkedIn",
-    icon: "/icons/linkedin.svg",
+    icon: "fa-brands fa-linkedin",
     url: "https://www.linkedin.com/in/emmanuel-ardoin-819217251/"
   },
   {
     name: "Discord",
-    icon: "/icons/discord.svg",
+    icon: "fa-brands fa-discord",
     url: "https://discord.com/users/334695006663344151"
   }
 ];
 
 function toggleStartMenu() {
   isStartMenuOpen.value = !isStartMenuOpen.value;
+  if (isStartMenuOpen.value) {
+    startMenuPage.value = 0; // Reset to first page when opening
+  }
+}
+
+function nextStartMenuPage() {
+  const totalPages = Math.ceil(desktopIcons[0].items.length / itemsPerPage);
+  if (startMenuPage.value < totalPages - 1) {
+    startMenuPage.value++;
+  }
+}
+
+function prevStartMenuPage() {
+  if (startMenuPage.value > 0) {
+    startMenuPage.value--;
+  }
+}
+
+function getVisibleMenuItems() {
+  const start = startMenuPage.value * itemsPerPage;
+  const end = start + itemsPerPage;
+  return desktopIcons[0].items.slice(start, end);
 }
 
 function handleClickOutside(event) {
@@ -105,7 +130,8 @@ function openApp(appName) {
 
   openWindows.value.push({
     name: appName,
-    zIndex: nextZIndex.value++
+    zIndex: nextZIndex.value++,
+    isReady: false
   });
 }
 
@@ -116,44 +142,67 @@ function closeApp(appName) {
   }
 }
 
+function getIconForApp(appName) {
+  const app = desktopIcons[0].items.find(item => item.name === appName);
+  return app ? app.icon : '';
+}
+
+function getIconColorForApp(appName) {
+  const app = desktopIcons[0].items.find(item => item.name === appName);
+  return app ? app.iconColor : 'white';
+}
+
 const desktopIcons = [
   {
     category: "Applications",
     items: [
       {
         name: "Projets",
-        icon: "/icons/portfolio.svg",
-        onClick: () => openApp("Projets")
+        icon: "fa-solid fa-folder-open",
+        onClick: () => openApp("Projets"),
+        iconColor: "#ffc107" // Yellow
       },
       {
         name: "Compétences",
-        icon: "/icons/html-css.svg",
-        onClick: () => openApp("Compétences")
+        icon: "fa-solid fa-code",
+        onClick: () => openApp("Compétences"),
+        iconColor: "#4caf50" // Green
+      },
+      {
+        name: "Compétence BUT Informatique",
+        icon: "fa-solid fa-code",
+        onClick: () => openApp("Compétence BUT Informatique"),
+        iconColor: "#ff5722" // Deep Orange
       },
       {
         name: "Expériences",
-        icon: "/icons/ecommerce.svg",
-        onClick: () => openApp("Expériences")
+        icon: "fa-solid fa-briefcase",
+        onClick: () => openApp("Expériences"),
+        iconColor: "#2196f3" // Blue
       },
       {
         name: "Formation",
-        icon: "/icons/blog.svg",
-        onClick: () => openApp("Formation")
+        icon: "fa-solid fa-graduation-cap",
+        onClick: () => openApp("Formation"),
+        iconColor: "#9c27b0" // Purple
       },
       {
         name: "Jeux Vidéo",
-        icon: "/icons/games.svg",
-        onClick: () => openApp("Jeux Vidéo")
+        icon: "fa-solid fa-gamepad",
+        onClick: () => openApp("Jeux Vidéo"),
+        iconColor: "#e91e63" // Pink
       },
       {
         name: "Spotify",
-        icon: "/icons/spotify.svg",
-        onClick: () => openApp("Spotify")
+        icon: "fa-brands fa-spotify",
+        onClick: () => openApp("Spotify"),
+        iconColor: "#1db954" // Spotify Green
       },
       {
         name: "Voyage",
-        icon: "/icons/travel.svg",
-        onClick: () => openApp("Voyage")
+        icon: "fa-solid fa-plane",
+        onClick: () => openApp("Voyage"),
+        iconColor: "#03a9f4" // Light Blue
       }
     ]
   }
@@ -186,6 +235,7 @@ const desktopIcons = [
                 :isMobile="isMobile"
                 :name="item.name"
                 :onClick="item.onClick"
+                :iconColor="item.iconColor"
             />
           </div>
         </div>
@@ -197,13 +247,17 @@ const desktopIcons = [
         :key="window.name"
         :isOpen="true"
         :title="window.name"
+        :icon="getIconForApp(window.name)"
+        :iconColor="getIconColorForApp(window.name)"
         :zIndex="window.zIndex"
         @close="closeApp(window.name)"
+        @window-ready="window.isReady = true"
     >
       <ProjectsApp v-if="window.name === 'Projets'"/>
-      <SkillsApp v-else-if="window.name === 'Compétences'"/>
+      <SkillsApp v-else-if="window.name === 'Compétences'" :isReady="window.isReady"/>
       <ExperiencesApp v-else-if="window.name === 'Expériences'"/>
       <EducationApp v-else-if="window.name === 'Formation'"/>
+      <CompetenciesApp v-else-if="window.name === 'Compétence BUT Informatique'" :isReady="window.isReady"/>
       <VoyageApp v-else-if="window.name === 'Voyage'"/>
       <VideoGamesApp v-else-if="window.name === 'Jeux Vidéo'"/>
       <SpotifyApp v-else-if="window.name === 'Spotify'"/>
@@ -214,7 +268,7 @@ const desktopIcons = [
 
     <div :class="{ 'mobile': isMobile }" class="taskbar">
       <div :class="{ 'mobile': isMobile }" class="start-button" @click="toggleStartMenu">
-        <img alt="Démarrer" src="/icons/start.svg"/>
+        <i class="fa-brands fa-windows"></i>
         <span v-if="!isMobile">Démarrer</span>
       </div>
 
@@ -222,36 +276,53 @@ const desktopIcons = [
       <div v-if="isMobile" class="mobile-quick-apps">
         <div v-for="item in desktopIcons[0].items.slice(0, 4)" :key="item.name"
              class="mobile-app-button" @click="item.onClick()">
-          <img :alt="item.name" :src="item.icon"/>
+          <img v-if="!item.icon.includes('fa-')" :alt="item.name" :src="item.icon"/>
+          <i v-else :class="item.icon" class="fa-icon"></i>
         </div>
       </div>
     </div>
 
     <div v-if="isStartMenuOpen" :class="{ 'mobile': isMobile }" class="start-menu">
       <div class="start-menu-header">
-        <img alt="Démarrer" class="start-menu-logo" src="/icons/start.svg"/>
+        <i class="fa-brands fa-windows start-menu-logo"></i>
         <span>Emmanuel ARDOIN</span>
         <button v-if="isMobile" class="start-menu-close" @click="toggleStartMenu">×</button>
       </div>
 
       <div class="start-menu-content">
         <div class="start-menu-section">
-          <h3 class="section-title">Liens Sociaux</h3>
+          <div class="section-header">
+            <h3 class="section-title">Liens Sociaux</h3>
+          </div>
           <div class="menu-items">
             <a v-for="link in socialLinks" :key="link.name" :class="{ 'mobile': isMobile }" :href="link.url"
                class="menu-item" target="_blank">
-              <img :alt="link.name" :src="link.icon" class="menu-item-icon"/>
+              <img v-if="!link.icon.includes('fa-')" :alt="link.name" :src="link.icon" class="menu-item-icon"/>
+              <i v-else :class="link.icon" class="menu-item-icon fa-icon"></i>
               <span class="menu-item-name">{{ link.name }}</span>
             </a>
           </div>
         </div>
 
         <div class="start-menu-section">
-          <h3 class="section-title">Applications</h3>
+          <div class="section-header">
+            <h3 class="section-title">Applications</h3>
+            <div class="navigation-controls">
+              <button class="nav-button" @click="prevStartMenuPage" :disabled="startMenuPage === 0">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <span class="page-indicator">{{ startMenuPage + 1 }}</span>
+              <button class="nav-button" @click="nextStartMenuPage" 
+                      :disabled="startMenuPage >= Math.ceil(desktopIcons[0].items.length / itemsPerPage) - 1">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
           <div class="menu-items">
-            <div v-for="item in desktopIcons[0].items" :key="item.name" :class="{ 'mobile': isMobile }"
+            <div v-for="item in getVisibleMenuItems()" :key="item.name" :class="{ 'mobile': isMobile }"
                  class="menu-item" @click="item.onClick(); toggleStartMenu()">
-              <img :alt="item.name" :src="item.icon" class="menu-item-icon"/>
+              <img v-if="!item.icon.includes('fa-')" :alt="item.name" :src="item.icon" class="menu-item-icon"/>
+              <i v-else :class="item.icon" class="menu-item-icon fa-icon" :style="{ color: item.iconColor }"></i>
               <span class="menu-item-name">{{ item.name }}</span>
             </div>
           </div>
@@ -491,16 +562,26 @@ const desktopIcons = [
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.start-button img {
+.start-button img, .start-button i {
   width: 20px;
   height: 20px;
   margin-right: 8px;
   filter: invert(1);
 }
 
+.start-button i {
+  font-size: 20px;
+  color: white;
+  filter: none;
+}
+
 /* Mobile start button icon */
-.start-button.mobile img {
+.start-button.mobile img, .start-button.mobile i {
   margin-right: 0;
+}
+
+.start-button.mobile i {
+  font-size: 24px;
 }
 
 .start-button span {
@@ -534,6 +615,11 @@ const desktopIcons = [
   width: 20px;
   height: 20px;
   filter: invert(1);
+}
+
+.mobile-app-button .fa-icon {
+  font-size: 20px;
+  color: white;
 }
 
 /* Start Menu Styles */
@@ -589,6 +675,12 @@ const desktopIcons = [
   filter: invert(1);
 }
 
+i.start-menu-logo {
+  font-size: 24px;
+  color: white;
+  filter: none;
+}
+
 .start-menu-header span {
   color: white;
   font-size: 16px;
@@ -637,18 +729,81 @@ const desktopIcons = [
   margin-bottom: 30px;
 }
 
-.section-title {
-  color: white;
-  font-size: 14px;
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
   padding-bottom: 5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.section-title {
+  color: white;
+  font-size: 14px;
+  margin: 0;
+}
+
+.navigation-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  color: white;
+  font-size: 12px;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* Mobile section header */
+.start-menu.mobile .section-header {
+  margin-bottom: 15px;
+}
+
 /* Mobile section title */
 .start-menu.mobile .section-title {
   font-size: 16px;
-  margin-bottom: 15px;
+}
+
+/* Mobile navigation controls */
+.start-menu.mobile .navigation-controls {
+  gap: 8px;
+}
+
+.start-menu.mobile .nav-button {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.start-menu.mobile .page-indicator {
+  font-size: 14px;
+  min-width: 20px;
 }
 
 .menu-items {
@@ -682,17 +837,27 @@ const desktopIcons = [
 }
 
 .menu-item-icon {
-  width: 20px;
-  height: 20px;
+  height: 18px;
   margin-right: 10px;
   filter: invert(1);
+  overflow: hidden;
+}
+
+.menu-item-icon.fa-icon {
+  font-size: 18px;
+  color: white;
+  filter: none;
 }
 
 /* Mobile menu item icon */
 .menu-item.mobile .menu-item-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   margin-right: 15px;
+}
+
+.menu-item.mobile .menu-item-icon.fa-icon {
+  font-size: 20px;
 }
 
 .menu-item-name {

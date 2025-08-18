@@ -1,0 +1,163 @@
+{
+  "competencies": [
+    {
+      "id": 1,
+      "title": "Réaliser un développement d'application",
+      "description": "Développer — c'est-à-dire concevoir, coder, tester et intégrer — une solution informatique pour un client.",
+      "color": "red",
+      "icon": "fa-solid fa-code",
+      "situations": [
+        "Élaborer une application informatique",
+        "Faire évoluer une application informatique",
+        "Maintenir en conditions opérationnelles une application informatique"
+      ],
+      "levels": [
+        {
+          "number": 1,
+          "description": "Développer des applications informatiques simples",
+          "acquired": true
+        },
+        {
+          "number": 2,
+          "description": "Partir des exigences et aller jusqu'à une application complète",
+          "acquired": true
+        },
+        {
+          "number": 3,
+          "description": "Se spécialiser sur un ensemble de supports (embarqué, web, mobile, IOT...) avec un suivi qualitatif",
+          "acquired": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Optimiser des applications informatiques",
+      "description": "Proposer des applications informatiques optimisées en fonction de critères spécifiques : temps d'exécution, précision, consommation de ressources...",
+      "color": "orange",
+      "icon": "fa-solid fa-gauge-high",
+      "situations": [
+        "Améliorer les performances des programmes dans des contextes contraints",
+        "Limiter l'impact environnemental d'une application informatique",
+        "Mettre en place des applications informatiques adaptées et innovantes"
+      ],
+      "levels": [
+        {
+          "number": 1,
+          "description": "Appréhender et construire des algorithmes",
+          "acquired": true
+        },
+        {
+          "number": 2,
+          "description": "Sélectionner les algorithmes adéquats pour répondre à un problème donné",
+          "acquired": true
+        },
+        {
+          "number": 3,
+          "description": "Analyser et optimiser des applications",
+          "acquired": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Administrer des systèmes informatiques communicants complexes",
+      "description": "Installer, configurer, mettre à disposition, maintenir en conditions opérationnelles des infrastructures, des services et des réseaux et optimiser le système informatique d'une organisation.",
+      "color": "yellow",
+      "icon": "fa-solid fa-server",
+      "situations": [
+        "Déployer une nouvelle architecture technique",
+        "Améliorer une infrastructure existante",
+        "Sécuriser les applications et les services"
+      ],
+      "levels": [
+        {
+          "number": 1,
+          "description": "Installer et configurer un poste de travail",
+          "acquired": true
+        },
+        {
+          "number": 2,
+          "description": "Déployer des services dans une architecture réseau",
+          "acquired": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Gérer des données de l'information",
+      "description": "Concevoir, gérer, administrer et exploiter les données de l'entreprise et mettre à disposition toutes les informations pour un bon pilotage de l'entreprise.",
+      "color": "green",
+      "icon": "fa-solid fa-database",
+      "situations": [
+        "Lancer un nouveau projet",
+        "Sécuriser des données",
+        "Exploiter des données pour la prise de décisions"
+      ],
+      "levels": [
+        {
+          "number": 1,
+          "description": "Concevoir et mettre en place une base de données à partir d'un cahier des charges client",
+          "acquired": true
+        },
+        {
+          "number": 2,
+          "description": "Optimiser une base de données, interagir avec une application et mettre en œuvre la sécurité",
+          "acquired": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Conduire un projet",
+      "description": "Satisfaire les besoins des utilisateurs au regard de la chaîne de valeur du client, organiser et piloter un projet informatique avec des méthodes classiques ou agiles.",
+      "color": "blue",
+      "icon": "fa-solid fa-diagram-project",
+      "situations": [
+        "Lancer un nouveau projet",
+        "Piloter le maintien d'un projet en condition opérationnelle",
+        "Faire évoluer un système d'information"
+      ],
+      "levels": [
+        {
+          "number": 1,
+          "description": "Identifier les besoins métiers des clients et des utilisateurs",
+          "acquired": true
+        },
+        {
+          "number": 2,
+          "description": "Appliquer une démarche de suivi de projet en fonction des besoins métiers des clients et des utilisateurs",
+          "acquired": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Travailler dans une équipe informatique",
+      "description": "Acquérir, développer et exploiter les aptitudes nécessaires pour travailler efficacement dans une équipe informatique.",
+      "color": "black",
+      "icon": "fa-solid fa-users",
+      "situations": [
+        "Lancer un nouveau projet",
+        "Organiser son travail en relation avec celui de son équipe",
+        "Élaborer, gérer et transmettre de l'information"
+      ],
+      "levels": [
+        {
+          "number": 1,
+          "description": "Identifier ses aptitudes pour travailler dans une équipe",
+          "acquired": true
+        },
+        {
+          "number": 2,
+          "description": "Situer son rôle et ses missions au sein d'une équipe informatique",
+          "acquired": true
+        },
+        {
+          "number": 3,
+          "description": "Manager une équipe informatique",
+          "acquired": true
+        }
+      ]
+    }
+  ]
+}
