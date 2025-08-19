@@ -283,8 +283,6 @@ watch(() => props.isReady, (newValue) => {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  margin-bottom: 30px;
-  padding: 20px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -296,6 +294,7 @@ watch(() => props.isReady, (newValue) => {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: 120px;
+  padding-top: 10px;
   margin: 0 10px;
   opacity: 0;
   transform: translateY(20px);
