@@ -15,6 +15,7 @@ const sortBy = ref('name');
 const activeType = ref('all');
 const isInitialLoad = ref(true);
 const animateProgressBars = ref(false);
+const transitionKey = ref(0); // Add a key to force transition-group re-render
 
 const skillTypes = computed(() => {
   const types = skills.value.technique.map(skill => skill.type);
@@ -44,16 +45,17 @@ function setActiveTab(tab) {
   isInitialLoad.value = false;
   animateProgressBars.value = false;
 
-  // Reset animation trigger
-  setTimeout(() => {
-    activeTab.value = tab;
-    activeType.value = 'all';
+  // Increment transition key to force complete re-render
+  transitionKey.value++;
 
-    // Trigger progress bar animations after tab change
-    setTimeout(() => {
-      animateProgressBars.value = true;
-    }, 100);
-  }, 50);
+  // Change tab immediately for better responsiveness
+  activeTab.value = tab;
+  activeType.value = 'all';
+
+  // Trigger progress bar animations with minimal delay
+  requestAnimationFrame(() => {
+    animateProgressBars.value = true;
+  });
 }
 
 function setActiveType(type) {
@@ -62,21 +64,26 @@ function setActiveType(type) {
   isInitialLoad.value = false;
   animateProgressBars.value = false;
 
-  // Reset animation trigger
-  setTimeout(() => {
-    activeType.value = type;
+  // Increment transition key to force complete re-render
+  transitionKey.value++;
 
-    // Trigger progress bar animations after filter change
-    setTimeout(() => {
-      animateProgressBars.value = true;
-    }, 100);
-  }, 50);
+  // Change type immediately for better responsiveness
+  activeType.value = type;
+
+  // Trigger progress bar animations with minimal delay
+  requestAnimationFrame(() => {
+    animateProgressBars.value = true;
+  });
 }
 
 function setSortBy(sort) {
   if (sort === sortBy.value) return;
 
   isInitialLoad.value = false;
+
+  // Increment transition key to force complete re-render
+  transitionKey.value++;
+
   sortBy.value = sort;
 }
 
@@ -93,33 +100,24 @@ function getLevelPercentage(level) {
   }
 }
 
-function getAnimationDelay(index) {
-  return `${index * 0.1}s`;
-}
-
-// Function to start animations
 function startAnimations() {
-  // Trigger progress bar animations
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     animateProgressBars.value = true;
-  }, 300);
+  });
 }
 
 onMounted(() => {
-  // If window is already ready, start animations
   if (props.isReady) {
     startAnimations();
   }
 });
 
-// Watch for changes to isReady prop
 watch(() => props.isReady, (newValue) => {
   if (newValue === true) {
     startAnimations();
   }
 });
 
-// Reset animation flag when displayed skills change
 watch(displayedSkills, () => {
   if (!isInitialLoad.value) {
     animateProgressBars.value = true;
@@ -151,11 +149,9 @@ watch(displayedSkills, () => {
       >
         <span class="tab-text">Langues</span>
       </button>
-      <div class="tab-indicator" :class="activeTab"></div>
     </div>
 
     <div class="controls">
-      <!-- Type filter for technical skills -->
       <transition name="fade-slide">
         <div v-if="activeTab === 'technique'" class="type-filter">
           <span>Type:</span>
@@ -195,6 +191,7 @@ watch(displayedSkills, () => {
       name="skill-list" 
       tag="div" 
       class="skills-container"
+      :key="transitionKey"
     >
       <div v-if="displayedSkills.length === 0" key="no-skills" class="no-skills">
         Aucune compétence à afficher.
@@ -204,7 +201,6 @@ watch(displayedSkills, () => {
         v-for="(skill, index) in displayedSkills" 
         :key="skill.name" 
         class="skill-card"
-        :style="{ animationDelay: getAnimationDelay(index) }"
       >
         <div v-if="skill.icon" class="skill-icon">
           <img :alt="skill.name" :src="skill.icon">
@@ -217,12 +213,13 @@ watch(displayedSkills, () => {
               <span class="skill-level">{{ skill.level }}</span>
             </div>
           </div>
-          <div class="skill-progress-container">
+          <div v-if="activeTab === 'technique'" class="skill-progress-container">
             <div class="skill-progress-bar">
               <div 
                 :class="{ 'animate-progress': animateProgressBars }" 
                 :data-percentage="getLevelPercentage(skill.level)"
                 class="skill-progress"
+                :style="{ '--width': getLevelPercentage(skill.level) + '%' }"
               ></div>
             </div>
           </div>
@@ -286,29 +283,6 @@ watch(displayedSkills, () => {
   color: var(--color-2);
 }
 
-.tab-indicator {
-  position: absolute;
-  bottom: 0;
-  height: 3px;
-  background-color: var(--color-2);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.tab-indicator.technique {
-  left: 0;
-  width: 33.33%;
-}
-
-.tab-indicator.competences {
-  left: 33.33%;
-  width: 33.33%;
-}
-
-.tab-indicator.langues {
-  left: 66.66%;
-  width: 33.33%;
-}
-
 /* Skills Container with Animation */
 .skills-container {
   flex: 1;
@@ -318,6 +292,7 @@ watch(displayedSkills, () => {
   flex-direction: column;
   gap: 16px;
   height: 0; /* Force container to respect flex: 1 */
+  position: relative; /* For absolute positioning during transitions */
 }
 
 /* Skill Card Animation */
@@ -331,18 +306,6 @@ watch(displayedSkills, () => {
   padding: 16px;
   min-width: 0;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  animation: fadeInUp 0.5s both;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .skill-card:hover {
@@ -397,6 +360,7 @@ watch(displayedSkills, () => {
 }
 
 .skill-info {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -451,12 +415,12 @@ watch(displayedSkills, () => {
   background-color: var(--color-2);
   border-radius: 4px;
   width: 0;
-  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .skill-progress.animate-progress {
   width: attr(data-percentage %);
-  animation: progressFill 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  animation: progressFill 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
 
 @keyframes progressFill {
@@ -598,19 +562,28 @@ watch(displayedSkills, () => {
 }
 
 /* Skill List Transitions */
-.skill-list-enter-active,
-.skill-list-leave-active {
-  transition: all 0.5s ease;
+.skill-list-enter-active {
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.skill-list-enter-from,
+.skill-list-leave-active {
+  transition: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: absolute;
+  width: 100%;
+}
+
+.skill-list-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
 .skill-list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(-20px);
 }
 
 .skill-list-move {
-  transition: transform 0.5s ease;
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .no-skills {
