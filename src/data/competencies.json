@@ -78,7 +78,7 @@
         {
           "number": 2,
           "description": "Déployer des services dans une architecture réseau",
-          "acquired": true
+          "acquired": false
         }
       ]
     },
@@ -126,7 +126,7 @@
         {
           "number": 2,
           "description": "Appliquer une démarche de suivi de projet en fonction des besoins métiers des clients et des utilisateurs",
-          "acquired": true
+          "acquired": false
         }
       ]
     },
@@ -155,7 +155,7 @@
         {
           "number": 3,
           "description": "Manager une équipe informatique",
-          "acquired": true
+          "acquired": false
         }
       ]
     }
